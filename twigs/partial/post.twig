@@ -1,0 +1,11 @@
+{% from "components/image.twig" import image %}
+<article>
+	{{ image({ image: post.thumbnail, class: "block", sizes: { w: 465, h: 262 } }) }}
+
+	<h3><a href="{{ post.link }}">{{ post.title }}</a></h3>
+	{% if post.preview %}
+		<div>
+			{{ post.preview }}
+		</div>
+	{% endif %}
+</article>

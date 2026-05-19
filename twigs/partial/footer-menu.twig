@@ -1,0 +1,14 @@
+{% if items %}
+	<ul class="space-y-2 {{ class }}">
+		{% for item in items %}
+			<li>
+				<a class="inline-block text-gray-600 hover:text-gray-900 transition-colors"
+					 href="{{ item.link }}"
+					 {% if item.target %}target="{{ item.target }}"{% endif %}
+					{% if offcanvas is defined %}@click="isMenuOpen = false"{% endif %}>
+					{{ item.title }}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}

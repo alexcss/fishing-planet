@@ -1,0 +1,14 @@
+{% macro button(props) %}
+	{% if props.link and props.link.title %}
+		<a href="{{ props.link.url ?: '#' }}"
+		   class="{{ props.variant == 'light'? 'fp-btn-light' : 'fp-btn' }} {{ props.class }}"
+			{% if props.link.target == '_blank' %}
+				target="_blank"
+				rel="noopener noreferrer"
+			{% endif %}
+			{{ props.props }}
+		>
+			{{ props.link.title }}
+		</a>
+	{% endif %}
+{% endmacro %}

@@ -1,0 +1,149 @@
+@import 'tailwindcss';
+@import './fonts.css';
+@import './theme.css';
+@import './typography.css';
+@import './components.css';
+@import './richtext.css';
+@import './utilities.css';
+
+/*@custom-variant hover (&:hover);*/
+
+@variant header-open (body:has(#header-toggle:checked) &);
+@variant header-closed (body:has(#header-toggle:not(:checked)) &);
+
+@variant header-sticky (body:has(.fp-sticky) &);
+@variant header-slide (body:has(.fp-slide-up) &);
+
+@variant headings (& :is(h1, h2, h3, h4, h5, h6));
+
+@layer base {
+
+  @supports (interpolate-size: allow-keywords) {
+    :root {
+      interpolate-size: allow-keywords;
+    }
+
+    :open::details-content {
+      height: auto;
+    }
+  }
+
+  :target {
+    scroll-margin-top: var(--header-height);
+
+    &:is(h1, h2, h3, h4, h5, h6) {
+      animation: target 2s ease-in-out forwards;
+    }
+  }
+
+  @keyframes target {
+    0%,
+    50% {
+      background-color: color-mix(
+        in oklab,
+        var(--color-amber-400) 50%,
+        transparent
+      );
+    }
+  }
+
+  html {
+    accent-color: var(--color-accent);
+    caret-color: var(--color-accent);
+    scroll-behavior: smooth;
+  }
+
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  label,
+  input[type='submit'],
+  select,
+  button,
+  summary {
+    cursor: pointer;
+  }
+
+  input {
+    background-color: transparent;
+  }
+
+  details {
+    &::details-content {
+      overflow: clip;
+      transition-behavior: allow-discrete;
+      transition-duration: var(--default-transition-duration);
+      transition-property: content-visibility, block-size;
+    }
+
+    &:not(:open)::details-content {
+      block-size: 0;
+    }
+  }
+
+  ::-webkit-details-marker {
+    display: none;
+  }
+
+  hr {
+    @apply border-black/10;
+  }
+
+  a, button {
+    @apply transition duration-200;
+  }
+}
+
+/* animations */
+
+@utility anim-fade {
+  --x: 0;
+  --y: 0;
+  animation: anim-fade-to var(--default-transition-duration) ease-in-out forwards;
+}
+@utility anim-fade-to-l {
+  @apply anim-fade;
+  --x: 1rem;
+}
+@utility anim-fade-to-r {
+  @apply anim-fade;
+  --x: -1rem;
+}
+@utility anim-fade-to-t {
+  @apply anim-fade;
+  --y: 1rem;
+}
+@utility anim-fade-to-b {
+  @apply anim-fade;
+  --y: -1rem;
+}
+
+@keyframes anim-fade-to {
+  from {
+    opacity: 0;
+    translate: var(--x, 0) var(--y, 0);
+  }
+}
+
+/* ctas, links */
+
+@utility link {
+  @apply text-accent underline hover:no-underline;
+}
+
+@utility input {
+  @apply border-black/10 rounded border p-[.25em] text-start;
+}
+
+
+/* layout */
+@utility container {
+  @apply mx-auto max-w-1440 px-16 md:px-32 xl:px-80;
+}
+
+@utility section {
+  @apply py-40;
+}
+
+

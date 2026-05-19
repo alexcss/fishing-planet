@@ -1,0 +1,26 @@
+<footer>
+	<div class="container mx-auto px-4">
+		{% if (menu.footer_nav.get_items|length) > 0 %}
+			<div class="relative mt-16 mb-8 p-8">
+				<div class="grid grid-cols-1 gap-6 md:grid-cols-12">
+					<!-- Menu 1 -->
+					<div class="md:col-span-3">
+						<p class="mb-4 cursor-pointer font-medium md:mb-6 md:cursor-default lg:mb-8">
+							{{ menu.footer_nav.title }}
+						</p>
+						<div class="hidden md:block">
+							{% include "partial/footer-menu.twig" with { items: footer_nav.get_items, class: "space-y-2" } %}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if footer.copyright %}
+			<div class="flex flex-col items-center gap-16 py-5 text-center">
+				{{ footer.copyright|replace({ "[year]": "now"|date("Y") }) }}
+				{% include "partial/socials.twig" %}
+			</div>
+		{% endif %}
+	</div>
+</footer>

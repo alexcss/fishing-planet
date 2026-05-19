@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html {{ site.language_attributes }}>
+	<head>
+		{% block html_head %}
+			<meta charset="{{ site.charset }}" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+			<!-- Prefetch and Preconnect -->
+			<link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+			<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+			<link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+
+			<link rel="preconnect" href="https://fonts.googleapis.com" />
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+			<link rel="preload" href="https://fonts.googleapis.com/css?family=Outfit&display=swap" as="style" />
+			<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+
+			<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+			<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+			<link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+			<link rel="dns-prefetch" href="https://connect.facebook.net" />
+
+			{{ function("wp_head") }}
+			{% block head %}
+
+			{% endblock %}
+		{% endblock %}
+	</head>
+
+	<body class="{{ body_class }} font-sans antialiased" x-data="{ isMenuOpen: false, isSearchOpen: false }">
+		{% block header %}
+			{% include "global/header.twig" %}
+		{% endblock %}
+		{% block offcanvas %}
+			{% include "global/offcanvas.twig" %}
+		{% endblock %}
+		{% block content %}
+			Sorry, no content
+		{% endblock %}
+		{% block footer %}
+			{% include "global/footer.twig" %}
+		{% endblock %}
+		{% include "global/svg-sprite.twig" %}
+		{{ function("wp_footer") }}
+	</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- Mobile Menu -->
+<div
+	x-show="isMenuOpen"
+	@click.away="isMenuOpen = false"
+	class="fixed inset-0 z-50 lg:hidden"
+	x-transition:enter="transition ease-in-out duration-300"
+	x-transition:enter-start="opacity-0"
+	x-transition:enter-end="opacity-100"
+	x-transition:leave="transition ease-in-out duration-300"
+	x-transition:leave-start="opacity-100"
+	x-transition:leave-end="opacity-0"
+>
+	<div class="fixed inset-0 bg-black/50" @click="isMenuOpen = false"></div>
+	<div
+		class="fixed inset-y-0 right-0 w-4/5 max-w-sm overflow-y-auto bg-white p-6"
+		x-transition:enter="transition ease-in-out duration-300 transform"
+		x-transition:enter-start="translate-x-full"
+		x-transition:enter-end="translate-x-0"
+		x-transition:leave="transition ease-in-out duration-300 transform"
+		x-transition:leave-start="translate-x-0"
+		x-transition:leave-end="translate-x-full"
+	>
+		<nav>
+			{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "space-y-4", offcanvas: true } %}
+		</nav>
+		<button @click="isMenuOpen = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+			</svg>
+		</button>
+	</div>
+</div>

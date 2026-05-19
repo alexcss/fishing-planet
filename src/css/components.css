@@ -1,0 +1,68 @@
+/* Buttons */
+
+@utility btn-base {
+  @apply inline-flex items-center justify-center gap-4 rounded-full px-19 py-8 h-44 border md:h-50 whitespace-nowrap;
+  @apply font-sans;
+}
+
+/* Primary Button */
+@utility btn {
+  @apply btn-base;
+  @apply bg-black text-white border-transparent;
+  @apply hover:bg-accent hover:text-white active:bg-accent active:text-white [&.active]:bg-accent [&.active]:text-white;
+  @apply disabled:bg-gray disabled:text-white disabled:border-gray disabled:opacity-70 disabled:cursor-not-allowed;
+}
+
+@utility btn-light {
+  @apply btn-base;
+  @apply bg-white text-black border-transparent;
+  @apply hover:bg-accent hover:text-white active:bg-accent active:text-white [&.active]:bg-accent [&.active]:text-white;
+}
+
+/* Secondary/Outline Button */
+@utility btn-outline {
+  @apply btn-base;
+  @apply bg-transparent text-black border-current;
+  @apply hover:text-accent active:text-accent [&.active]:text-accent;
+}
+
+@utility btn-outline-light {
+  @apply btn-base;
+  @apply bg-transparent text-white border-current;
+  @apply hover:not-disabled:text-accent active:not-disabled:text-accent [&.active]:not-disabled:text-accent;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+@utility input {
+  @apply border-black/10 rounded border p-6 text-start;
+}
+@utility btn-circle {
+  @apply border-gray flex h-32 w-32 items-center justify-center rounded-full border bg-white;
+  @apply hover:not-disabled:border-accent hover:not-disabled:text-accent;
+  @apply active:not-disabled:border-accent active:not-disabled:text-accent;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+/* Block links */
+
+@utility fp-link-image {
+  @apply block overflow-hidden *:transition-transform *:duration-400 *:ease-in-out hover:*:scale-105;
+}
+
+/* layout */
+@utility container {
+  @apply mx-auto max-w-1440 px-16 md:px-32 xl:px-60;
+}
+
+
+/* Links */
+@utility fp-link {
+  @apply text-accent hover:underline;
+}
+@utility fp-link-light {
+  @apply text-white no-underline hover:text-accent [&.active]:text-accent;
+}
+@utility fp-link-dark {
+  @apply text-black no-underline hover:text-accent [&.active]:text-accent;
+}
+

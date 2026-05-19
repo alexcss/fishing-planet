@@ -1,0 +1,52 @@
+@theme {
+  --font-sans: sans-serif;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1680px;
+
+  --spacing: 1px;
+
+  --color-accent: #008cff;
+  --color-black: #010101;
+  --color-gray: #666666;
+  --header-height: 60px;
+  --max-height-fold: calc(100svh - var(--header-height));
+
+  --text-12: 0.75rem;
+  --text-14: 0.875rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-22: 1.375rem;
+  --text-24: 1.5rem;
+  --text-26: 1.625rem;
+  --text-28: 1.75rem;
+  --text-30: 1.875rem;
+  --text-32: 2rem;
+  --text-36: 2.25rem;
+  --text-38: 2.375rem;
+  --text-40: 2.5rem;
+  --text-42: 2.625rem;
+  --text-44: 2.75rem;
+  --text-48: 3rem;
+  --text-50: 3.125rem;
+  --text-52: 3.25rem;
+  --text-54: 3.375rem;
+  --text-60: 3.75rem;
+  --text-64: 4rem;
+  --text-68: 4.25rem;
+  --text-70: 4.375rem;
+  --text-74: 4.625rem;
+  --text-80: 5rem;
+  --text-84: 5.25rem;
+  --text-88: 5.5rem;
+  --text-94: 5.875rem;
+  --text-98: 6.125rem;
+  --text-100: 6.25rem;
+  --text-120: 7.5rem;
+  --text-200: 12.5rem;
+
+  --tracking-1: 0.01em;
+}

@@ -1,0 +1,46 @@
+<header class="bg-body" data-header>
+	<div class="py-4 md:py-5">
+		<div class="container">
+			<div class="flex flex-wrap items-center">
+				<div class="flex items-center space-x-8">
+					<a class="fp-site-logo inline-flex" href="{{ site.url|e("esc_url") }}" rel="home" title="{{ site.name }}">
+						{% if site.logo %}
+							<img src="{{ site.logo }}" alt="{{ site.name }}" width="172" height="40" />
+						{% else %}
+							{{ site.name }}
+						{% endif %}
+					</a>
+					<button
+						type="button"
+						class="fp-search-button hidden items-center justify-center lg:flex"
+						@click="isSearchOpen = !isSearchOpen"
+						aria-label="{{ __("Toggle Search", "fp") }}"
+					>
+						<svg width="20" height="20">
+							<use xlink:href="{{ svg_sprite }}#icon-search"></use>
+						</svg>
+					</button>
+				</div>
+				<div class="flex flex-1 items-center justify-end">
+					<nav class="hidden lg:block">
+						{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-8" } %}
+					</nav>
+					<div class="flex items-center justify-end space-x-8 lg:hidden">
+						<button
+							class="flex h-16 w-16 flex-col justify-between"
+							type="button"
+							@click="isMenuOpen = !isMenuOpen"
+							aria-label="{{ __("Toggle Menu", "fp") }}"
+						>
+							<svg width="16" height="16" viewBox="0 0 32 24">
+								<rect width="32" height="2" fill="currentColor" />
+								<rect y="11" width="32" height="2" fill="currentColor" />
+								<rect y="22" width="32" height="2" fill="currentColor" />
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

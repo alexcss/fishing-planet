@@ -1,0 +1,8 @@
+node_modules/
+vendor/
+*.min.js
+*.min.css
+build/
+dist/
+cache/
+var/cache/

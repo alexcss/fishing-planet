@@ -1,0 +1,77 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<main class="py-12">
+		<div class="container mx-auto px-4">
+			<!-- Search Header -->
+			<div class="mx-auto mb-12 max-w-3xl text-center">
+				<h1 class="mb-4 text-3xl font-bold">{{ title }}</h1>
+
+				<!-- Search Form -->
+				<form role="search" method="get" class="search-form" action="{{ site.url }}">
+					<div class="mx-auto flex max-w-2xl items-center">
+						<label for="search" class="sr-only">{{ __("Search for:", "fp") }}</label>
+						<input
+							type="search"
+							id="search"
+							class="focus:ring-primary-500 focus:border-primary-500 block w-full min-w-0 flex-1 rounded-l-lg border border-gray-300 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:ring-2"
+							placeholder="{{ __("Search...", "fp") }}"
+							value="{{ function("get_search_query") }}"
+							name="s"
+							required
+						/>
+						<button
+							type="submit"
+							class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-r-lg border border-transparent px-6 py-3 text-base font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
+						>
+							<svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+							</svg>
+							{{ __("Search", "fp") }}
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<!-- Search Results -->
+			{% if posts %}
+				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4">
+					{% for post in posts %}
+						<div class="flex">
+							{% include "partial/content.twig" with { post: post } %}
+						</div>
+					{% endfor %}
+				</div>
+
+				<!-- Pagination -->
+				<div class="mt-16">
+					{% include "partial/pagination.twig" with { classes: "" } %}
+				</div>
+			{% else %}
+				<!-- No Results -->
+				<div class="py-16 text-center">
+					<svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.5"
+							d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+					<h3 class="mt-4 text-lg font-medium text-gray-900">{{ __("No results found", "fp") }}</h3>
+					<p class="mt-1 text-gray-500">
+						{{ __("Try adjusting your search or filter to find what you're looking for.", "fp") }}
+					</p>
+					<div class="mt-6">
+						<a
+							href="{{ site.url }}"
+							class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
+						>
+							{{ __("Back to home", "fp") }}
+						</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</main>
+{% endblock %}

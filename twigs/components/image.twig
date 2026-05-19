@@ -1,0 +1,88 @@
+{#
+# Image Macro Component
+#
+#}
+
+{% macro image(props) %}
+	{% if props.image.url or props.image.src %}
+		{% set url = props.image.url ? : props.image.src %}
+		{% set aspect = (props.image.width / props.image.height)|round(2) %}
+		{% set w = props.sizes.w ? : props.image.width %}
+		{% set h = props.sizes.h ? props.sizes.h : props.sizes.w ? (props.sizes.w / aspect)|round : props.image.height %}
+
+		{% set w2x = props.sizes.w ? props.sizes.w * 2 : props.image.width %}
+		{% set h2x = props.sizes.h ? props.sizes.h * 2 : props.sizes.w ? h * 2 : props.image.height %}
+
+		<picture class="block {{ props.wrap_class }}">
+			{% if props.sizes.mob.w and props.sizes.mob.h %}
+				<source
+					media="(max-width: 639px)"
+					srcset="{{ url|resize(props.sizes.mob.w, props.sizes.mob.h, "center")|towebp(90) }} 1x, {{ url
+						|resize(props.sizes.mob.w * 2, props.sizes.mob.h * 2, "center")
+						|towebp(90) }} 1.5x"
+					type="image/webp"
+					width="{{ props.sizes.mob.w }}"
+					height="{{ props.sizes.mob.h }}"
+				/>
+				<source
+					media="(max-width: 639px)"
+					srcset="{{ url|resize(props.sizes.mob.w, props.sizes.mob.h, "center") }} 1x, {{ url|resize(
+						props.sizes.mob.w * 2,
+						props.sizes.mob.h * 2,
+						"center"
+					) }} 1.5x"
+					width="{{ props.sizes.mob.w }}"
+					height="{{ props.sizes.mob.h }}"
+				/>
+			{% endif %}
+
+			<source srcset="{{ url|resize(w, h, "center")|towebp(90) }} 1x, {{ url|resize(w2x, h2x, "center")|towebp(90) }} 1.5x" type="image/webp" />
+			<img
+				class="block {{ props.class }}"
+				src="{{ url|resize(w, h, "center") }}"
+				srcset="{{ url|resize(w2x, h2x, "center") }} 1.5x"
+				loading="lazy"
+				alt="{{ props.image.alt|e("html_attr") ? : props.image.title|e("html_attr") }}"
+				width="{{ w }}"
+				height="{{ h }}"
+			/>
+		</picture>
+	{% endif %}
+{% endmacro %}
+
+{% macro image_native(props) %}
+	{% if props.image.url or props.image.src %}
+		{% set url = props.image.url ? : props.image.src %}
+
+		{% set url2x = url %}
+
+		{% set aspect = (props.image.width / props.image.height)|round(2) %}
+		{% set w = props.sizes.w ? : props.image.width %}
+		{% set h = props.sizes.h ? props.sizes.h : props.sizes.w ? (props.sizes.w / aspect)|round : props.image.height %}
+
+		{% set w2x = props.sizes.w ? props.sizes.w * 2 : props.image.width %}
+		{% set h2x = props.sizes.h ? props.sizes.h * 2 : props.sizes.w ? h * 2 : props.image.height %}
+
+		{% if w < 800 %}
+			{% set url = props.image.src("medium_large") ? : url %}
+			{% set url2x = props.image.src("large") ? : url %}
+		{% endif %}
+
+		{% if w < 200 %}
+			{% set url = props.image.src("medium") ? : url %}
+			{% set url2x = url %}
+		{% endif %}
+
+		<picture class="block {{ props.wrap_class }}">
+			<img
+				class="block object-cover aspect-[{{ w }}/{{ h }}] {{ props.class }}"
+				src="{{ url }}"
+				srcset="{{ url2x }} 1.5x"
+				loading="lazy"
+				alt="{{ props.image.alt|e("html_attr") ? : props.image.title|e("html_attr") }}"
+				width="{{ w }}"
+				height="{{ h }}"
+			/>
+		</picture>
+	{% endif %}
+{% endmacro %}

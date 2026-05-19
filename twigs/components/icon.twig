@@ -1,0 +1,7 @@
+{% macro icon(props) %}
+	{% if props.name %}
+		<svg class="shrink-0 {{ props.class }}" width="{{ props.w ? : 16 }}" height="{{ props.h ? : 16 }}">
+			<use href="#icon-{{ props.name }}" />
+		</svg>
+	{% endif %}
+{% endmacro %}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "fp-example",
+  "title": "Example",
+  "description": "Example Block",
+  "category": "custom-blocks",
+  "icon": "block-default",
+  "textdomain": "fp",
+  "keywords": [
+    "example",
+    "custom block"
+  ],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "view.php",
+    "postTypes": [
+      "post",
+      "page"
+    ]
+  },
+  "styles": [
+    {
+      "label": "White",
+      "name": "cs-white",
+      "isDefault": true
+    },
+    {
+      "name": "cs-black",
+      "label": "Black"
+    }
+  ],
+  "supports": {
+    "align": true,
+    "anchor": true,
+    "alignContent": true,
+    "color": {
+      "text": false,
+      "background": false,
+      "link": false
+    },
+    "alignText": true,
+    "spacing": {
+      "customSpacingSize": true,
+      "margin": [
+        "bottom"
+      ]
+    },
+    "typography": {},
+    "fullHeight": true,
+    "mode": false
+  },
+  "attributes": {
+    "backgroundColor": {
+      "type": "string",
+      "default": "purple"
+    }
+  },
+  "example": {
+    "attributes": {
+      "data": {
+        "title": "Preview Title"
+      }
+    }
+  }
+}

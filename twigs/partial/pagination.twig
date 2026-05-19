@@ -1,0 +1,73 @@
+{% if posts.pagination.pages is not empty %}
+	<div class="flex justify-center {{ classes }}">
+		<nav class="flex items-center space-x-2" aria-label="{{ __("Pagination", "fp") }}">
+			{% if posts.pagination.prev %}
+				<a
+					href="{{ posts.pagination.prev.link }}"
+					class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+					aria-label="{{ __("Previous page", "fp") }}"
+					title="{{ __("Previous page", "fp") }}"
+				>
+					<span class="sr-only">{{ __("Previous", "fp") }}</span>
+					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+					</svg>
+				</a>
+			{% else %}
+				<span class="inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-full text-gray-300">
+					<span class="sr-only">{{ __("Previous", "fp") }}</span>
+					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+					</svg>
+				</span>
+			{% endif %}
+
+			{% for page in posts.pagination.pages %}
+				{% if page.link %}
+					<a
+						href="{{ page.link }}"
+						class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition-colors hover:bg-gray-100 {{
+						page.class == "current"
+							? "bg-primary-100 text-primary-600 font-medium"
+							: ""
+						}}"
+						aria-label="{{ __("Page %s"|format(page.title), "fp") }}"
+						title="{{ __("Page %s"|format(page.title), "fp") }}"
+					>
+						{{ page.title }}
+					</a>
+				{% else %}
+					<span
+						class="bg-primary-100 text-primary-600 inline-flex h-10 w-10 items-center justify-center rounded-full font-medium"
+						aria-current="page"
+						aria-label="{{ __("Page %s"|format(page.title), "fp") }}"
+						title="{{ __("Page %s"|format(page.title), "fp") }}"
+					>
+						{{ page.title }}
+					</span>
+				{% endif %}
+			{% endfor %}
+
+			{% if posts.pagination.next %}
+				<a
+					href="{{ posts.pagination.next.link }}"
+					class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+					aria-label="{{ __("Next page", "fp") }}"
+					title="{{ __("Next page", "fp") }}"
+				>
+					<span class="sr-only">{{ __("Next", "fp") }}</span>
+					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				</a>
+			{% else %}
+				<span class="inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-full text-gray-300">
+					<span class="sr-only">{{ __("Next", "fp") }}</span>
+					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				</span>
+			{% endif %}
+		</nav>
+	</div>
+{% endif %}

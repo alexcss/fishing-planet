@@ -1,0 +1,20 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<main>
+		<div class="container">
+			<section class="space-y-20">
+				{% if (posts|length) > 0 %}
+					{% for post in posts %}
+						{% include "partial/content.twig" with { post: post } %}
+					{% endfor %}
+				{% else %}
+					<p class="uppercase">
+						{{ __("No results", "fp") }}
+					</p>
+				{% endif %}
+			</section>
+			{% include "partial/pagination.twig" with { classes: "mt-80" } %}
+		</div>
+	</main>
+{% endblock %}

@@ -1,0 +1,11 @@
+/* Admin dashboard */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import '../theme.css';
+@import '../fonts.css';
+@import '../components.css';
+@import '../typography.css';
+@import '../utilities.css';
+@import '../admin/editor.css';
+/*@import './forms.css';*/

@@ -1,0 +1,49 @@
+{% if (categories|length) > 0 %}
+	<aside class="mb-10 rounded-2xl bg-white p-6 shadow-sm lg:p-8 xl:mr-8">
+		<!-- Header with title and mobile toggle -->
+		<div class="mb-6 flex items-center justify-between">
+			<h3 class="m-0 text-xl font-semibold text-gray-900">{{ sidebar_title }}</h3>
+			<button
+				class="flex h-8 w-8 items-center justify-center text-gray-500 transition-colors hover:text-gray-700 lg:hidden"
+				type="button"
+				aria-label="{{ __("Toggle Sidebar") }}"
+				@click="$el.nextElementSibling.classList.toggle('hidden')"
+			>
+				<svg class="open h-5 w-5" :class="{ 'hidden': $el.nextElementSibling.classList.contains('hidden') }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+				<svg class="close h-5 w-5" :class="{ 'hidden': !$el.nextElementSibling.classList.contains('hidden') }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" stroke-linecap="round" />
+				</svg>
+			</button>
+		</div>
+
+		<!-- Category list -->
+		<div class="hidden lg:block" x-data="{ selected: '{{ active_category.slug }}' }">
+			<nav class="space-y-3" aria-label="{{ sidebar_title }}">
+				<a href="#" class="container">Hi</a>
+				{% for item in categories %}
+					<a
+						href="{{ item.link }}"
+						class="group flex items-center justify-between rounded-lg p-3 transition-colors {{
+						item.slug == active_category.slug
+							? "bg-gray-100 text-primary-600"
+							: "text-gray-600 hover:bg-gray-50"
+						}}"
+						:class="{ 'bg-gray-100 text-primary-600': selected === '{{ item.slug }}' }"
+						@click="selected = '{{ item.slug }}'"
+					>
+						<span class="font-medium">{{ item.name }}</span>
+						<span
+							class="group-hover:border-primary-500 group-hover:text-primary-500 ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 transition-colors"
+						>
+							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+							</svg>
+						</span>
+					</a>
+				{% endfor %}
+			</nav>
+		</div>
+	</aside>
+{% endif %}

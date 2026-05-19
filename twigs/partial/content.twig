@@ -1,0 +1,40 @@
+{% from "components/image.twig" import image %}
+
+<article class="group overflow-hidden">
+	{% if post.thumbnail %}
+		<a href="{{ post.link }}" class="block overflow-hidden">{{ image({ image: post.thumbnail, class: "block", sizes: { w: 1200, h: 720 } }) }}</a>
+	{% endif %}
+
+	<div class="py-12">
+		{% if post.categories %}
+			<div class="mb-3 flex flex-wrap gap-2">
+				{% for cat in post.categories %}
+					<a href="{{ cat.link }}" class="inline-block px-3 py-1 text-xs font-medium transition-colors" title="{{ cat.title }}">{{ cat.name }}</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<h3 class="mb-3 text-xl leading-snug font-semibold">
+			<a href="{{ post.link }}" class="hover:text-primary-600 transition-colors">{{ post.title }}</a>
+		</h3>
+
+		<div class="mb-4 line-clamp-3">
+			{{ post.preview.read_more("") }}
+		</div>
+
+		{% if post.tags %}
+			<div class="mb-4 flex flex-wrap gap-2">
+				{% for tag in post.tags %}
+					<a href="{{ tag.link }}" class="hover:text-primary-600 inline-block text-xs text-gray-500 transition-colors" title="{{ tag.title }}">
+						#{{ tag.name }}
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<div class="flex items-center justify-between py-10">
+			<a href="{{ post.link }}" class="text-primary-600 hover:text-primary-700 inline-flex items-center font-medium transition-colors">Read more</a>
+			<time datetime="{{ post.date("Y-m-d") }}T{{ post.date("H:i:s") }}" class="text-sm">{{ post.date }}</time>
+		</div>
+	</div>
+</article>

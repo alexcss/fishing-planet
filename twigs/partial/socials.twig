@@ -1,0 +1,17 @@
+{% from "components/icon.twig" import icon %}
+
+{% if global.socials %}
+	<div class="flex justify-center space-x-4">
+		{% for social in global.socials %}
+			<a
+				href="{{ social.url }}"
+				class="flex h-24 w-24 items-center justify-center"
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="{{ social.icon }}"
+			>
+				{{ icon({ name: social.icon, w: 24, h: 24 }) }}
+			</a>
+		{% endfor %}
+	</div>
+{% endif %}
