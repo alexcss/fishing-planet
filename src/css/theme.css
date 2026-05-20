@@ -1,5 +1,9 @@
 @theme {
-  --font-sans: sans-serif;
+  /* Font families */
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-sans: 'Sora', sans-serif;
+
+  /* Breakpoints */
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
@@ -8,14 +12,36 @@
 
   --spacing: 1px;
 
+  /* Colors */
   --color-accent: #008cff;
   --color-black: #010101;
-  --color-gray: #666666;
+  --color-gray: #AAACAF;
+  --color-dark-gray: #757C81;
+
+  /* Figma Design System Colors */
+  --color-primary: #F88A1E;
+  --color-primary-active: #F37900;
+  --color-white: #FFFFFF;
+
+  /* Background images - Button gradients */
+  --background-image-body: linear-gradient(180deg, #2D2E31 0.57%, #3B4046 27.76%, #585F65 56.55%, #5D656A 90.85%, #777D82 123.36%, #B4B8BA 138.38%);
+  --background-image-btn-default: linear-gradient(180deg, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 0.12) 100%),
+  linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 8.33%),
+  linear-gradient(90deg, #F88A1E 0%, #F88A1E 100%);
+  --background-image-btn-active: linear-gradient(180deg, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 0.12) 100%),
+  linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 8.33%),
+  linear-gradient(90deg, #F37900 0%, #F37900 100%);
+
   --header-height: 60px;
   --max-height-fold: calc(100svh - var(--header-height));
+  --scroll-margin-top: calc(var(--header-height) + var(--wp-admin--admin-bar--height, 0px) + 20px);
 
+  --text-10: 0.625rem;
+  --text-11: 0.6875rem;
   --text-12: 0.75rem;
+  --text-13: 0.8125rem;
   --text-14: 0.875rem;
+  --text-15: 0.9375rem;
   --text-16: 1rem;
   --text-18: 1.125rem;
   --text-20: 1.25rem;
@@ -25,6 +51,7 @@
   --text-28: 1.75rem;
   --text-30: 1.875rem;
   --text-32: 2rem;
+  --text-34: 2.125rem;
   --text-36: 2.25rem;
   --text-38: 2.375rem;
   --text-40: 2.5rem;
@@ -34,6 +61,8 @@
   --text-50: 3.125rem;
   --text-52: 3.25rem;
   --text-54: 3.375rem;
+  --text-56: 3.5rem;
+  --text-58: 3.625rem;
   --text-60: 3.75rem;
   --text-64: 4rem;
   --text-68: 4.25rem;
@@ -42,10 +71,13 @@
   --text-80: 5rem;
   --text-84: 5.25rem;
   --text-88: 5.5rem;
+  --text-90: 5.625rem;
+  --text-92: 5.75rem;
   --text-94: 5.875rem;
   --text-98: 6.125rem;
   --text-100: 6.25rem;
   --text-120: 7.5rem;
+  --text-130: 8.125rem;
   --text-200: 12.5rem;
 
   --tracking-1: 0.01em;

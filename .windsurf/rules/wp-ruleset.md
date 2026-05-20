@@ -10,7 +10,7 @@ globs:
 This is a modern WordPress theme development project using:
 - **Timber** for WordPress and Twig integration
 - **ACF (Advanced Custom Fields)** for custom field management
-- **Tailwind CSS** for utility-first styling
+- **Tailwind CSS 4** for utility-first styling
 - **Twig** templating engine (via Timber)
 - **Alpine.js** for lightweight reactive JavaScript functionality
 - **Vite** for modern build tooling and asset bundling
@@ -91,7 +91,7 @@ This is a modern WordPress theme development project using:
 - Use `twigs/components/Image.twig` for responsive image handling
 
 ### 6. Tailwind CSS Rules
-- Use Tailwind utility classes primarily
+- Use Tailwind 4 utility classes primarily
 - Use `@apply` directive for component classes
 - Use responsive prefixes consistently (mobile-first approach)
 

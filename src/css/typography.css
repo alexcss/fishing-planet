@@ -1,34 +1,51 @@
-/* typography */
+/* Typography - Figma Design System */
+
+/* Base heading styles with Bebas Neue */
 @utility h-base {
-  @apply font-normal uppercase;
+  @apply font-heading font-normal uppercase;
 }
+
+/* Heading styles */
 
 @utility h0 {
   @apply text-40 md:text-100 font-normal leading-[1.2] h-base;
 }
+
 @utility h1 {
   @apply text-30 md:text-50 font-normal leading-[1.3] h-base;
 }
+
 @utility h2 {
   @apply text-26 md:text-38 font-normal leading-[1.3] h-base tracking-1;
 }
+
 @utility h3 {
   @apply text-22 md:text-32 font-normal leading-[1.1] h-base;
 }
+
 @utility h4 {
   @apply text-18 md:text-26 font-normal leading-[1.4] h-base;
 }
+
 @utility h5 {
   @apply text-20 md:text-24 font-normal leading-[1.3] h-base;
 }
+
 @utility h6 {
   @apply text-18 md:text-24 font-normal leading-[1.4] h-base;
 }
 
+/* Button text style from Figma */
+@utility btn-text {
+  @apply font-heading text-24 font-bold leading-[0.8] uppercase;
+}
+
+/* Body text */
 @utility fp-text-body {
   @apply text-18 lg:text-20 font-normal leading-[1.5];
 }
 
+/* Gradient text */
 @utility text-gradient {
   @apply from-accent/3 to-accent bg-linear-to-br bg-clip-text text-transparent;
 }

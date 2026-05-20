@@ -63,7 +63,15 @@ class Enqueue {
 		wp_dequeue_style( 'wp-block-library-theme' );
 		wp_dequeue_style( 'wc-block-style' );
 		wp_dequeue_style( 'global-styles' );
-		wp_deregister_script( 'wp-embed' );
+
+		if ( ! is_admin() ) {
+			remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+			remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
+			wp_dequeue_script( 'wp-i18n' );
+		}
+		if ( ! is_single() ) {
+			wp_deregister_script( 'wp-embed' );
+		}
 	}
 
 	public function login_stylesheet(): void {
