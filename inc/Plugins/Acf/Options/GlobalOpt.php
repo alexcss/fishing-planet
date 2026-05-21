@@ -55,6 +55,21 @@ class GlobalOpt extends Options_Page {
 				],
 			],
 		] );
+		$this->add_tab( 'Header' );
+
+		$this->add_field( [
+			'name'       => 'header',
+			'label'      => __( 'Header', 'fp' ),
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'         => __( 'Button', 'fp' ),
+					'name'          => 'button',
+					'type'          => 'link',
+					'return_format' => 'array',
+				],
+			],
+		] );
 		$this->add_tab( 'Footer' );
 
 		$this->add_field( [

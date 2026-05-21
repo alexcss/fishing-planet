@@ -1,4 +1,6 @@
 {% macro button(props) %}
+	{% from "components/icon.twig" import icon %}
+
 	{% if props.link and props.link.title %}
 		<a href="{{ props.link.url ?: '#' }}"
 		   class="{{ props.variant == 'light'? 'fp-btn-light' : 'fp-btn' }} {{ props.class }}"
@@ -9,6 +11,7 @@
 			{{ props.props }}
 		>
 			{{ props.link.title }}
+			{{ icon({ name: props.icon }) }}
 		</a>
 	{% endif %}
 {% endmacro %}

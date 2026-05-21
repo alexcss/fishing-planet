@@ -2,7 +2,7 @@
 	<ul class="{{ class }}">
 		{% for item in items %}
 			<li class="group relative {{ item.current ? 'active' }}">
-				<a class="block px-4 py-2 transition-colors {{ item.current ? 'active' : '' }}"
+				<a class="fp-heading-text fp-link block {{ item.current ? 'active' : '' }}"
 					 href="{{ item.link }}"
 					 {% if item.target %}target="{{ item.target }}"{% endif %}
 					{% if offcanvas is defined %}@click="isMenuOpen = false"{% endif %}>

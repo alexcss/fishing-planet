@@ -1,17 +1,13 @@
 {% from "components/buttons.twig" import button %}
 {% from "components/icon.twig" import icon %}
 
-<header class="fp-header" data-header>
-	<div class="py-4 md:py-5">
+<header class="fp-header bg-linear-to-b from-black/40 to-transparent" data-header>
+	<div class="py-28 xl:py-40">
 		<div class="container">
 			<div class="flex flex-wrap items-center">
-				<div class="flex items-center space-x-8">
+				<div class="flex flex-1 items-center space-x-8">
 					<a class="fp-site-logo inline-flex" href="{{ site.url|e("esc_url") }}" rel="home" title="{{ site.name }}">
-						{% if site.logo %}
-							<img src="{{ site.logo }}" alt="{{ site.name }}" width="172" height="40" />
-						{% else %}
-							{{ site.name }}
-						{% endif %}
+						{% include "global/logo.twig" %}
 					</a>
 					<button
 						type="button"
@@ -24,12 +20,11 @@
 						</svg>
 					</button>
 				</div>
+				<nav class="hidden flex-1 items-center justify-center lg:flex">
+					{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-32 items-center" } %}
+				</nav>
 				<div class="flex flex-1 items-center justify-end">
-					<nav class="hidden lg:block">
-						{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-8" } %}
-					</nav>
-					{{ button({ link: { url: "#", title: "Button" } }) }}
-					{{ icon({ name: "steam" }) }}
+					{{ button({ link: header.button, icon: "fish", class: "max-lg:hidden" }) }}
 					<div class="flex items-center justify-end space-x-8 lg:hidden">
 						<button
 							class="flex h-16 w-16 flex-col justify-between"

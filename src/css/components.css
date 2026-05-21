@@ -1,25 +1,20 @@
 /* Buttons - Figma Design System */
 
 @utility btn-base {
-  @apply inline-flex items-center justify-center gap-8 px-32 py-20 h-64 border-0 whitespace-nowrap;
-  @apply font-heading text-24 font-bold leading-[0.8] uppercase;
+  @apply inline-flex items-center justify-center gap-8 p-20 h-64 border-0 whitespace-nowrap;
+  @apply font-heading text-24 font-normal leading-[0.8] uppercase;
 }
 
 /* Primary Button - Orange gradient from Figma */
-@utility btn {
-  @apply btn-base;
+@utility fp-btn {
+  @apply btn-base min-w-180;
   @apply bg-btn-default text-white;
   @apply hover:brightness-110 active:brightness-90;
   @apply disabled:bg-gray disabled:text-white/70 disabled:cursor-not-allowed;
 }
 
-@utility btn-active {
-  @apply btn-base;
-  @apply bg-btn-active text-white;
-}
-
 /* Legacy button styles */
-@utility btn-legacy {
+@utility fp-btn-legacy {
   @apply inline-flex items-center justify-center gap-4 rounded-full px-19 py-8 h-44 border md:h-50 whitespace-nowrap;
   @apply font-sans;
   @apply bg-black text-white border-transparent;
@@ -27,30 +22,30 @@
   @apply disabled:bg-gray disabled:text-white disabled:border-gray disabled:opacity-70 disabled:cursor-not-allowed;
 }
 
-@utility btn-light {
+@utility fp-btn-light {
   @apply btn-base;
   @apply bg-white text-black border-transparent;
   @apply hover:bg-accent hover:text-white active:bg-accent active:text-white [&.active]:bg-accent [&.active]:text-white;
 }
 
 /* Secondary/Outline Button */
-@utility btn-outline {
+@utility fp-btn-outline {
   @apply btn-base;
   @apply bg-transparent text-black border-current;
   @apply hover:text-accent active:text-accent [&.active]:text-accent;
 }
 
-@utility btn-outline-light {
+@utility fp-btn-outline-light {
   @apply btn-base;
   @apply bg-transparent text-white border-current;
   @apply hover:not-disabled:text-accent active:not-disabled:text-accent [&.active]:not-disabled:text-accent;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
 
-@utility input {
+@utility fp-input {
   @apply border-black/10 rounded border p-6 text-start;
 }
-@utility btn-circle {
+@utility fp-btn-circle {
   @apply border-gray flex h-32 w-32 items-center justify-center rounded-full border bg-white;
   @apply hover:not-disabled:border-accent hover:not-disabled:text-accent;
   @apply active:not-disabled:border-accent active:not-disabled:text-accent;
@@ -71,7 +66,7 @@
 
 /* Links */
 @utility fp-link {
-  @apply text-accent hover:underline;
+  @apply text-white hover:text-accent no-underline ;
 }
 @utility fp-link-light {
   @apply text-white no-underline hover:text-accent [&.active]:text-accent;

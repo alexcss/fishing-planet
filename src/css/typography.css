@@ -36,8 +36,12 @@
 }
 
 /* Button text style from Figma */
-@utility btn-text {
-  @apply font-heading text-24 font-bold leading-[0.8] uppercase;
+@utility fp-btn-text {
+  @apply font-heading text-24 font-normal leading-[0.8] uppercase;
+}
+
+@utility fp-heading-text {
+  @apply font-heading text-24/none font-normal uppercase;
 }
 
 /* Body text */
