@@ -35,6 +35,9 @@
   @apply text-18 md:text-24 font-normal leading-[1.4] h-base;
 }
 
+@utility fp-title-footer {
+  @apply font-sans text-14/normal font-semibold uppercase tracking-1;
+}
 /* Button text style from Figma */
 @utility fp-btn-text {
   @apply font-heading text-24 font-normal leading-[0.8] uppercase;

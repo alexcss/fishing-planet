@@ -30,9 +30,10 @@ class Support {
 	public function theme_support(): void {
 		register_nav_menus(
 			[
-				'desktop_nav' => esc_html__( 'Desktop Nav', 'fp' ),
-				'mobile_nav'  => esc_html__( 'Mobile Nav', 'fp' ),
-				'footer_nav'  => esc_html__( 'Footer Nav', 'fp' ),
+				'desktop_nav'     => esc_html__( 'Desktop Nav', 'fp' ),
+				'mobile_nav'      => esc_html__( 'Mobile Nav', 'fp' ),
+				'footer_nav'      => esc_html__( 'Footer Nav', 'fp' ),
+				'footer_policies' => esc_html__( 'Footer Policies', 'fp' ),
 			]
 		);
 		add_theme_support( 'menus' );

@@ -1,17 +1,40 @@
 {% from "components/icon.twig" import icon %}
 
 {% if global.socials %}
-	<div class="flex justify-center space-x-4">
-		{% for social in global.socials %}
-			<a
-				href="{{ social.url }}"
-				class="flex h-24 w-24 items-center justify-center"
-				target="_blank"
-				rel="noopener noreferrer"
-				aria-label="{{ social.icon }}"
-			>
-				{{ icon({ name: social.icon, w: 24, h: 24 }) }}
-			</a>
-		{% endfor %}
-	</div>
+	{% if vertical is defined and vertical %}
+		{# Vertical layout for footer #}
+		<div class="flex flex-col gap-3">
+			{% for social in global.socials %}
+				<a
+					href="{{ social.url }}"
+					class="inline-flex items-center gap-3 text-gray-300 transition-colors hover:text-white"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{{ icon({ name: social.icon, w: 20, h: 20 }) }}
+					<span class="uppercase">{{ social.icon }}</span>
+				</a>
+			{% endfor %}
+		</div>
+	{% else %}
+		{# Horizontal layout #}
+		<div class="flex items-center gap-4">
+			{% if global.socials_title %}
+				<span class="text-sm text-gray-400">{{ global.socials_title }}</span>
+			{% endif %}
+			<div class="flex gap-3">
+				{% for social in global.socials %}
+					<a
+						href="{{ social.url }}"
+						class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="{{ social.icon }}"
+					>
+						{{ icon({ name: social.icon, w: 20, h: 20 }) }}
+					</a>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
 {% endif %}

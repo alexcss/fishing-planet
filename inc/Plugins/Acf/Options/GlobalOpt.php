@@ -62,6 +62,47 @@ class GlobalOpt extends Options_Page {
 						],
 					],
 				],
+				[
+					'label'         => 'Stores title',
+					'name'          => 'stores_title',
+					'type'          => 'text',
+					'default_value' => 'Play for free',
+					'maxlength'     => 100
+				],
+				[
+					'label'        => __( 'Stores', 'fp' ),
+					'type'         => 'repeater',
+					'name'         => 'stores',
+					'button_label' => __( 'Add Store', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'   => __( 'Icon', 'fp' ),
+							'name'    => 'icon',
+							'type'    => 'select',
+							'choices' => [
+								'apple'           => 'Apple',
+								'android'         => 'Android',
+								'steam'           => 'Steam',
+								'epic'            => 'Epic Games',
+								'playstation'     => 'PlayStation',
+								'xbox'            => 'Xbox',
+								'nintento-switch' => 'Nintendo Switch',
+								'windows'         => 'Windows',
+							],
+							'wrapper' => [
+								'width' => '50',
+							],
+						],
+						[
+							'label'   => __( 'URL', 'fp' ),
+							'name'    => 'url',
+							'type'    => 'url',
+							'wrapper' => [
+								'width' => '50',
+							],
+						],
+					],
+				],
 			],
 		] );
 		$this->add_tab( 'Header' );

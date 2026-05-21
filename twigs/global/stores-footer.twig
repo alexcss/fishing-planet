@@ -1,0 +1,23 @@
+{% from "components/icon.twig" import icon %}
+
+{# Store Icons Grid #}
+{% if (global.stores|length) > 0 %}
+	<div class="mb-50 space-y-16">
+		{% if global.stores_title %}
+			<h5 class="fp-title-footer">{{ global.stores_title }}</h5>
+		{% endif %}
+		<div class="flex w-fit flex-wrap gap-5 gap-8 md:grid md:grid-cols-3">
+			{% for store in global.stores %}
+				<a
+					href="{{ store.url }}"
+					class="hover:bg-accent text-gray-stone flex size-40 items-center justify-center bg-white hover:text-white"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="{{ store.icon }}"
+				>
+					{{ icon({ name: store.icon, w: 26, h: 26 }) }}
+				</a>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

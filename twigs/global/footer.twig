@@ -1,25 +1,42 @@
-<footer>
-	<div class="container mx-auto px-4">
-		{% if (menu.footer_nav.get_items|length) > 0 %}
-			<div class="relative mt-16 mb-8 p-8">
-				<div class="grid grid-cols-1 gap-6 md:grid-cols-12">
-					<!-- Menu 1 -->
-					<div class="md:col-span-3">
-						<p class="mb-4 cursor-pointer font-medium md:mb-6 md:cursor-default lg:mb-8">
-							{{ menu.footer_nav.title }}
-						</p>
-						<div class="hidden md:block">
-							{% include "partial/footer-menu.twig" with { items: footer_nav.get_items, class: "space-y-2" } %}
-						</div>
-					</div>
-				</div>
-			</div>
-		{% endif %}
+<footer class="pt-120 pb-125 lg:pb-58">
+	<div class="container">
+		{# Store Icons Grid - Top Section #}
+		{% include "global/stores-footer.twig" %}
 
+		{# Logo #}
+		<div class="mb-12">
+			<a href="{{ site.url }}" class="inline-block">{% include "global/logo-large.twig" %}</a>
+		</div>
+
+		{# Footer Menus and Social Links #}
+		<div class="grid grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12">
+			{# Footer Navigation Menu #}
+			{% if menu.footer_nav and (menu.footer_nav.get_items|length) > 0 %}
+				<div>
+					{% include "partial/footer-menu.twig" with { items: menu.footer_nav.get_items, class: "space-y-3" } %}
+				</div>
+			{% endif %}
+
+			{# Social Media Links #}
+			<div>
+				<h3 class="mb-4 text-lg font-semibold uppercase">{{ __("Social Media:", "fp") }}</h3>
+				{% include "partial/socials.twig" with { vertical: true } %}
+			</div>
+
+			{# Footer Policies Menu #}
+			{% if menu.footer_policies and (menu.footer_policies.get_items|length) > 0 %}
+				<div>
+					{% include "partial/footer-menu.twig" with { items: menu.footer_policies.get_items, class: "space-y-3" } %}
+				</div>
+			{% endif %}
+		</div>
+
+		{# Footer Bottom - Copyright #}
 		{% if footer.copyright %}
-			<div class="flex flex-col items-center gap-16 py-5 text-center">
-				{{ footer.copyright|replace({ "[year]": "now"|date("Y") }) }}
-				{% include "partial/socials.twig" %}
+			<div class="mt-12 border-t border-gray-800 pt-8">
+				<div class="text-sm text-gray-400">
+					{{ footer.copyright|replace({ "[year]": "now"|date("Y") }) }}
+				</div>
 			</div>
 		{% endif %}
 	</div>
