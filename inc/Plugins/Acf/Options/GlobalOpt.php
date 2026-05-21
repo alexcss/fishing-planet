@@ -24,6 +24,13 @@ class GlobalOpt extends Options_Page {
 			'type'       => 'group',
 			'sub_fields' => [
 				[
+					'label'         => 'Socials title',
+					'name'          => 'socials_title',
+					'type'          => 'text',
+					'default_value' => 'Social media:',
+					'maxlength'     => 100
+				],
+				[
 					'label'        => __( 'Socials', 'fp' ),
 					'type'         => 'repeater',
 					'name'         => 'socials',
@@ -34,6 +41,8 @@ class GlobalOpt extends Options_Page {
 							'name'    => 'icon',
 							'type'    => 'select',
 							'choices' => [
+								'discord'   => 'Discord',
+								'youtube'   => 'Youtube',
 								'facebook'  => 'Facebook',
 								'twitter'   => 'Twitter',
 								'instagram' => 'Instagram',
