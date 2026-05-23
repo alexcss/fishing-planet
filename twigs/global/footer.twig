@@ -1,43 +1,42 @@
 <footer class="pt-120 pb-125 lg:pb-58">
 	<div class="container">
-		{# Store Icons Grid - Top Section #}
-		{% include "global/stores-footer.twig" %}
+		<div class="mb-50 flex flex-wrap sm:justify-between xl:mb-100">
+			{# Store Icons Grid - Top Section #}
+			{% include "global/footer/stores-footer.twig" %}
 
-		{# Logo #}
-		<div class="mb-12">
-			<a href="{{ site.url }}" class="inline-block">{% include "global/logo-large.twig" %}</a>
-		</div>
-
-		{# Footer Menus and Social Links #}
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12">
 			{# Footer Navigation Menu #}
 			{% if menu.footer_nav and (menu.footer_nav.get_items|length) > 0 %}
-				<div>
-					{% include "partial/footer-menu.twig" with { items: menu.footer_nav.get_items, class: "space-y-3" } %}
+				<div class="w-1/2 sm:w-auto">
+					{% include "partial/footer-menu.twig" with { items: menu.footer_nav.get_items, class: "space-y-16" } %}
 				</div>
 			{% endif %}
 
 			{# Social Media Links #}
-			<div>
-				<h3 class="mb-4 text-lg font-semibold uppercase">{{ __("Social Media:", "fp") }}</h3>
+			<div class="flex w-1/2 flex-col items-end sm:w-auto sm:items-start">
+				<h5 class="fp-title-footer mb-16 max-md:hidden">{{ __("Social Media:", "fp") }}</h5>
 				{% include "partial/socials.twig" with { vertical: true } %}
 			</div>
 
 			{# Footer Policies Menu #}
 			{% if menu.footer_policies and (menu.footer_policies.get_items|length) > 0 %}
-				<div>
-					{% include "partial/footer-menu.twig" with { items: menu.footer_policies.get_items, class: "space-y-3" } %}
+				<div class="mt-32 w-full sm:mt-0 sm:w-auto">
+					{% include "partial/footer-menu.twig" with {
+						items: menu.footer_policies.get_items,
+						class: "flex gap-12 flex-wrap justify-between sm:flex-col"
+					} %}
 				</div>
 			{% endif %}
 		</div>
 
+		<div class="mb-40 flex flex-col gap-32 lg:mb-16 lg:flex-row lg:items-start lg:gap-60">
+			{% include "global/footer/subscribe.twig" %}
+			<a href="{{ site.url }}" class="flex w-fit lg:order-first lg:w-3/5">{% include "global/logo-large.twig" %}</a>
+		</div>
+
 		{# Footer Bottom - Copyright #}
-		{% if footer.copyright %}
-			<div class="mt-12 border-t border-gray-800 pt-8">
-				<div class="text-sm text-gray-400">
-					{{ footer.copyright|replace({ "[year]": "now"|date("Y") }) }}
-				</div>
-			</div>
-		{% endif %}
+		<div class="flex items-start justify-between gap-80 md:items-center">
+			{% include "global/footer/copy.twig" %}
+			{% include "global/footer/made-by.twig" %}
+		</div>
 	</div>
 </footer>

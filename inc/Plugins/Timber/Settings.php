@@ -63,6 +63,7 @@ class Settings {
 		$context['footer']     = get_field( 'footer', 'options' );
 		$context['global']     = get_field( 'global', 'options' );
 		$context['header']     = get_field( 'header', 'options' );
+		$context['subscribe']  = get_field( 'subscribe', 'options' );
 
 		return $context;
 	}

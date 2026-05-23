@@ -16,7 +16,7 @@
 }
 
 @utility h2 {
-  @apply text-26 md:text-38 font-normal leading-[1.3] h-base tracking-1;
+  @apply text-26 md:text-38 font-normal leading-[1.3] h-base -tracking-1;
 }
 
 @utility h3 {
@@ -36,7 +36,7 @@
 }
 
 @utility fp-title-footer {
-  @apply font-sans text-14/normal font-semibold uppercase tracking-1;
+  @apply font-sans text-14/normal font-semibold uppercase -tracking-1;
 }
 /* Button text style from Figma */
 @utility fp-btn-text {
@@ -50,6 +50,25 @@
 /* Body text */
 @utility fp-text-body {
   @apply text-18 lg:text-20 font-normal leading-[1.5];
+}
+@utility fp-text-body-article {
+  @apply text-18/[1.35] md:text-20/[1.45] font-normal -tracking-1;
+}
+
+@utility fp-text-body-xs {
+  @apply text-14/normal md:text-16 font-normal -tracking-1;
+}
+
+@utility fp-text-body-small {
+  @apply text-16/[1.35] font-normal -tracking-1;
+}
+
+@utility fp-text-small-description {
+  @apply text-16/none font-mono font-medium uppercase;
+}
+
+@utility fp-text-link {
+  @apply text-14/normal font-sans font-normal uppercase tracking-1;
 }
 
 /* Gradient text */

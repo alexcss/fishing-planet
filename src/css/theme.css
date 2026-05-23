@@ -2,6 +2,7 @@
   /* Font families */
   --font-heading: 'Bebas Neue', sans-serif;
   --font-sans: 'Sora', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 
   /* Breakpoints */
   --breakpoint-sm: 640px;

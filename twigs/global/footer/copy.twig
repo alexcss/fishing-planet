@@ -1,0 +1,5 @@
+{% if footer.copyright %}
+	<p class="fp-text-body-xs text-white/70">
+		{{ footer.copyright|replace({ "[year]": "now"|date("Y") }) }}
+	</p>
+{% endif %}

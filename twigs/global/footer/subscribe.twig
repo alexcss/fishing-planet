@@ -1,0 +1,12 @@
+{% if subscribe.title or subscribe.form_shortcode %}
+	<div class="space-y-16 lg:py-12">
+		{% if subscribe.title %}
+			<h5 class="fp-title-footer">{{ subscribe.title }}</h5>
+		{% endif %}
+		{% if subscribe.form_shortcode %}
+			<div class="subscribe-form">
+				{{ fn("do_shortcode", subscribe.form_shortcode) }}
+			</div>
+		{% endif %}
+	</div>
+{% endif %}

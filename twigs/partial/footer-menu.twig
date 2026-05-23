@@ -2,7 +2,7 @@
 	<ul class="{{ class }}">
 		{% for item in items %}
 			<li>
-				<a class="inline-block text-gray-300 hover:text-white transition-colors"
+				<a class="fp-text-link fp-link"
 					 href="{{ item.link }}"
 					 {% if item.target %}target="{{ item.target }}"{% endif %}
 					{% if offcanvas is defined %}@click="isMenuOpen = false"{% endif %}>

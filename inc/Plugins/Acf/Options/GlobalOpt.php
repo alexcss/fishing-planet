@@ -135,5 +135,28 @@ class GlobalOpt extends Options_Page {
 				],
 			],
 		] );
+
+		$this->add_tab( 'Subscribe' );
+
+		$this->add_field( [
+			'name'       => 'subscribe',
+			'label'      => __( 'Subscribe', 'fp' ),
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'         => __( 'Title', 'fp' ),
+					'name'          => 'title',
+					'type'          => 'text',
+					'default_value' => 'Subscribe for updates',
+					'maxlength'     => 100,
+				],
+				[
+					'label'        => __( 'Form Shortcode', 'fp' ),
+					'name'         => 'form_shortcode',
+					'type'         => 'text',
+					'instructions' => __( 'Enter the form shortcode (e.g., [contact-form-7 id="123"])', 'fp' ),
+				],
+			],
+		] );
 	}
 }
