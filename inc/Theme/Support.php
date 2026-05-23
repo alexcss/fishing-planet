@@ -46,12 +46,11 @@ class Support {
 	}
 
 	public function custom_header_toolbar( $toolbars ): array {
-		$toolbars['FP Header Toolbar'][1] = [
+		$toolbars['Simple'][1] = [
 			'bold',
 			'italic',
 			'underline',
 			'link',
-			'unlink',
 		];
 
 		return $toolbars;

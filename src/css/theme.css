@@ -15,10 +15,15 @@
 
   /* Colors */
   --color-accent: #F88A1E;
+  --color-accent-active: #F37900;
+
+  --color-sand: #DBA66D;
   --color-black: #010101;
   --color-gray: #AAACAF;
   --color-dark-gray: #757C81;
   --color-gray-stone: #777E83;
+  --color-gray-gunmetal: #44494E;
+  --color-medium-gray: #50565C;
 
   /* Figma Design System Colors */
   --color-primary: #F88A1E;

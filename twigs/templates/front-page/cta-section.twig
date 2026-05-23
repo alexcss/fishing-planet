@@ -1,0 +1,70 @@
+{% from "components/icon.twig" import icon %}
+
+{% if cta %}
+<section class="relative overflow-hidden py-168 lg:min-h-screen flex items-center justify-center isolate">
+	<div class="absolute inset-0 z-0">
+		{% if cta.background_video %}
+			<video
+				class="absolute inset-0 w-full h-full object-cover"
+				autoplay
+				loop
+				muted
+				playsinline
+				{% if cta.video_poster %}poster="{{ cta.video_poster.url }}"{% endif %}
+			>
+				<source src="{{ cta.background_video.url }}" type="{{ cta.background_video.mime_type }}">
+			</video>
+		{% elseif cta.video_poster %}
+			<div class="absolute inset-0 w-full h-full bg-cover bg-center" style="background-image: url('{{ cta.video_poster.url }}');"></div>
+		{% endif %}
+	</div>
+
+	<div class="container relative z-10">
+		<div class="sm:max-w-412">
+			<div class="bg-medium-gray py-32 px-28 space-y-32 ring-12 ring-black/10 md:px-45 md:py-60">
+				<div class="space-y-24">
+					{% if cta.title %}
+						<h2 class="h3 text-white">
+							{{ cta.title }}
+						</h2>
+					{% endif %}
+
+					{% if cta.text %}
+						<div class="fp-richtext-simple fp-text-body-small text-white">
+							{{ cta.text }}
+						</div>
+					{% endif %}
+				</div>
+
+				{% if global.socials_title or global.socials %}
+					<div class="space-y-16">
+						{% if global.socials_title %}
+							<p class="fp-text-small-description text-sand">
+								{{ global.socials_title }}
+							</p>
+						{% endif %}
+
+						{% if global.socials %}
+							<div class="flex gap-12 flex-wrap">
+								{% for social in global.socials %}
+									<a
+										href="{{ social.url }}"
+										target="_blank"
+										rel="noopener noreferrer"
+										class="fp-btn-sqr"
+										aria-label="{{ social.icon }}"
+									>
+										<span>
+											{{ icon({name:social.icon, w:16, h:16}) }}
+										</span>
+									</a>
+								{% endfor %}
+							</div>
+						{% endif %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+{% endif %}

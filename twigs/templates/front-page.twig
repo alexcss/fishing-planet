@@ -10,5 +10,7 @@
 				</div>
 			</article>
 		</div>
+
+		{% include 'templates/front-page/cta-section.twig' with {cta: post.meta('cta'), global: global} %}
 	</main>
 {% endblock %}

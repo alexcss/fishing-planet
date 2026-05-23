@@ -20,7 +20,7 @@
 }
 
 @utility h3 {
-  @apply text-22 md:text-32 font-normal leading-[1.1] h-base;
+  @apply text-50/[0.9] md:text-70 font-normal h-base;
 }
 
 @utility h4 {
@@ -49,7 +49,7 @@
 
 /* Body text */
 @utility fp-text-body {
-  @apply text-18 lg:text-20 font-normal leading-[1.5];
+  @apply text-18/normal lg:text-20 font-normal ;
 }
 @utility fp-text-body-article {
   @apply text-18/[1.35] md:text-20/[1.45] font-normal -tracking-1;

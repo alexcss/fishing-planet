@@ -1,6 +1,6 @@
 /* richtext */
 
-@utility richtext {
+@utility fp-richtext {
   @apply space-y-20 md:space-y-24 fp-text-body;
 
   & :is(h1, h2, h3, h4, h5, h6) :where(strong, b, span) {
@@ -222,6 +222,18 @@
     @apply text-gray mt-0 *:!font-inherit;
   }
 
+
+  & > :first-child {
+    @apply !mt-0;
+  }
+
+  & > :last-child {
+    @apply !mb-0;
+  }
+}
+
+@utility fp-richtext-simple {
+  @apply space-y-20 md:space-y-24;
 
   & > :first-child {
     @apply !mt-0;

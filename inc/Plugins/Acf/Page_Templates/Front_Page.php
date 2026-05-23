@@ -69,5 +69,53 @@ class Front_Page extends Page_Template {
 			],
 		] );
 
+		$this->add_tab( __( 'CTA Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'CTA Section', 'fp' ),
+			'name'       => 'cta',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'      => __( 'Background Video', 'fp' ),
+					'name'       => 'background_video',
+					'type'       => 'file',
+					'mime_types' => 'mp4, webm, ogg',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Video Poster', 'fp' ),
+					'name'         => 'video_poster',
+					'type'         => 'image',
+					'mime_types'   => 'jpg, jpeg, png, webp',
+					'instructions' => __( 'Fallback image shown before video loads', 'fp' ),
+					'wrapper'      => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'      => __( 'Title', 'fp' ),
+					'name'       => 'title',
+					'type'       => 'textarea',
+					'formatting' => 'br',
+					'rows'       => 2,
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Text', 'fp' ),
+					'name'         => 'text',
+					'type'         => 'wysiwyg',
+					'toolbar'      => 'simple',
+					'media_upload' => 0,
+					'wrapper'      => [
+						'width' => '50',
+					],
+				],
+			],
+		] );
+
 	}
 }
