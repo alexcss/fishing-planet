@@ -12,27 +12,27 @@
 }
 
 @utility h1 {
-  @apply text-30 md:text-50 font-normal leading-[1.3] h-base;
+  @apply text-70/[0.8] md:text-100 h-base;
 }
 
 @utility h2 {
-  @apply text-26 md:text-38 font-normal leading-[1.3] h-base -tracking-1;
+  @apply text-60/[0.8] md:text-90 h-base tracking-1;
 }
 
 @utility h3 {
-  @apply text-50/[0.9] md:text-70 font-normal h-base;
+  @apply text-50/[0.9] md:text-70 h-base;
 }
 
 @utility h4 {
-  @apply text-18 md:text-26 font-normal leading-[1.4] h-base;
+  @apply text-40/none md:text-48 h-base;
 }
 
 @utility h5 {
-  @apply text-20 md:text-24 font-normal leading-[1.3] h-base;
+  @apply text-28/none md:text-38 h-base;
 }
 
 @utility h6 {
-  @apply text-18 md:text-24 font-normal leading-[1.4] h-base;
+  @apply text-20/none md:text-28 h-base;
 }
 
 @utility fp-title-footer {

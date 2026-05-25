@@ -23,7 +23,7 @@
 }
 
 @utility fp-btn-light {
-  @apply btn-base;
+  @apply btn-base h-54 py-14;
   @apply bg-white text-black border-transparent;
   @apply hover:bg-accent hover:text-white active:bg-accent active:text-white [&.active]:bg-accent [&.active]:text-white;
 }
@@ -90,8 +90,12 @@
 }
 
 /* layout */
+@utility fp-header {
+  @apply fixed inset-x-0 z-50;
+  top: var(--wp-admin--admin-bar--height, 0px);
+}
 @utility container {
-  @apply mx-auto max-w-1440 px-16 md:px-32 xl:px-60;
+  @apply mx-auto max-w-1440 px-18 md:px-32 xl:px-60;
 }
 
 

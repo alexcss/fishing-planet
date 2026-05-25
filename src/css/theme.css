@@ -19,10 +19,12 @@
 
   --color-sand: #DBA66D;
   --color-black: #010101;
+  --color-black-cat: #2E2F31;
   --color-gray: #AAACAF;
   --color-dark-gray: #757C81;
   --color-gray-stone: #777E83;
   --color-gray-gunmetal: #44494E;
+  --color-gray-tar: #2D2E31;
   --color-medium-gray: #50565C;
 
   /* Figma Design System Colors */
@@ -88,4 +90,6 @@
   --text-200: 12.5rem;
 
   --tracking-1: 0.01em;
+
+  --background-image-pattern-wave: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAhCAYAAACr8emlAAAFV0lEQVR4AcyXS1vTVxCHk5CEJNZQoEDkolKCVBPahStd6daFO/0I7v0E6sfwK8CSBUvYsYFFK6UtUEoLhXJpQWklF0L6vhH6CJV7RPLM5NzmzPzOnHPmzD8UuOC/qgMsl8vBaq65qgDv3bsXvnv3bv2FBTg0NFQeGRlJ9vX11eDJmmoArZoHARR+/PixmOoorwWDwZJ9dpyFqwEwCJAIgLb6+/tvAeZ3OAq32+cY9VPTmQA+f/48JACAFEGQgS1XKafhFjjl2NTUVC31U9GpAY6Pj0efPXtW8+LFiy0s90ajUXX9SF2yb4JKG9zR3d2dZyExzybtE5FKTzQBQ16AeCaTKeKdMF78JhKJ1BQKhe/3KdqkPQk3wz3IFh49ehRkfgw+dig6NkCUCiyBMWwFc/xdoe6ZKxWLxVfUt+H3SRAbdEzBn8FfNzY2JpiXo16LvhiLO9L+oQIqQJHKBBZC+duGhoZLGOiFBfgP5ThcgvdTeafjDeUPcHBjY6Ob8gZb7lieIxJBf3x0dNTSBTG8l0KCkD0flGHPFpPchgQKvI1bAMuxpZeZmllbW0uzpRHqy7Bnbr/n6P4fvaVnHE+77Zenp6ez6Pzy4cOHNZS527dvMxyo2NT2y5cvI2KBQyFAxGTOR+XQA6SyOmJZvqmpKZJIJFqZ3TsxMdEJsBh17BR/opyDj0t6xxvuxTEMBdD1+cDAwE0U3AJkAy8Q1YALKDx58iQIpjBcG2prawvIzc3NNR0dHZfg5lgsdoOYll1dXb2xubnZzMwwvA2yBUrP29+UJyEXvSv/B5VX6HpNKcUA284LJNBsS0vL9c7Ozob6+vpYKpUKhRYWFm7KKysrPfPz851wKp/Pe6gFpQJX7qq/o7EIv2+M5qmowCxjpef3L8DuHpPo8vJy/ezsbNv6+nrX0tLSVyHQI7uHBKCCFXoNE3rMVX/oIiByJsoz+xfYxc9S6lVjqBhoBgIh0C9wSBdaW1t/pUdACruy32gbJv4Tpv2xyMX/iXK9qn1j6s+05wwzi2NjY4tss0+UgPasAKHzJh2iZ9cxvCxAyotLFYBPnz6Ns80HBstPCd9sJHTnzp0C23yVeBQgUFYl0azWony+tgnKKW6zoaVqiWY1AOKssFvsm/oFt/lblNbBrXhyyyeP+icjwPnMlgToU+ZjLhifIgFfyWazBYR8H4MOnBdjs5KS4aQCnBKgsc/ALBBfDRMAQV9HwNQoarZxHgB37ER37F7n2LUK0NinfeOPpSnUNIONNHwft7nh26wsDh9wgZA8A5lJodtIUgKcQTujfY7dlAA/pPo1g5MIxRnsZVIDbKbhrY/zebn7TjN8etJjAiOTcuEmwTqlF7sx7aP5zUEAGQtsIOST40N+lY4syaoZ8SYf6J6TBMpjO2A9HogcSUHlnQcn2Bkn5Lq6uuI4wI8u7ZR37LqzwcMAVibz59u4wapqTVZpZ5PJZN39+/c9xDnAVryqwbm5ubhfcEaAHe9EbdvvOBxXHjA55yeTyTrqmZmZmTR6a2Gzb+159mkGykcBVEgPTrKqGRqej9pcLndteHjYtD/d09OTxJgyhfb29nw6nS6S9Jbwjme6ZNt+5AsPHjwoKY+eNO1e9VAXmHrV7/eLuuh+R8cB+E4yEFij4uoWAatC59ZNTk4KNoMnvFBpSl8kv4ebqFvaTrOIW4ODg1nl0WO8NZMSjDmmetXP0F7SyN6ew1sq3M2qTfl3t8JZfqf43eJBT9FhqLK0bb/jdFfIec73cVCfeisD+/9OCnB3vh70o8lLZEJrLmm65qeAMdXtVVbDtu13XDnlned8x5U7kP8FAAD//yhQiuAAAAAGSURBVAMAcIFpEeMlSlkAAAAASUVORK5CYII=')
 }
