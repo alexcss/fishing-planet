@@ -39,6 +39,7 @@ class Settings {
 	public function custom_class_map( $classmap ) {
 		$custom_classmap = [
 //			'post'       => \FP\Plugins\Timber\BlogPost::class,
+			'dlc'        => \FP\Plugins\Timber\DLC::class,
 		];
 
 		return array_merge( $classmap, $custom_classmap );

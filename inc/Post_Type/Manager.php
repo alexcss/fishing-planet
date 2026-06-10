@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 class Manager {
 
 	private array $post_types = [
-//		Service::class,
+		DLC::class,
 	];
 
 

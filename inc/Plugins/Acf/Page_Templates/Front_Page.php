@@ -195,5 +195,167 @@ class Front_Page extends Page_Template {
 			],
 		] );
 
+		$this->add_tab( __( 'Latest DLC Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Latest DLC Section', 'fp' ),
+			'name'       => 'latest_dlc',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 2,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'     => __( 'Subtitle', 'fp' ),
+					'name'      => 'subtitle',
+					'type'      => 'textarea',
+					'maxlength' => 400,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'        => __( 'Posts', 'fp' ),
+					'name'         => 'posts',
+					'type'         => 'repeater',
+					'min'          => 0,
+					'max'          => 6,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Post', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'        => __( 'Image', 'fp' ),
+							'name'         => 'image',
+							'type'         => 'image',
+							'mime_types'   => 'jpg, jpeg, png, webp',
+							'instructions' => __( 'Optional. If empty, post thumbnail will be used', 'fp' ),
+							'wrapper'      => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'         => __( 'Post', 'fp' ),
+							'name'          => 'post',
+							'type'          => 'relationship',
+							'elements'      => [ 'featured_image' ],
+							'post_type'     => [ 'post', 'dlc' ],
+							'filters'       => [ 'search', 'post_type' ],
+							'max'           => 1,
+							'return_format' => 'id',
+							'wrapper'       => [
+								'width' => '70',
+							],
+						],
+					],
+				],
+				[
+					'label' => __( 'Button', 'fp' ),
+					'name'  => 'button',
+					'type'  => 'link',
+				],
+			],
+		] );
+
+		$this->add_tab( __( 'Latest Posts Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Latest Posts Section', 'fp' ),
+			'name'       => 'latest_posts',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 2,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'     => __( 'Subtitle', 'fp' ),
+					'name'      => 'subtitle',
+					'type'      => 'textarea',
+					'maxlength' => 400,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'        => __( 'Posts', 'fp' ),
+					'name'         => 'posts',
+					'type'         => 'repeater',
+					'min'          => 0,
+					'max'          => 6,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Post', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'        => __( 'Image', 'fp' ),
+							'name'         => 'image',
+							'type'         => 'image',
+							'mime_types'   => 'jpg, jpeg, png, webp',
+							'instructions' => __( 'Optional. If empty, post thumbnail will be used', 'fp' ),
+							'wrapper'      => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'         => __( 'Post', 'fp' ),
+							'name'          => 'post',
+							'type'          => 'relationship',
+							'elements'      => [ 'featured_image' ],
+							'post_type'     => [ 'post', 'dlc' ],
+							'filters'       => [ 'search', 'post_type' ],
+							'max'           => 1,
+							'return_format' => 'id',
+							'wrapper'       => [
+								'width' => '70',
+							],
+						],
+					],
+				],
+				[
+					'label' => __( 'Button', 'fp' ),
+					'name'  => 'button',
+					'type'  => 'link',
+				],
+			],
+		] );
+
 	}
 }

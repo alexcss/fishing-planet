@@ -1,0 +1,33 @@
+{#
+ # DLC Card Component
+ # Card for displaying DLC custom post type
+ #}
+
+{% from "components/image.twig" import image %}
+
+{% if post %}
+	{% set card_image = custom_image ? : post.thumbnail %}
+	{% set dlc_category = post.get_primary_category %}
+
+	<article class="group relative space-y-24">
+		{% if card_image %}
+			<a href="{{ post.link }}" class="relative block overflow-hidden">
+				{{ image({ image: card_image, class: "w-full transition-transform duration-500 group-hover:scale-102", sizes: { w: 414, h: 434 } }) }}
+			</a>
+		{% endif %}
+
+		<div class="space-y-20">
+			{% if dlc_category %}
+				<div class="fp-badge">
+					{{ dlc_category.name }}
+				</div>
+			{% endif %}
+			<h3 class="h4"><a href="{{ post.link }}" class="fp-link fp-stretched-link">{{ post.title }}</a></h3>
+			{% if post.excerpt %}
+				<p class="fp-text-body-small">
+					{{ post.excerpt }}
+				</p>
+			{% endif %}
+		</div>
+	</article>
+{% endif %}

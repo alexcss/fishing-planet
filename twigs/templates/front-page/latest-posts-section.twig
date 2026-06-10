@@ -1,0 +1,67 @@
+{#
+# Latest Posts Section
+# Section displaying latest posts and DLC items
+#}
+
+{% from "components/buttons.twig" import button %}
+
+{% if data and data.posts %}
+	<section class="py-80 xl:py-130 {{ show_gradient ? "from-gray-frost to-gray-frost/0 bg-linear-to-b" }}">
+		<div class="container">
+			<div class="mb-40 flex flex-col gap-24 md:mb-60 lg:flex-row lg:items-start">
+				{% if data.subtitle %}
+					<p class="fp-text-small-description text-sand lg:order-1 lg:max-w-160">
+						{{ data.subtitle }}
+					</p>
+				{% endif %}
+
+				{% if data.title %}
+					<h2 class="h2">{{ data.title }}</h2>
+				{% endif %}
+
+				{% if data.tagline %}
+					<div class="fp-block-corners w-full text-white max-lg:hidden lg:order-last lg:ml-auto lg:w-fit lg:px-60">
+						<p class="h5 text-center">
+							{{ data.tagline }}
+						</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="lg:border-t lg:border-b lg:border-white/15">
+			<div class="container">
+				<div class="grid grid-cols-1 gap-40 md:grid-cols-3 md:gap-x-20 lg:gap-40">
+					{% for item in data.posts %}
+						{% if item.post %}
+							{% set post_obj = get_post(item.post|first) %}
+							{% if post_obj %}
+								<div class="relative md:col-span-2 lg:col-span-1 lg:py-30">
+									{% include "components/card-" ~ post_obj.post_type ~ ".twig" with { post: post_obj, custom_image: item.image } %}
+									{% if not loop.first %}
+										<div class="absolute inset-y-0 -left-20 z-0 w-1 bg-white/15 max-lg:hidden"></div>
+									{% endif %}
+								</div>
+							{% endif %}
+						{% endif %}
+						{% if loop.first %}
+							{% if data.tagline %}
+								<div class="relative -mt-16 md:row-span-3 md:mt-0 lg:hidden">
+									<div class="fp-block-corners text-white md:sticky md:top-120 lg:max-w-315">
+										<p class="h5 text-center">
+											{{ data.tagline }}
+										</p>
+									</div>
+								</div>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% if data.button.url %}
+			<div class="container mt-48 md:mt-60">
+				{{ button({ link: data.button, class: "md:mx-auto flex w-fit" }) }}
+			</div>
+		{% endif %}
+	</section>
+{% endif %}

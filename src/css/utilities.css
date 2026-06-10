@@ -36,3 +36,7 @@
 @utility fp-wp-top {
   top: var(--wp-admin--admin-bar--height, 0px);
 }
+
+@utility fp-stretched-link {
+  @apply after:absolute after:inset-0 after:z-10;
+}

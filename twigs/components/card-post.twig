@@ -1,0 +1,38 @@
+{#
+ # Post Card Component
+ # Card for displaying standard blog post with date
+ #}
+
+{% from "components/image.twig" import image %}
+
+{% if post %}
+	{% set card_image = custom_image ? : post.thumbnail %}
+	{% set category = post.category %}
+
+	<article class="group relative space-y-24">
+		{% if card_image %}
+			<a href="{{ post.link }}" class="relative block overflow-hidden">
+				{{ image({ image: card_image, class: "w-full transition-transform duration-500 group-hover:scale-102", sizes: { w: 414, h: 434 } }) }}
+			</a>
+		{% endif %}
+
+		<div class="space-y-20">
+			<div class="flex items-center justify-between gap-2">
+				{% if category %}
+					<div class="fp-badge">
+						{{ category.name }}
+					</div>
+				{% endif %}
+				{% if post.date %}
+					<time datetime="{{ post.date("c") }}" class="fp-text-caption text-white/70">{{ post.date("j.m.Y") }}</time>
+				{% endif %}
+			</div>
+			<h3 class="h4"><a href="{{ post.link }}" class="fp-link fp-stretched-link">{{ post.title }}</a></h3>
+			{% if post.excerpt %}
+				<p class="fp-text-body-small">
+					{{ post.excerpt }}
+				</p>
+			{% endif %}
+		</div>
+	</article>
+{% endif %}

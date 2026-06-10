@@ -28,7 +28,7 @@
 }
 
 @utility h5 {
-  @apply text-28/none md:text-38 h-base;
+  @apply text-28/[0.9] md:text-38 h-base;
 }
 
 @utility h6 {
@@ -69,6 +69,14 @@
 
 @utility fp-text-link {
   @apply text-14/normal font-sans font-normal uppercase tracking-1;
+}
+
+@utility fp-text-caption {
+  @apply text-16/none font-mono font-medium;
+}
+
+@utility fp-badge {
+  @apply text-20/[0.6] font-heading md:text-24 font-bold p-12 bg-black border-white/15 border text-sand w-fit;
 }
 
 /* Gradient text */
