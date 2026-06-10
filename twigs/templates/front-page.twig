@@ -3,6 +3,7 @@
 {% block content %}
 	<main>
 		{% include "templates/front-page/intro-section.twig" with { data: intro } %}
+		{% include "templates/front-page/last-update-section.twig" with { data: last_update } %}
 		{% include "templates/front-page/cta-section.twig" with { cta: post.meta("cta"), global: global } %}
 	</main>
 {% endblock %}

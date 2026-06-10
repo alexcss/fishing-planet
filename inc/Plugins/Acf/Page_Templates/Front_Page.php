@@ -138,5 +138,62 @@ class Front_Page extends Page_Template {
 			],
 		] );
 
+		$this->add_tab( __( 'Last Update Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Last Update Section', 'fp' ),
+			'name'       => 'last_update',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Suptitle', 'fp' ),
+					'name'      => 'suptitle',
+					'type'      => 'text',
+					'maxlength' => 100,
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'required'  => 1,
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Text', 'fp' ),
+					'name'         => 'text',
+					'type'         => 'wysiwyg',
+					'toolbar'      => 'simple',
+					'media_upload' => 0,
+					'wrapper'      => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'      => __( 'Image', 'fp' ),
+					'name'       => 'image',
+					'type'       => 'image',
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'   => __( 'Button', 'fp' ),
+					'name'    => 'button',
+					'type'    => 'link',
+					'wrapper' => [
+						'width' => '50',
+					],
+				],
+			],
+		] );
+
 	}
 }

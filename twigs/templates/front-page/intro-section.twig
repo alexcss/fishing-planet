@@ -6,7 +6,7 @@
 {% from "components/icon.twig" import icon %}
 
 {% if data|length > 1 %}
-	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 mb-80 md:mb-0" x-data="introSlider()">
+	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 pb-80 md:pb-0 bg-gray-matte" x-data="introSlider()">
 		<div class="swiper" x-ref="swiperContainer">
 			<div class="swiper-wrapper">
 				{% for slide in data %}

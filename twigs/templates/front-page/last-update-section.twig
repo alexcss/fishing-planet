@@ -1,0 +1,49 @@
+{#
+ # Last Update Section
+ # Section with suptitle, title, text and CTA button
+ #}
+
+{% from "components/buttons.twig" import button %}
+{% from "components/image.twig" import image %}
+
+{% if data %}
+	<div class="bg-gray-frost pb-80 md:pb-0">
+		<section class="bg-pattern-wave relative overflow-hidden pt-40 md:py-80 xl:py-150">
+			<div class="relative z-10 container">
+				<div class="grid grid-cols-1 gap-40 md:gap-60 lg:grid-cols-24 lg:gap-20 xl:gap-40">
+					<div class="flex flex-col items-start justify-center gap-24 md:gap-32 lg:col-span-8">
+						{% if data.suptitle %}
+							<p class="fp-text-small-description text-sand">
+								{{ data.suptitle }}
+							</p>
+						{% endif %}
+
+						{% if data.title %}
+							<h2 class="h2">{{ data.title|nl2br }}</h2>
+						{% endif %}
+
+						{% if data.text %}
+							<div class="fp-text-body-small fp-richtext">
+								{{ data.text }}
+							</div>
+						{% endif %}
+
+						{{ button({ link: data.button, class: "mt-16 md:mt-18" }) }}
+					</div>
+
+					{% if data.image %}
+						<div class="lg:col-span-15 lg:col-start-10">
+							<div class="md:fp-block-corners">
+								<div>
+									{{ image({ image: data.image, class: "w-full", sizes: { w: 776, h: 605 } }) }}
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="from-gray-frost to-gray-frost/0 absolute inset-x-0 bottom-0 z-0 h-228 bg-linear-to-t"></div>
+			<div class="from-gray-matte to-gray-matte/0 absolute inset-x-0 top-0 z-0 h-228 bg-linear-to-b md:hidden"></div>
+		</section>
+	</div>
+{% endif %}
