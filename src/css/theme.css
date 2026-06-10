@@ -18,13 +18,14 @@
   --color-accent-active: #F37900;
 
   --color-sand: #DBA66D;
-  --color-black: #010101;
+  --color-black-true: #010101;
   --color-black-cat: #2E2F31;
   --color-gray: #AAACAF;
   --color-dark-gray: #757C81;
   --color-gray-stone: #777E83;
   --color-gray-gunmetal: #44494E;
   --color-gray-tar: #2D2E31;
+  --color-black: #2D2E31;
   --color-medium-gray: #50565C;
 
   /* Figma Design System Colors */

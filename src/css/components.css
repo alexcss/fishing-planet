@@ -103,6 +103,21 @@
 @utility fp-link {
   @apply text-white hover:text-accent no-underline ;
 }
+@utility fp-link-underline-group {
+  &:hover, &:focus {
+    --underline-width: 100%;
+  }
+}
+@utility fp-link-underline {
+  @apply inline-flex text-current hover:text-current no-underline transition-[background] duration-200 ease-in-out;
+
+  background: linear-gradient(currentColor 0 0) bottom left/
+    var(--underline-width, 0%) 1px no-repeat;
+
+  &:hover, &:focus {
+    --underline-width: 100%;
+  }
+}
 @utility fp-link-light {
   @apply text-white no-underline hover:text-accent [&.active]:text-accent;
 }
