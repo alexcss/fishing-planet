@@ -7,6 +7,7 @@
 
 $context = Timber::context();
 $data    = [
+	'intro' => get_field( "intro_slider" ),
 ];
 
 $context = array_merge( $context, $data );

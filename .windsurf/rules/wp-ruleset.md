@@ -94,6 +94,7 @@ This is a modern WordPress theme development project using:
 - Use Tailwind 4 utility classes primarily
 - Use `@apply` directive for component classes
 - Use responsive prefixes consistently (mobile-first approach)
+- Never use custom css classes in css, only Tailwind 4 in html layout
 
 ### 7. Alpine.js Integration Rules
 - Use Alpine.js for interactive components (modals, dropdowns, tabs, etc.)

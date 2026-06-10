@@ -17,6 +17,9 @@
 @variant headings (& :is(h1, h2, h3, h4, h5, h6));
 
 @layer base {
+  [x-cloak] {
+    @apply !hidden;
+  }
 
   @supports (interpolate-size: allow-keywords) {
     :root {

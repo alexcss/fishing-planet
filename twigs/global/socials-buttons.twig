@@ -3,7 +3,7 @@
 {% if global.socials %}
 	<div class="flex flex-wrap gap-12 md:gap-16">
 		{% for social in global.socials %}
-			<a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="fp-btn-sqr" aria-label="{{ social.icon }}">
+			<a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="fp-btn-corners" aria-label="{{ social.icon }}">
 				<span>{{ icon({ name: social.icon, w: 16, h: 16 }) }}</span>
 			</a>
 		{% endfor %}

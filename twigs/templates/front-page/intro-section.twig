@@ -1,0 +1,70 @@
+{#
+ # Intro Slider Component
+ # Full-screen slider with MP4 background videos and navigation controls
+ #}
+
+{% from "components/icon.twig" import icon %}
+
+{% if data|length > 1 %}
+	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 mb-80 md:mb-0" x-data="introSlider()">
+		<div class="swiper" x-ref="swiperContainer">
+			<div class="swiper-wrapper">
+				{% for slide in data %}
+					<div class="swiper-slide" data-slide>
+						<div class="relative max-md:aspect-[354/480] md:h-screen">
+
+							<div class="absolute inset-0 z-0">
+								<video
+									class="absolute left-0 top-0 w-full h-full z-0 object-cover"
+									{% if slide.poster %}poster="{{ slide.poster.url }}"{% endif %}
+									muted
+									loop
+									playsinline
+									preload="metadata"
+								>
+									{% if slide.video %}
+										<source src="{{ slide.video.url }}" type="{{ slide.video.mime_type }}">
+									{% endif %}
+								</video>
+								<div class="pointer-events-none absolute inset-0 bg-black-true/20 z-10"></div>
+								<div class="pointer-events-none max-md:hidden absolute inset-0 w-344 border-l border-r border-white/15 mx-auto z-10"></div>
+							</div>
+
+							<div class="container relative z-10 flex h-full items-end py-20 md:py-32 xl:py-60">
+								<div class="w-200 md:w-250 fp-block-corners border-white/10 opacity-0 transition duration-700 ease-out [.swiper-slide-active_&]:translate-y-0 [.swiper-slide-active_&]:opacity-100 [.swiper-slide_&]:translate-y-8">
+									<p class="h5 text-center">
+										{{ slide.title }}
+									</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+			<div class="mt-18 md:mt-0 md:absolute md:bottom-32 xl:bottom-45 md:inset-x-0 md:mx-auto z-20 pointer-events-none">
+				<div class="container max-md:px-0 flex justify-between md:justify-end items-center gap-12 md:gap-24">
+					<button
+						x-ref="prevBtn"
+						class="fp-btn-sqr pointer-events-auto"
+						aria-label="Previous slide"
+					>
+						{{ icon({ name: 'arrow-l', w: 24, h: 24 }) }}
+					</button>
+					<div class="text-cente font-heading text-18 text-dark-gray tracking-3 min-w-30">
+						<span x-ref="currentSlide" class="text-accent">1</span>/{{ data|length }}
+					</div>
+					<button
+						x-ref="nextBtn"
+						class="fp-btn-sqr pointer-events-auto"
+						aria-label="Next slide"
+					>
+						{{ icon({ name: 'arrow-r', w: 24, h: 24 }) }}
+					</button>
+				</div>
+			</div>
+
+	</section>
+{% endif %}

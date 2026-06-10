@@ -42,27 +42,48 @@ class Front_Page extends Page_Template {
 	}
 
 	public function init_fields(): void {
-		$this->add_tab( __( 'Intro Section', 'fp' ) );
+		$this->add_tab( __( 'Intro Slider', 'fp' ) );
 		$this->add_field( [
-			'label'      => __( 'Intro Section', 'fp' ),
-			'name'       => 'intro',
-			'type'       => 'group',
-			'sub_fields' => [
+			'label'        => __( 'Intro Slider Items', 'fp' ),
+			'name'         => 'intro_slider',
+			'type'         => 'repeater',
+			'instructions' => __( 'Add slider items with title and YouTube background video', 'fp' ),
+			'min'          => 1,
+			'max'          => 10,
+			'layout'       => 'block',
+			'button_label' => __( 'Add Slide', 'fp' ),
+			'sub_fields'   => [
 				[
-					'label'      => __( 'Text', 'fp' ),
-					'name'       => 'Text',
-					'type'       => 'textarea',
-					'formatting' => 'br',
-					'wrapper'    => [
+					'label'        => __( 'Title', 'fp' ),
+					'name'         => 'title',
+					'type'         => 'textarea',
+					'required'     => 1,
+					'maxlength'    => 400,
+					'rows'         => 4,
+					'new_lines'    => 'br',
+					'instructions' => __( 'Maximum 400 characters', 'fp' ),
+					'wrapper'      => [
+						'width' => '100',
+					],
+				],
+				[
+					'label'        => __( 'Background Video', 'fp' ),
+					'name'         => 'video',
+					'type'         => 'file',
+					'required'     => 1,
+					'mime_types'   => 'mp4, webm',
+					'instructions' => __( 'Upload MP4 or WebM video file', 'fp' ),
+					'wrapper'      => [
 						'width' => '50',
 					],
 				],
 				[
-					'label'      => __( 'Image', 'fp' ),
-					'name'       => 'image',
-					'type'       => 'image',
-					'mime_types' => 'jpg, jpeg, png',
-					'wrapper'    => [
+					'label'        => __( 'Poster Image', 'fp' ),
+					'name'         => 'poster',
+					'type'         => 'image',
+					'mime_types'   => 'jpg, jpeg, png, webp',
+					'instructions' => __( 'Fallback image shown before video loads', 'fp' ),
+					'wrapper'      => [
 						'width' => '50',
 					],
 				],

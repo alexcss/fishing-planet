@@ -51,8 +51,14 @@
   @apply active:not-disabled:border-accent active:not-disabled:text-accent;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
-
 @utility fp-btn-sqr {
+  @apply size-50 flex items-center justify-center bg-gray-gunmetal border border-white/15 p-6 text-white relative;
+  @apply hover:not-disabled:border-accent hover:not-disabled:text-white hover:not-disabled:bg-accent;
+  @apply active:not-disabled:border-accent-active active:not-disabled:text-white active:not-disabled:bg-accent-active;
+  @apply disabled:cursor-not-allowed disabled:text-white/20;
+}
+
+@utility fp-btn-corners {
   @apply size-40 flex items-center justify-center bg-gray-gunmetal border border-white/15 p-6 text-white relative;
   @apply hover:not-disabled:border-accent hover:not-disabled:text-white hover:not-disabled:bg-accent;
   @apply active:not-disabled:border-accent-active active:not-disabled:text-white active:not-disabled:bg-accent-active;
@@ -96,6 +102,34 @@
 }
 @utility container {
   @apply mx-auto max-w-1440 px-18 md:px-32 xl:px-60;
+}
+
+@utility fp-block-corners {
+  --corner-size: 12px;
+
+  @apply relative p-16 border border-transparent;
+
+  &:before, &:after {
+    @apply content-[''] absolute -inset-y-1 -left-1 border-t border-b w-(--corner-size) border-sand;
+  }
+
+  &:after {
+    @apply -right-1 left-auto
+  }
+
+  & > :first-child {
+    &:before, &:after {
+      @apply content-[''] absolute -inset-x-1 -top-1 border-l border-r h-(--corner-size) border-sand;
+    }
+
+    &:after {
+      @apply -bottom-1 top-auto
+    }
+  }
+
+  @media screen and (min-width: --theme(--breakpoint-md)) {
+    --corner-size: 16px;
+  }
 }
 
 

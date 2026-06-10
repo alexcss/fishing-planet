@@ -1,6 +1,7 @@
 {% from "components/buttons.twig" import button %}
 <!-- Mobile Menu -->
 <div
+	x-cloak
 	x-show="isMenuOpen"
 	@click.away="isMenuOpen = false"
 	class="fp-wp-top fixed inset-0 z-40 lg:hidden"

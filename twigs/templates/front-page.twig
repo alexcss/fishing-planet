@@ -2,15 +2,7 @@
 
 {% block content %}
 	<main>
-		<div class="container">
-			<article>
-				<h1>{{ post.title }}</h1>
-				<div>
-					{{ post.content }}
-				</div>
-			</article>
-		</div>
-
-		{% include 'templates/front-page/cta-section.twig' with {cta: post.meta('cta'), global: global} %}
+		{% include "templates/front-page/intro-section.twig" with { data: intro } %}
+		{% include "templates/front-page/cta-section.twig" with { cta: post.meta("cta"), global: global } %}
 	</main>
 {% endblock %}
