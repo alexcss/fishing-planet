@@ -5,6 +5,7 @@
 		{% include "templates/front-page/intro-section.twig" with { data: intro } %}
 		{% include "templates/front-page/last-update-section.twig" with { data: last_update } %}
 		{% include "templates/front-page/latest-posts-section.twig" with { data: latest_dlc, show_gradient: true } %}
+		{% include "templates/front-page/about-section.twig" with { data: about } %}
 		{% include "templates/front-page/latest-posts-section.twig" with { data: latest_posts } %}
 		{% include "templates/front-page/cta-section.twig" with { cta: post.meta("cta"), global: global } %}
 	</main>

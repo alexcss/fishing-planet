@@ -11,6 +11,7 @@ $data    = [
 	'last_update'  => get_field( "last_update" ),
 	'latest_dlc'   => get_field( "latest_dlc" ),
 	'latest_posts' => get_field( "latest_posts" ),
+	'about'        => get_field( "about" ),
 ];
 
 $context = array_merge( $context, $data );

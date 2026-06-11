@@ -1,0 +1,51 @@
+{#
+# About Section
+# Hero section with background image, title, feature list and CTA
+#}
+
+{% from "components/buttons.twig" import button %}
+{% from "components/icon.twig" import icon %}
+{% from "components/image.twig" import image %}
+
+{% if data and data.bg_image_desktop %}
+	<section class="relative overflow-hidden">
+		<div class="absolute inset-0 z-0">
+			{% if data.bg_image_mobile %}
+				<picture>
+					<source media="(min-width: 768px)" srcset="{{ data.bg_image_desktop.url }}" />
+					{{ image({ image: data.bg_image_mobile, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1920, h: 1080 } }) }}
+				</picture>
+			{% else %}
+				{{ image({ image: data.bg_image_desktop, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1920, h: 1080 } }) }}
+			{% endif %}
+			<div class="from-black-true/0 to-black-true/80 absolute inset-0 bg-linear-to-b"></div>
+		</div>
+
+		<div class="relative z-10 container flex h-lvh flex-col items-start justify-between gap-60 py-60 md:py-80 lg:flex-row lg:items-center">
+			<div class="max-w-532 space-y-32 md:space-y-60">
+				{% if data.title %}
+					<h2 class="h2">{{ data.title }}</h2>
+				{% endif %}
+				{{ button({ link: data.button }) }}
+			</div>
+			{% if data.list %}
+				<ul class="space-y-6 md:space-y-16 lg:self-end">
+					{% for item in data.list %}
+						<li class="flex items-center gap-10 md:gap-16">
+							{% if item.icon %}
+								<div class="fp-btn-corners bg-black-true/10 shrink-0">
+									<span>{{ icon({ name: item.icon, w: 24, h: 24, class: "text-white" }) }}</span>
+								</div>
+							{% endif %}
+							{% if item.text %}
+								<p class="fp-captital-title">
+									{{ item.text }}
+								</p>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+	</section>
+{% endif %}

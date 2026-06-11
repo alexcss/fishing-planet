@@ -90,54 +90,6 @@ class Front_Page extends Page_Template {
 			],
 		] );
 
-		$this->add_tab( __( 'CTA Section', 'fp' ) );
-		$this->add_field( [
-			'label'      => __( 'CTA Section', 'fp' ),
-			'name'       => 'cta',
-			'type'       => 'group',
-			'sub_fields' => [
-				[
-					'label'      => __( 'Background Video', 'fp' ),
-					'name'       => 'background_video',
-					'type'       => 'file',
-					'mime_types' => 'mp4, webm, ogg',
-					'wrapper'    => [
-						'width' => '50',
-					],
-				],
-				[
-					'label'        => __( 'Video Poster', 'fp' ),
-					'name'         => 'video_poster',
-					'type'         => 'image',
-					'mime_types'   => 'jpg, jpeg, png, webp',
-					'instructions' => __( 'Fallback image shown before video loads', 'fp' ),
-					'wrapper'      => [
-						'width' => '50',
-					],
-				],
-				[
-					'label'      => __( 'Title', 'fp' ),
-					'name'       => 'title',
-					'type'       => 'textarea',
-					'formatting' => 'br',
-					'rows'       => 2,
-					'wrapper'    => [
-						'width' => '50',
-					],
-				],
-				[
-					'label'        => __( 'Text', 'fp' ),
-					'name'         => 'text',
-					'type'         => 'wysiwyg',
-					'toolbar'      => 'simple',
-					'media_upload' => 0,
-					'wrapper'      => [
-						'width' => '50',
-					],
-				],
-			],
-		] );
-
 		$this->add_tab( __( 'Last Update Section', 'fp' ) );
 		$this->add_field( [
 			'label'      => __( 'Last Update Section', 'fp' ),
@@ -276,6 +228,87 @@ class Front_Page extends Page_Template {
 			],
 		] );
 
+		$this->add_tab( __( 'About Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'About Section', 'fp' ),
+			'name'       => 'about',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'      => __( 'Background Image Desktop', 'fp' ),
+					'name'       => 'bg_image_desktop',
+					'type'       => 'image',
+					'required'   => 1,
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'      => __( 'Background Image Mobile', 'fp' ),
+					'name'       => 'bg_image_mobile',
+					'type'       => 'image',
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 300,
+					'rows'      => 3,
+					'new_lines' => 'br',
+				],
+				[
+					'label'        => __( 'List', 'fp' ),
+					'name'         => 'list',
+					'type'         => 'repeater',
+					'min'          => 0,
+					'max'          => 10,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Item', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'   => __( 'Icon', 'fp' ),
+							'name'    => 'icon',
+							'type'    => 'select',
+							'choices' => [
+								'fish'     => __( 'Fish', 'fp' ),
+								'boat'     => __( 'Boat', 'fp' ),
+								'hook'     => __( 'Hook', 'fp' ),
+								'float'    => __( 'Float', 'fp' ),
+								'spinning' => __( 'Spinning', 'fp' ),
+								'magnet'   => __( 'Magnet', 'fp' ),
+								'medal'    => __( 'Medal', 'fp' ),
+								'location' => __( 'Location', 'fp' ),
+								'check'    => __( 'Check', 'fp' ),
+								'cross'    => __( 'Cross', 'fp' ),
+							],
+							'wrapper' => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'     => __( 'Text', 'fp' ),
+							'name'      => 'text',
+							'type'      => 'text',
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '70',
+							],
+						],
+					],
+				],
+				[
+					'label' => __( 'Button', 'fp' ),
+					'name'  => 'button',
+					'type'  => 'link',
+				],
+			],
+		] );
+
 		$this->add_tab( __( 'Latest Posts Section', 'fp' ) );
 		$this->add_field( [
 			'label'      => __( 'Latest Posts Section', 'fp' ),
@@ -353,6 +386,54 @@ class Front_Page extends Page_Template {
 					'label' => __( 'Button', 'fp' ),
 					'name'  => 'button',
 					'type'  => 'link',
+				],
+			],
+		] );
+
+		$this->add_tab( __( 'CTA Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'CTA Section', 'fp' ),
+			'name'       => 'cta',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'      => __( 'Background Video', 'fp' ),
+					'name'       => 'background_video',
+					'type'       => 'file',
+					'mime_types' => 'mp4, webm, ogg',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Video Poster', 'fp' ),
+					'name'         => 'video_poster',
+					'type'         => 'image',
+					'mime_types'   => 'jpg, jpeg, png, webp',
+					'instructions' => __( 'Fallback image shown before video loads', 'fp' ),
+					'wrapper'      => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'      => __( 'Title', 'fp' ),
+					'name'       => 'title',
+					'type'       => 'textarea',
+					'formatting' => 'br',
+					'rows'       => 2,
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Text', 'fp' ),
+					'name'         => 'text',
+					'type'         => 'wysiwyg',
+					'toolbar'      => 'simple',
+					'media_upload' => 0,
+					'wrapper'      => [
+						'width' => '50',
+					],
 				],
 			],
 		] );
