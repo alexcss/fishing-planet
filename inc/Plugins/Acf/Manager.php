@@ -9,6 +9,7 @@ class Manager {
 	private array $option_pages = [
 		Options\GlobalOpt::class,
 		Page_Templates\Front_Page::class,
+		Page_Templates\About::class,
 		Post_Types\Post::class,
 	];
 

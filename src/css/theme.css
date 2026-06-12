@@ -35,8 +35,9 @@
   --color-primary-active: #F37900;
   --color-white: #FFFFFF;
 
+
   /* Background images - Button gradients */
-  --background-image-body: linear-gradient(180deg, #2D2E31 0.57%, #3B4046 27.76%, #585F65 56.55%, #5D656A 90.85%, #777D82 123.36%, #B4B8BA 138.38%);
+  --background-image-body: linear-gradient(180deg, #2D2E31 0.42%, #3B4046 15.77%, #585F65 41.32%, #5D656A 64.51%, #777D82 90.14%, #B4B8BA 101.11%);
   --background-image-btn-default: linear-gradient(180deg, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 0.12) 100%),
   linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 8.33%),
   linear-gradient(90deg, #F88A1E 0%, #F88A1E 100%);

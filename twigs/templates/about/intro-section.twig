@@ -1,0 +1,38 @@
+<section class="relative overflow-hidden bg-cover bg-center"
+		 {% if data.poster.url and not data.video.url %}
+		 	style="background-image: url({{ data.poster.url|resize(1900, 1080, "center")|towebp(80) }})"
+		 {% endif %}
+>
+	{% if data.video.url %}
+		<div class="pointer-events-none absolute inset-0 w-full h-full z-0">
+			<video
+				class="w-full h-full object-cover"
+				autoplay
+				loop
+				muted
+				playsinline
+				{% if data.poster %}poster="{{ data.poster.url }}"{% endif %}
+			>
+				<source src="{{ data.video.url }}" type="{{ data.video.mime_type }}">
+			</video>
+		</div>
+	{% endif %}
+	<div class="pointer-events-none absolute inset-0 bg-black/40 z-10"></div>
+	<div class="pointer-events-none max-md:hidden absolute inset-0 w-344 border-l border-r border-white/15 mx-auto z-10"></div>
+
+	<div class="relative z-20 container pt-120 pb-40 md:pb-100 xl:pb-150 h-svh flex items-end">
+		<div class="flex flex-col gap-32 md:gap-60 lg:flex-row lg:items-start lg:justify-between w-full">
+			{% if data.title %}
+				<h1 class="h1">
+					{{ data.title }}
+				</h1>
+			{% endif %}
+
+			{% if data.text %}
+				<div class="fp-text-body-small fp-richtext md:max-w-358">
+					{{ data.text|raw }}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
