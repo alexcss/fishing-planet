@@ -1,0 +1,58 @@
+{#
+# Play Section
+# Section with wave pattern background, title, text, image, feature list and stores button
+#}
+
+{% from "components/icon.twig" import icon %}
+{% from "components/image.twig" import image %}
+
+{% if data %}
+	<div class="from-gray-matte to-gray-frost bg-linear-to-b pt-80 md:pt-0">
+		<section class="bg-pattern-wave relative pb-30 md:py-100 xl:pt-140 xl:pb-116">
+			<div class="relative z-20 container">
+				{% if data.title %}
+					<h2 class="h1 mb-32 md:mb-60 xl:w-2/3">{{ data.title }}</h2>
+				{% endif %}
+				<div class="grid gap-32 lg:grid-cols-24 lg:items-start lg:gap-40 xl:items-center xl:gap-40">
+					{% if data.image %}
+						<div class="md:fp-block-corners lg:col-span-12 xl:col-span-15">
+							{{ image({ image: data.image, wrap_class: "w-full", class: "w-full h-auto", sizes: { w: 776, h: 605 } }) }}
+						</div>
+					{% endif %}
+					<div class="space-y-40 md:max-w-lg md:space-y-60 lg:col-span-12 lg:max-w-none xl:col-span-8">
+						{% if data.list %}
+							<ul class="space-y-32 md:space-y-40">
+								{% for item in data.list %}
+									<li class="space-y-16 md:space-y-20">
+										{% if item.title %}
+											<div class="#44494E flex items-center gap-16 md:gap-20">
+												{% if item.icon %}
+													<div class="fp-btn-corners bg-gray-gunmetal shrink-0">
+														<span>{{ icon({ name: item.icon, w: 24, h: 24 }) }}</span>
+													</div>
+												{% endif %}
+												<p class="h4">
+													{{ item.title }}
+												</p>
+											</div>
+										{% endif %}
+										{% if item.text %}
+											<div class="fp-text-body-small fp-richtext text-white/90">
+												{{ item.text|raw }}
+											</div>
+										{% endif %}
+									</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+
+						{% include "global/header/stores-button.twig" with { link: data.button } %}
+					</div>
+				</div>
+			</div>
+
+			<div class="from-gray-frost to-gray-frost/0 absolute inset-x-0 bottom-0 z-0 h-228 bg-linear-to-t"></div>
+			<div class="from-gray-matte to-gray-matte/0 absolute inset-x-0 top-0 z-0 h-228 bg-linear-to-b md:hidden"></div>
+		</section>
+	</div>
+{% endif %}

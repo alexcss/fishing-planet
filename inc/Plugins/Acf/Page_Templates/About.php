@@ -93,5 +93,94 @@ class About extends Page_Template {
 				],
 			],
 		] );
+
+		$this->add_tab( __( 'Play Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Play Section', 'fp' ),
+			'name'       => 'play',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'        => __( 'Title', 'fp' ),
+					'name'         => 'title',
+					'type'         => 'textarea',
+					'maxlength'    => 300,
+					'rows'         => 4,
+					'new_lines'    => 'br',
+					'instructions' => __( 'Maximum 300 characters', 'fp' ),
+					'wrapper'      => [
+						'width' => '100',
+					],
+				],
+				[
+					'label'      => __( 'Image', 'fp' ),
+					'name'       => 'image',
+					'type'       => 'image',
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'List', 'fp' ),
+					'name'         => 'list',
+					'type'         => 'repeater',
+					'min'          => 0,
+					'max'          => 10,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Item', 'fp' ),
+					'wrapper'      => [
+						'width' => '50',
+					],
+					'sub_fields'   => [
+						[
+							'label'   => __( 'Icon', 'fp' ),
+							'name'    => 'icon',
+							'type'    => 'select',
+							'choices' => [
+								'fish'     => __( 'Fish', 'fp' ),
+								'boat'     => __( 'Boat', 'fp' ),
+								'hook'     => __( 'Hook', 'fp' ),
+								'float'    => __( 'Float', 'fp' ),
+								'spinning' => __( 'Spinning', 'fp' ),
+								'magnet'   => __( 'Magnet', 'fp' ),
+								'medal'    => __( 'Medal', 'fp' ),
+								'location' => __( 'Location', 'fp' ),
+								'check'    => __( 'Check', 'fp' ),
+								'cross'    => __( 'Cross', 'fp' ),
+							],
+							'wrapper' => [
+								'width' => '20',
+							],
+						],
+						[
+							'label'     => __( 'Title', 'fp' ),
+							'name'      => 'title',
+							'type'      => 'text',
+							'required'  => 1,
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '80',
+							],
+						],
+						[
+							'label'        => __( 'Text', 'fp' ),
+							'name'         => 'text',
+							'type'         => 'wysiwyg',
+							'toolbar'      => 'simple',
+							'media_upload' => 0,
+							'wrapper'      => [
+								'width' => '100',
+							],
+						],
+					],
+				],
+				[
+					'label' => __( 'Button', 'fp' ),
+					'name'  => 'button',
+					'type'  => 'link',
+				],
+			],
+		] );
 	}
 }

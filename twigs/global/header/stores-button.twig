@@ -1,11 +1,12 @@
 {% from "components/buttons.twig" import button %}
-
-<div class="relative max-lg:hidden" x-data="{ isStoresOpen: false }" @click.outside="isStoresOpen = false">
-	{{ button({ link: header.button, icon: "spinning", class: "", props: '@click.prevent="isStoresOpen = !isStoresOpen"' }) }}
-	<div
-		class="bg-gray-tar invisible absolute top-full left-0 z-10 mt-16 w-180 -translate-y-10 border border-white/15 p-18 opacity-0 transition-all duration-200 ease-in-out"
-		:class="{'translate-y-0 opacity-100 visible': isStoresOpen}"
-	>
-		{% include "global/stores-links.twig" %}
+{% if link.title %}
+	<div class="relative {{ class }}" x-data="{ isStoresOpen: false }" @click.outside="isStoresOpen = false">
+		{{ button({ link: link, icon: "spinning", class: "", props: '@click.prevent="isStoresOpen = !isStoresOpen"' }) }}
+		<div
+			class="bg-gray-tar invisible absolute top-full left-0 z-10 mt-16 w-166 -translate-y-10 border border-white/15 p-18 opacity-0 transition-all duration-200 ease-in-out md:w-180"
+			:class="{'translate-y-0 opacity-100 visible': isStoresOpen}"
+		>
+			{% include "global/stores-links.twig" %}
+		</div>
 	</div>
-</div>
+{% endif %}
