@@ -2,7 +2,7 @@ import Swiper from 'swiper'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 
-export default function introSlider() {
+export default function videoSlider() {
   return {
     swiper: null,
     videos: [],
@@ -32,6 +32,7 @@ export default function introSlider() {
         modules: [Navigation],
         loop: false,
         speed: 600,
+        autoHeight: true,
         effect: 'fade',
         fadeEffect: {
           crossFade: true,
@@ -59,6 +60,8 @@ export default function introSlider() {
     },
 
     handleVideoPlayback(swiper) {
+      if (this.videos.length === 0) return
+
       this.videos.forEach((video, index) => {
         if (video) {
           if (index === swiper.realIndex) {

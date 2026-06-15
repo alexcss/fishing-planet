@@ -135,7 +135,8 @@
 
 /* Links */
 @utility fp-link {
-  @apply text-white hover:text-accent no-underline ;
+  @apply text-white hover:text-accent no-underline
+  [&.active]:text-accent;
 }
 @utility fp-link-underline-group {
   &:hover, &:focus {

@@ -3,10 +3,8 @@
  # Full-screen slider with MP4 background videos and navigation controls
  #}
 
-{% from "components/icon.twig" import icon %}
-
 {% if data|length > 1 %}
-	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 pb-40 md:pb-0 bg-gray-matte" x-data="introSlider()">
+	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 pb-40 md:pb-0 bg-gray-matte" x-data="videoSlider()">
 		<div class="swiper" x-ref="swiperContainer">
 			<div class="swiper-wrapper">
 				{% for slide in data %}
@@ -44,27 +42,9 @@
 			</div>
 		</div>
 
-			<div class="mt-18 md:mt-0 md:absolute md:bottom-32 xl:bottom-45 md:inset-x-0 md:mx-auto z-20 pointer-events-none">
-				<div class="container max-md:px-0 flex justify-between md:justify-end items-center gap-12 md:gap-24">
-					<button
-						x-ref="prevBtn"
-						class="fp-btn-sqr pointer-events-auto"
-						aria-label="Previous slide"
-					>
-						{{ icon({ name: 'arrow-l', w: 24, h: 24 }) }}
-					</button>
-					<div class="text-cente font-heading text-18 text-dark-gray tracking-3 min-w-30">
-						<span x-ref="currentSlide" class="text-accent">1</span>/{{ data|length }}
-					</div>
-					<button
-						x-ref="nextBtn"
-						class="fp-btn-sqr pointer-events-auto"
-						aria-label="Next slide"
-					>
-						{{ icon({ name: 'arrow-r', w: 24, h: 24 }) }}
-					</button>
-				</div>
-			</div>
+		<div class="mt-18 md:mt-0 md:absolute md:bottom-32 xl:bottom-45 md:inset-x-0 md:mx-auto z-20 pointer-events-none">
+			{% include "global/slider/controls.twig" with { class: "container max-md:px-0", slides: data } %}
+		</div>
 
 	</section>
 {% endif %}

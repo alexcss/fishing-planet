@@ -182,5 +182,67 @@ class About extends Page_Template {
 				],
 			],
 		] );
+
+		$this->add_tab( __( 'Updates Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Updates Section', 'fp' ),
+			'name'       => 'updates',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 300,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'List', 'fp' ),
+					'name'         => 'list',
+					'type'         => 'repeater',
+					'min'          => 1,
+					'max'          => 10,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Update', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'     => __( 'Text', 'fp' ),
+							'name'      => 'text',
+							'type'      => 'text',
+							'required'  => 1,
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '50',
+							],
+						],
+						[
+							'label'      => __( 'Image', 'fp' ),
+							'name'       => 'image',
+							'type'       => 'image',
+							'required'   => 1,
+							'mime_types' => 'jpg, jpeg, png, webp',
+							'wrapper'    => [
+								'width' => '50',
+							],
+						],
+					],
+				],
+			],
+		] );
 	}
 }

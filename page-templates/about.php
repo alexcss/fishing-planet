@@ -7,8 +7,9 @@
 
 $context = Timber::context();
 $data    = [
-	'intro' => get_field( "intro" ),
-	'play'  => get_field( "play" ),
+	'intro'   => get_field( "intro" ),
+	'play'    => get_field( "play" ),
+	'updates' => get_field( "updates" ),
 ];
 
 $context = array_merge( $context, $data );

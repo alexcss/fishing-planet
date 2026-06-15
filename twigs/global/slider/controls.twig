@@ -1,0 +1,9 @@
+{% from "components/icon.twig" import icon %}
+
+<div class="flex items-center justify-between gap-12 md:justify-end md:gap-24 {{ class }}">
+	<button x-ref="prevBtn" class="fp-btn-sqr pointer-events-auto" aria-label="Previous slide">{{ icon({ name: "arrow-l", w: 24, h: 24 }) }}</button>
+	<div class="text-cente font-heading text-18 text-dark-gray tracking-3 min-w-30">
+		<span x-ref="currentSlide" class="text-accent">1</span>/{{ slides|length }}
+	</div>
+	<button x-ref="nextBtn" class="fp-btn-sqr pointer-events-auto" aria-label="Next slide">{{ icon({ name: "arrow-r", w: 24, h: 24 }) }}</button>
+</div>

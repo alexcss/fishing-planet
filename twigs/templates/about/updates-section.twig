@@ -1,0 +1,89 @@
+{#
+# Updates Section
+# Desktop: List with hover image change, Mobile: Slider
+#}
+
+{% from "components/image.twig" import image %}
+
+{% if data and data.list is not empty %}
+	<section class="from-gray-frost to-gray-frost/0 relative overflow-hidden bg-linear-to-b py-56 xl:pt-60 xl:pb-120">
+		<div class="relative z-10 container">
+			<div class="mb-40 flex flex-col gap-24 md:mb-60 lg:flex-row lg:items-center">
+				{% if data.title %}
+					<h2 class="h2">{{ data.title }}</h2>
+				{% endif %}
+
+				{% if data.tagline %}
+					<div class="fp-block-corners w-full text-white lg:order-last lg:ml-auto lg:w-fit lg:max-w-330 lg:px-60">
+						<p class="h5 text-center">
+							{{ data.tagline }}
+						</p>
+					</div>
+				{% endif %}
+			</div>
+			{% if data.list is not empty %}
+				<div class="hidden lg:grid lg:grid-cols-24 lg:items-center lg:gap-40" x-data="{
+						activeIndex: 0,
+						setActive(index) {
+							this.activeIndex = index;
+						}
+					 }">
+					<ul class="lg:col-span-9">
+						{% for item in data.list %}
+							<li class="group border-white/15 not-last:border-b">
+								<div
+									class="flex cursor-pointer items-start gap-20 py-40 opacity-50 transition group-first:pt-0 group-last:pb-0 [&.active]:opacity-100"
+									@mouseenter="setActive({{ loop.index0 }})"
+									:class="{ 'active': activeIndex === {{ loop.index0 }} }"
+								>
+									<span class="fp-text-small-description text-sand min-w-20">{{ "%02d"|format(loop.index) }}</span>
+									<h3 class="h3 leading-[0.8] text-white">{{ item.text }}</h3>
+								</div>
+							</li>
+						{% endfor %}
+					</ul>
+
+					{# Right Column - Images with fade transition #}
+					<div class="fp-block-corners lg:col-span-15">
+						<div>
+							<div class="relative aspect-[776/605] overflow-hidden">
+								{% for item in data.list %}
+									<div
+										class="absolute inset-0 transition-opacity duration-500"
+										:class="activeIndex === {{ loop.index0 }} ? 'opacity-100' : 'opacity-0'"
+										x-show="true"
+										x-transition:enter="transition-opacity duration-500"
+										x-transition:enter-start="opacity-0"
+										x-transition:enter-end="opacity-100"
+										x-transition:leave="transition-opacity duration-500"
+										x-transition:leave-start="opacity-100"
+										x-transition:leave-end="opacity-0"
+									>
+										{{ image({ image: item.image, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 776, h: 605 } }) }}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{# Mobile: Slider #}
+				<div class="swiper updates-swiper lg:!hidden" x-data="videoSlider()" x-ref="swiperContainer">
+					<div class="swiper-wrapper">
+						{% for item in data.list %}
+							<div class="swiper-slide space-y-32" data-slide>
+								{{ image({ image: item.image, class: "h-auto w-full", sizes: { w: 450, h: 474 } }) }}
+								<div class="relative mx-auto w-fit gap-20 px-40">
+									<span class="fp-text-small-description text-sand absolute top-0 left-0">{{ "%02d"|format(loop.index) }}</span>
+									<h3 class="h4 md:h3 leading-[0.8] text-white">{{ item.text }}</h3>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+
+					{% include "global/slider/controls.twig" with { class: "mt-20 border-t-white/15 border-t pt-32", slides: data.list } %}
+				</div>
+			{% endif %}
+		</div>
+	</section>
+{% endif %}
