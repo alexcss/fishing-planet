@@ -1,5 +1,7 @@
 @import './fonts.css';
 @import 'tailwindcss';
+@import 'swiper/css' layer(base);
+@import 'swiper/css/effect-fade' layer(base);
 @import './theme.css';
 @import './typography.css';
 @import './components.css';

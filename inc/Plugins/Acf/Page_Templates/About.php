@@ -305,5 +305,106 @@ class About extends Page_Template {
 				],
 			],
 		] );
+
+		$this->add_tab( __( 'Fish Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Fish Section', 'fp' ),
+			'name'       => 'fish',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Subtitle', 'fp' ),
+					'name'      => 'subtitle',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 2,
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 300,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '33.33',
+					],
+				],
+				[
+					'label'        => __( 'Gallery (Fish)', 'fp' ),
+					'name'         => 'gallery',
+					'type'         => 'gallery',
+					'min'          => 1,
+					'instructions' => __( 'Fish images for auto-scrolling marquee', 'fp' ),
+					'wrapper'      => [
+						'width' => '100',
+					],
+				],
+				[
+					'label'        => __( 'Content', 'fp' ),
+					'name'         => 'content',
+					'type'         => 'repeater',
+					'min'          => 1,
+					'max'          => 4,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Content Block', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'     => __( 'Title', 'fp' ),
+							'name'      => 'title',
+							'type'      => 'text',
+							'required'  => 1,
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '100',
+							],
+						],
+						[
+							'label'        => __( 'Text', 'fp' ),
+							'name'         => 'text',
+							'type'         => 'wysiwyg',
+							'toolbar'      => 'simple',
+							'media_upload' => 0,
+							'wrapper'      => [
+								'width' => '100',
+							],
+						],
+					],
+				],
+				[
+					'label'      => __( 'Background Image Desktop', 'fp' ),
+					'name'       => 'bg_image_desktop',
+					'type'       => 'image',
+					'required'   => 1,
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'      => __( 'Background Image Mobile', 'fp' ),
+					'name'       => 'bg_image_mobile',
+					'type'       => 'image',
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+			],
+		] );
 	}
 }

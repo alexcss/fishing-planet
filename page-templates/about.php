@@ -11,6 +11,7 @@ $data    = [
 	'play'    => get_field( "play" ),
 	'updates' => get_field( "updates" ),
 	'tackle'  => get_field( "tackle" ),
+	'fish'    => get_field( "fish" ),
 ];
 
 $context = array_merge( $context, $data );

@@ -1,7 +1,5 @@
 import Swiper from 'swiper'
 import { Navigation, EffectFade, Autoplay } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/effect-fade'
 
 export default function videoSlider(options = {}) {
   return {
@@ -34,7 +32,7 @@ export default function videoSlider(options = {}) {
         modules: [Navigation, EffectFade, Autoplay],
         loop: false,
         speed: 600,
-        autoHeight: true,
+        autoHeight: false,
         navigation: {
           nextEl: this.$refs.nextBtn,
           prevEl: this.$refs.prevBtn,

@@ -68,7 +68,7 @@
 				</div>
 
 				{# Mobile: Slider #}
-				<div class="swiper updates-swiper lg:!hidden" x-data="videoSlider()" x-ref="swiperContainer">
+				<div class="swiper updates-swiper lg:hidden!" x-data="videoSlider({autoHeight: true})" x-ref="swiperContainer">
 					<div class="swiper-wrapper">
 						{% for item in data.list %}
 							<div class="swiper-slide space-y-32" data-slide>
