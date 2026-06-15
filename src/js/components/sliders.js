@@ -1,11 +1,13 @@
 import Swiper from 'swiper'
-import { Navigation } from 'swiper/modules'
+import { Navigation, EffectFade, Autoplay } from 'swiper/modules'
 import 'swiper/css'
+import 'swiper/css/effect-fade'
 
-export default function videoSlider() {
+export default function videoSlider(options = {}) {
   return {
     swiper: null,
     videos: [],
+    options: options,
 
     init() {
       this.initVideos()
@@ -28,15 +30,11 @@ export default function videoSlider() {
     },
 
     initSwiper() {
-      this.swiper = new Swiper(this.$refs.swiperContainer, {
-        modules: [Navigation],
+      const defaultOptions = {
+        modules: [Navigation, EffectFade, Autoplay],
         loop: false,
         speed: 600,
         autoHeight: true,
-        effect: 'fade',
-        fadeEffect: {
-          crossFade: true,
-        },
         navigation: {
           nextEl: this.$refs.nextBtn,
           prevEl: this.$refs.prevBtn,
@@ -50,7 +48,11 @@ export default function videoSlider() {
             this.handleVideoPlayback(swiper)
           },
         },
-      })
+      }
+
+      const swiperOptions = { ...defaultOptions, ...this.options }
+
+      this.swiper = new Swiper(this.$refs.swiperContainer, swiperOptions)
     },
 
     updatePagination(swiper) {

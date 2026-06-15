@@ -1,0 +1,75 @@
+{#
+# Tackle Section
+# Full-screen slider with tackle/lure images on wave pattern background
+#}
+
+{% from "components/image.twig" import image %}
+
+{% if data and data.slides is not empty %}
+	<section
+		class="from-gray-gunmetal to-gray-medium relative overflow-hidden bg-linear-to-b pb-130 md:pb-0"
+		x-data="videoSlider({ effect: 'fade', fadeEffect: { crossFade: true }, loop: true, autoplay: { delay: 3000, disableOnInteraction: false } })"
+	>
+		<div class="bg-pattern-wave absolute inset-0 z-20 mb-80 md:mb-0">
+			<div class="swiper !h-full" x-ref="swiperContainer">
+				<div class="swiper-wrapper !h-full">
+					{% for slide in data.slides %}
+						<div class="swiper-slide !h-full" data-slide>
+							{# Desktop Image #}
+							{% if slide.image_desktop %}
+								<div class="hidden h-full w-full lg:block">
+									{{
+										image({
+											image: slide.image_desktop,
+											wrap_class: "h-full w-full",
+											class: "h-full w-full object-contain object-center",
+											sizes: { w: 1920 }
+										})
+									}}
+								</div>
+							{% endif %}
+
+							{# Mobile Image #}
+							{% if slide.image_mobile or slide.image_desktop %}
+								<div class="h-full w-full lg:hidden">
+									{{
+										image({
+											image: slide.image_mobile ? : slide.image_desktop,
+											wrap_class: "h-full w-full",
+											class: "h-full w-full object-cover",
+											sizes: { w: 768 }
+										})
+									}}
+								</div>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="from-gray-medium to-gray-medium/0 pointer-events-none absolute inset-x-0 bottom-0 z-0 h-200 bg-linear-to-t"></div>
+			<div class="from-gray-gunmetal to-gray-gunmetal/0 pointer-events-none absolute inset-x-0 top-0 z-0 h-240 bg-linear-to-b"></div>
+		</div>
+
+		{# Content Overlay #}
+		<div class="pointer-events-none relative z-30 container flex min-h-svh items-center py-80 max-md:pb-0 md:pb-120">
+			<div
+				class="bg-gray-medium border-gray-gunmetal max-w-430 space-y-40 overflow-hidden border-12 p-32 md:space-y-60 md:border-16 md:px-40 md:py-60"
+			>
+				{% if data.title %}
+					<h2 class="h4 first-line:text-90 xl:first-line:text-120 md:first-line:text-100">{{ data.title }}</h2>
+				{% endif %}
+
+				{% if data.text %}
+					<div class="fp-text-body-small fp-richtext text-white/80">
+						{{ data.text|raw }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+
+		<div class="pointer-events-none absolute inset-x-0 bottom-32 z-30 xl:bottom-60">
+			{% include "global/slider/controls.twig" with { class: "container", slides: data.slides } %}
+		</div>
+	</section>
+{% endif %}

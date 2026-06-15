@@ -244,5 +244,66 @@ class About extends Page_Template {
 				],
 			],
 		] );
+
+		$this->add_tab( __( 'Tackle Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Tackle Section', 'fp' ),
+			'name'       => 'tackle',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Text', 'fp' ),
+					'name'         => 'text',
+					'type'         => 'wysiwyg',
+					'toolbar'      => 'simple',
+					'media_upload' => 0,
+					'wrapper'      => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Slides', 'fp' ),
+					'name'         => 'slides',
+					'type'         => 'repeater',
+					'min'          => 1,
+					'max'          => 10,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Slide', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'      => __( 'Desktop Image', 'fp' ),
+							'name'       => 'image_desktop',
+							'type'       => 'image',
+							'required'   => 1,
+							'mime_types' => 'jpg, jpeg, png, webp',
+							'wrapper'    => [
+								'width' => '50',
+							],
+						],
+						[
+							'label'      => __( 'Mobile Image', 'fp' ),
+							'name'       => 'image_mobile',
+							'type'       => 'image',
+							'required'   => 0,
+							'mime_types' => 'jpg, jpeg, png, webp',
+							'wrapper'    => [
+								'width' => '50',
+							],
+						],
+					],
+				],
+			],
+		] );
 	}
 }
