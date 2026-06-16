@@ -29,9 +29,10 @@ abstract class Post_Type extends Group {
 		}
 
 		$args = [
-			'key'    => $this->get_key( 'group' ),
-			'title'  => $this->title(),
-			'fields' => $this->fields,
+			'key'      => $this->get_key( 'group' ),
+			'title'    => $this->title(),
+			'fields'   => $this->fields,
+			'position' => 'acf_after_title'
 		];
 
 		$args['location'][] = [

@@ -8,6 +8,8 @@ class Manager {
 
 	private array $taxonomies = [
 		DLC_Category::class,
+		DLC_Includes::class,
+		DLC_Waterways::class,
 	];
 
 	public function __construct() {

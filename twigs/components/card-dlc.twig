@@ -23,9 +23,9 @@
 				</div>
 			{% endif %}
 			<h3 class="h4"><a href="{{ post.link }}" class="fp-link fp-stretched-link">{{ post.title }}</a></h3>
-			{% if post.excerpt %}
+			{% if post.meta("short_description") %}
 				<p class="fp-text-body-small">
-					{{ post.excerpt }}
+					{{ post.meta("short_description") }}
 				</p>
 			{% endif %}
 		</div>
