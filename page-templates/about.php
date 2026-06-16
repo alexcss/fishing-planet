@@ -14,6 +14,7 @@ $data    = [
 	'fish'     => get_field( "fish" ),
 	'vessels'  => get_field( "vessels" ),
 	'elements' => get_field( "elements" ),
+	'cta'      => get_field( "cta" ),
 ];
 
 $context = array_merge( $context, $data );

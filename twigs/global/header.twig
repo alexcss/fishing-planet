@@ -14,7 +14,7 @@
 					{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-32 items-center" } %}
 				</nav>
 				<div class="flex flex-1 items-center justify-end">
-					{% include "global/header/stores-button.twig" with { link: header.button, class: "max-lg:hidden" } %}
+					{% include "global/stores-button.twig" with { link: header.button, class: "max-lg:hidden" } %}
 					<div class="flex items-center justify-end space-x-8 lg:hidden">
 						<button class="fp-btn-light min-w-115" type="button" @click="isMenuOpen = !isMenuOpen" aria-label="{{ __("Toggle Menu", "fp") }}">
 							<span class="flex items-center gap-10" :class="{'hidden' : isMenuOpen}">

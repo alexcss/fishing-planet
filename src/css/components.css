@@ -68,7 +68,8 @@
   @apply hover:not-disabled:border-accent hover:not-disabled:text-white hover:not-disabled:bg-accent;
   @apply active:not-disabled:border-accent-active active:not-disabled:text-white active:not-disabled:bg-accent-active;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
-
+  @apply [&:not(a):not(button)]:pointer-events-none;
+  
   &:before, &:after {
     @apply content-[''] absolute -inset-y-1 -left-1 border-t border-b w-6 border-sand transition-opacity duration-200 ease-in-out;
   }
