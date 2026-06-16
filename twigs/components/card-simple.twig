@@ -1,0 +1,25 @@
+{#
+# Simple Card Component
+# Card with image, title, and text
+#}
+
+{% from "components/image.twig" import image %}
+
+{% if card %}
+	{% set image_size = image_type == "wide" ? { w: 620, h: 480 } : { w: 413, h: 434 } %}
+	<article class="space-y-24 md:space-y-40">
+		{{ image({ image: card.image, class: "w-full", sizes: image_size }) }}
+
+		<div class="space-y-18">
+			{% if card.title %}
+				<h3 class="h4">{{ card.title }}</h3>
+			{% endif %}
+
+			{% if card.text %}
+				<div class="fp-text-body-small fp-richtext text-white">
+					{{ card.text|raw }}
+				</div>
+			{% endif %}
+		</div>
+	</article>
+{% endif %}

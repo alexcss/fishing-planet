@@ -406,5 +406,149 @@ class About extends Page_Template {
 				],
 			],
 		] );
+
+		$this->add_tab( __( 'Vessels Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Vessels Section', 'fp' ),
+			'name'       => 'vessels',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '40',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 300,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Cards', 'fp' ),
+					'name'         => 'cards',
+					'type'         => 'repeater',
+					'min'          => 1,
+					'max'          => 10,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Card', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'     => __( 'Title', 'fp' ),
+							'name'      => 'title',
+							'type'      => 'text',
+							'required'  => 1,
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'      => __( 'Image', 'fp' ),
+							'name'       => 'image',
+							'type'       => 'image',
+							'required'   => 1,
+							'mime_types' => 'jpg, jpeg, png, webp',
+							'wrapper'    => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'        => __( 'Text', 'fp' ),
+							'name'         => 'text',
+							'type'         => 'wysiwyg',
+							'toolbar'      => 'simple',
+							'media_upload' => 0,
+							'wrapper'      => [
+								'width' => '40',
+							],
+						],
+					],
+				],
+			],
+		] );
+
+		$this->add_tab( __( 'Elements Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Elements Section', 'fp' ),
+			'name'       => 'elements',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '40',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 300,
+					'rows'      => 3,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'        => __( 'Cards', 'fp' ),
+					'name'         => 'cards',
+					'type'         => 'repeater',
+					'min'          => 1,
+					'max'          => 10,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Card', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'     => __( 'Title', 'fp' ),
+							'name'      => 'title',
+							'type'      => 'text',
+							'required'  => 1,
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'      => __( 'Image', 'fp' ),
+							'name'       => 'image',
+							'type'       => 'image',
+							'required'   => 1,
+							'mime_types' => 'jpg, jpeg, png, webp',
+							'wrapper'    => [
+								'width' => '30',
+							],
+						],
+						[
+							'label'        => __( 'Text', 'fp' ),
+							'name'         => 'text',
+							'type'         => 'wysiwyg',
+							'toolbar'      => 'simple',
+							'media_upload' => 0,
+							'wrapper'      => [
+								'width' => '40',
+							],
+						],
+					],
+				],
+			],
+		] );
 	}
 }
