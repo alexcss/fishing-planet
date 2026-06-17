@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import DlcGrid from './DlcGrid'
 import EmptyState from './EmptyState'
 import Pagination from './Pagination'
@@ -21,12 +21,27 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
   const [currentPage, setCurrentPage] = useState(initialPage)
   const [totalPages, setTotalPages] = useState(initialTotalPosts ? Math.ceil(initialTotalPosts / PER_PAGE) : 1)
   const [totalPosts, setTotalPosts] = useState(initialTotalPosts || initialPosts.length)
+  const isInitialMount = useRef(true)
 
-  // Update URL with current state
+  // Update URL with current state (only if changed)
   const updateUrl = useCallback((page: number, filters: Filters) => {
     if (typeof window === 'undefined') return
 
     const url = new URL(window.location.href)
+    const currentCategory = url.searchParams.get('category') || ''
+    const currentInclude = url.searchParams.get('include') || ''
+    const currentWaterway = url.searchParams.get('waterway') || ''
+    const currentPage = parseInt(url.searchParams.get('page') || '1', 10)
+
+    // Only update if something changed
+    if (
+      currentPage === page &&
+      currentCategory === (filters.category || '') &&
+      currentInclude === (filters.include || '') &&
+      currentWaterway === (filters.waterway || '')
+    ) {
+      return
+    }
 
     // Update page
     if (page > 1) {
@@ -100,8 +115,12 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
     }
   }
 
-  // Fetch when filters change (reset to page 1)
+  // Fetch when filters change (reset to page 1), but skip on initial mount
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      return
+    }
     fetchPosts(1, filters)
   }, [filters, fetchPosts])
 

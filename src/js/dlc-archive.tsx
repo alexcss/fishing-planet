@@ -1,7 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import DlcFilter from './components/dlc-filter/DlcFilter'
-import type { FilterData, DlcPost } from './components/dlc-filter/types'
+import type { FilterData, DlcPost, Filters } from './components/dlc-filter/types'
 
 // Global type declaration for window.dlcFilterData
 declare global {
@@ -9,6 +9,9 @@ declare global {
     dlcFilterData?: {
       filterData: FilterData
       initialPosts: DlcPost[]
+      totalPosts?: number
+      initialPage?: number
+      initialFilters?: Filters
       apiEndpoint: string
     }
   }
@@ -28,7 +31,7 @@ const initDlcFilter = () => {
     return
   }
 
-  const { filterData, initialPosts, apiEndpoint } = window.dlcFilterData
+  const { filterData, initialPosts, totalPosts, initialPage, initialFilters, apiEndpoint } = window.dlcFilterData
 
   const root = createRoot(container)
   root.render(
@@ -36,6 +39,9 @@ const initDlcFilter = () => {
       <DlcFilter
         filterData={filterData}
         initialPosts={initialPosts}
+        totalPosts={totalPosts}
+        initialPage={initialPage}
+        initialFilters={initialFilters}
         apiEndpoint={apiEndpoint}
       />
     </React.StrictMode>
