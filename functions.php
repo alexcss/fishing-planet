@@ -45,6 +45,9 @@ if ( file_exists( $composer_autoload ) ) {
 	new FP\Plugins\Cf7();
 	new FP\Plugins\Yoast();
 
+	/* Admin */
+	new FP\Admin\DLC_Importer();
+
 } elseif ( ! is_admin() ) {
 	wp_die( 'Pls install composer dependency' );
 }

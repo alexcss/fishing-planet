@@ -1,0 +1,138 @@
+@import 'tailwindcss';
+
+.fp-dlc-importer {
+	max-width: 1200px;
+	margin: 20px 0;
+}
+
+.fp-dlc-importer h1 {
+	margin-bottom: 20px;
+}
+
+.fp-importer-card {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.fp-importer-card h2 {
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.fp-importer-card h3 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.fp-importer-card h4 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+#fp-sync-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+}
+
+#fp-sync-button .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+#fp-sync-button.is-loading .dashicons {
+	animation: fp-spin 1s linear infinite;
+}
+
+@keyframes fp-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.fp-columns-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 20px;
+	margin-top: 15px;
+}
+
+.fp-column-group ul {
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+}
+
+.fp-column-group li {
+	padding: 6px 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.fp-column-group li:last-child {
+	border-bottom: none;
+}
+
+.fp-column-group code {
+	background: #f0f0f1;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #2271b1;
+}
+
+.fp-info-box {
+	background: #f0f6fc;
+	border-left: 4px solid #2271b1;
+	padding: 15px;
+	margin-top: 20px;
+}
+
+.fp-info-box h4 {
+	margin-top: 0;
+	color: #2271b1;
+}
+
+.fp-info-box ul {
+	margin: 10px 0 0 0;
+	padding-left: 20px;
+}
+
+.fp-info-box li {
+	margin-bottom: 8px;
+	line-height: 1.6;
+}
+
+.notice .error-count {
+	color: #d63638;
+	font-weight: 600;
+}
+
+.notice ul {
+	margin: 10px 0 0 20px;
+}
+
+.notice ul li {
+	margin-bottom: 5px;
+}
+
+#sheet_url {
+	width: 100%;
+	max-width: 600px;
+}

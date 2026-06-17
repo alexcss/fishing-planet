@@ -8,7 +8,14 @@ import tailwindcss from '@tailwindcss/vite'
 const wordpressHost = 'https://dev-starter.loc/'
 
 const dest = './dist'
-const entries = ['./src/css/app.css', './src/css/admin/admin.css', './src/js/app.js', './src/js/admin.js']
+const entries = [
+  './src/css/app.css',
+  './src/css/admin/admin.css',
+  './src/css/admin/dlc-importer.css',
+  './src/js/app.js',
+  './src/js/admin.js',
+  './src/js/admin/dlc-importer.js',
+]
 
 const watchFiles = ['*.php', '*.twig', 'page-templates/**/*', 'twigs/**/*', 'inc/**/*']
 
