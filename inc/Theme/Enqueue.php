@@ -39,7 +39,6 @@ class Enqueue {
 
 	public function global_assets(): void {
 
-
 		wp_enqueue_script( 'app', Assets::requireUrl( 'src/js/app.js' ), [], null );
 //		wp_script_add_data( 'app', 'defer', true );
 		wp_script_add_data( 'app', 'module', true );
@@ -50,6 +49,12 @@ class Enqueue {
 			'restURL' => rest_url(),
 			'nonce'   => wp_create_nonce( 'wp_rest' ),
 		] );
+
+		// Enqueue DLC Archive script on DLC archive template
+		if (is_page_template('page-templates/dlc-archive.php')) {
+			wp_enqueue_script('dlc-archive', Assets::requireUrl('src/js/dlc-archive.tsx'), [], null);
+			wp_script_add_data('dlc-archive', 'module', true);
+		}
 
 		if ( ! is_user_logged_in() ) {
 			// Deregister the jquery version bundled with WordPress.

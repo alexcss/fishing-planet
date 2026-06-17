@@ -1,0 +1,42 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<main class="pt-113 pb-80 xl:pt-144 xl:pb-130" id="dlc-root">
+		{# Hero Section #}
+		<section class="relative pt-40 md:pt-60 xl:pt-100">
+			<div class="relative z-10 container">
+				<div class="mb-24 flex flex-col gap-24 md:mb-60 lg:flex-row lg:items-start">
+					{% if intro.subtitle %}
+						<p class="fp-text-small-description text-sand lg:order-1 lg:max-w-160">
+							{{ intro.subtitle }}
+						</p>
+					{% endif %}
+
+					{% if intro.title %}
+						<h2 class="h2">{{ intro.title }}</h2>
+					{% endif %}
+
+					{% if intro.tagline %}
+						<div class="fp-block-corners w-full text-white lg:order-last lg:ml-auto lg:w-fit lg:max-w-360 lg:px-60">
+							<p class="h5 text-center">
+								{{ intro.tagline }}
+							</p>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</section>
+
+		{# DLC Filter Section #}
+		<div class="container">
+			<div id="dlc-filter-root"></div>
+		</div>
+	</main>
+
+	{# Pass data to React component #}
+	<script>
+		window.dlcFilterData = { filterData: {{ filter_data|json_encode|raw }}, initialPosts: {{ initial_posts|json_encode|raw }}, totalPosts: {{
+			total_posts
+		}}, initialPage: {{ initial_page }}, initialFilters: {{ initial_filters|json_encode|raw }}, apiEndpoint: '{{ fn("rest_url", "fp/v1/dlc") }}' };
+	</script>
+{% endblock %}

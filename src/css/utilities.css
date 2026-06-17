@@ -40,3 +40,18 @@
 @utility fp-stretched-link {
   @apply after:absolute after:inset-0 after:z-10;
 }
+
+@utility fp-scrollbar-thin {
+
+  &::-webkit-scrollbar {
+    @apply w-4;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-dark-gray rounded-none;
+  }
+}

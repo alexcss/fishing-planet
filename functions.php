@@ -48,6 +48,9 @@ if ( file_exists( $composer_autoload ) ) {
 	/* Admin */
 	new FP\Admin\DLC_Importer();
 
+	/* API */
+	new FP\Api\DLC_Api();
+
 } elseif ( ! is_admin() ) {
 	wp_die( 'Pls install composer dependency' );
 }

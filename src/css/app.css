@@ -18,9 +18,11 @@
 
 @variant headings (& :is(h1, h2, h3, h4, h5, h6));
 
+@variant no-hero-page (body:is(.page-template-dlc-archive, .single-dlc) &);
+
 @layer base {
   [x-cloak] {
-    @apply !hidden;
+    @apply hidden!;
   }
 
   @supports (interpolate-size: allow-keywords) {
