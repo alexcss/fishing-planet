@@ -247,15 +247,22 @@ class DLC_Importer {
 
 			switch ( $column_name ) {
 				case 'title':
-					$data['title'] = trim( $value, " \t\n\r\0\x0B\"'" );
+					$clean_title = trim( $value, " \t\n\r\0\x0B\"'" );
+					if ( $this->is_valid_value( $clean_title ) ) {
+						$data['title'] = $clean_title;
+					}
 					break;
 
 				case 'content':
-					$data['content'] = $value;
+					if ( $this->is_valid_value( $value ) ) {
+						$data['content'] = $value;
+					}
 					break;
 
 				case 'short_description':
-					$data['short_description'] = $value;
+					if ( $this->is_valid_value( $value ) ) {
+						$data['short_description'] = $value;
+					}
 					break;
 
 				case 'store_steam':
@@ -266,31 +273,58 @@ class DLC_Importer {
 				case 'store_android':
 				case 'store_ios':
 				case 'store_switch':
-					$data[ $column_name ] = $value;
+					if ( $this->is_valid_url( $value ) ) {
+						$data[ $column_name ] = $value;
+					}
 					break;
 
 				case 'store_xbox':
 				case 'stroe_xbox':
-					$data['store_xbox'] = $value;
+					if ( $this->is_valid_url( $value ) ) {
+						$data['store_xbox'] = $value;
+					}
 					break;
 
 				case 'dlc_category':
 				case 'dlc_includes':
 				case 'dlc_waterways':
-					$data[ $column_name ] = $this->parse_multiline_field( $value );
+					$terms = $this->parse_multiline_field( $value );
+					$valid_terms = array_filter( $terms, [ $this, 'is_valid_value' ] );
+					if ( ! empty( $valid_terms ) ) {
+						$data[ $column_name ] = array_values( $valid_terms );
+					}
 					break;
 
 				case 'thumbnail':
-					$data['thumbnail'] = $value;
+					if ( $this->is_valid_url( $value ) ) {
+						$data['thumbnail'] = $value;
+					}
 					break;
 
 				case 'gallery':
-					$data['gallery'] = $this->parse_multiline_field( $value );
+					$urls = $this->parse_multiline_field( $value );
+					$valid_urls = array_filter( $urls, [ $this, 'is_valid_url' ] );
+					if ( ! empty( $valid_urls ) ) {
+						$data['gallery'] = array_values( $valid_urls );
+					}
 					break;
 			}
 		}
 
 		return $data;
+	}
+
+	private function is_valid_value( string $value ): bool {
+		$trimmed = trim( $value );
+		return strlen( $trimmed ) >= 3;
+	}
+
+	private function is_valid_url( string $url ): bool {
+		$trimmed = trim( $url );
+		if ( strlen( $trimmed ) < 3 ) {
+			return false;
+		}
+		return filter_var( $trimmed, FILTER_VALIDATE_URL ) !== false;
 	}
 
 	private function parse_multiline_field( string $value ): array {
