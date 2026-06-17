@@ -41,9 +41,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   // Normalize selected to array for internal use
   const selectedArray = multi ? (selected as string[]) : selected ? [selected as string] : []
 
-  const selectedOption = multi
-    ? null
-    : options.find((opt) => opt.slug === selected)
+  const selectedOption = multi ? null : options.find((opt) => opt.slug === selected)
 
   // Display text for button
   const displayLabel = multi
@@ -58,7 +56,6 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   const toggleSelection = (slug: string) => {
     if (!multi) {
       onSelect(slug)
-      setIsOpen(false)
       return
     }
 
@@ -88,12 +85,9 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       {/* Dropdown Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="hover:border-accent flex h-64 w-240 shrink-0 items-center justify-between gap-12 border border-white/15 bg-black px-24 py-20 text-left transition-colors"
+        className="hover:border-accent flex h-64 w-280 shrink-0 items-center justify-between gap-12 border border-white/15 bg-black px-24 py-20 text-left transition-colors"
       >
-        <span
-          className="fp-captital-title min-w-0 truncate"
-          dangerouslySetInnerHTML={{ __html: displayLabel }}
-        ></span>
+        <span className="fp-captital-title min-w-0 truncate" dangerouslySetInnerHTML={{ __html: displayLabel }}></span>
         <svg className={`h-24 w-24 shrink-0 text-white transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
           <use href="#icon-arrow-down" />
         </svg>
@@ -123,13 +117,14 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
                   onSelect([])
                 } else {
                   onSelect('')
-                  setIsOpen(false)
                 }
               }}
               className="w-full px-20 transition-colors hover:bg-white/5"
             >
               <span className="flex items-center justify-between border-b border-white/15 py-16">
-                <span className={`font-heading text-24 leading-none uppercase ${selectedArray.length === 0 ? 'text-white' : 'text-white/50'}`}>All</span>
+                <span className={`font-heading text-24 leading-none uppercase ${selectedArray.length === 0 ? 'text-white' : 'text-white/50'}`}>
+                  All
+                </span>
                 {selectedArray.length === 0 && (
                   <svg className="h-24 w-24 text-white">
                     <use href="#icon-check" />
@@ -140,11 +135,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
 
             {/* Filtered Options */}
             {filteredOptions.map((option) => (
-              <button
-                key={option.slug}
-                onClick={() => toggleSelection(option.slug)}
-                className="w-full px-20 transition-colors hover:bg-white/5"
-              >
+              <button key={option.slug} onClick={() => toggleSelection(option.slug)} className="w-full px-20 transition-colors hover:bg-white/5">
                 <span className="flex items-center justify-between border-b border-white/15 py-16">
                   <span
                     className={`font-heading text-24 text-left leading-none uppercase ${isSelected(option.slug) ? 'text-white' : 'text-white/50'}`}
