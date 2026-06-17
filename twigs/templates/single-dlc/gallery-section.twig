@@ -1,0 +1,28 @@
+{#
+ # DLC Single - Gallery Section
+ # Image gallery with Swiper slider
+ #}
+
+{% from "components/image.twig" import image %}
+
+{% if gallery %}
+	<section class="pt-40 xl:pt-60" x-data="videoSlider()">
+		<div class="container">
+			<div class="md:fp-block-corners">
+				<div>
+					<div class="swiper" x-ref="swiperContainer">
+						<div class="swiper-wrapper">
+							{% for item in gallery %}
+								<div class="swiper-slide" data-slide>
+									{{ image({ image: item, class: "w-full", sizes: { w: 1288, h: 724, mob: { w: 640, h: 360 } } }) }}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{% include "global/slider/controls.twig" with { class: "md:w-fit md:mx-auto mt-32 md:mt-40", slides: gallery, text_variant: "light" } %}
+		</div>
+	</section>
+{% endif %}

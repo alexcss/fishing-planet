@@ -1,0 +1,15 @@
+{#
+ # Back Button Component
+ #
+ # @param url - The URL to link to (default: history.back)
+ # @param label - The button label text (default: 'Back')
+ # @param class - Additional CSS classes
+ #}
+{% from "components/icon.twig" import icon %}
+
+{% set back_label = label|default(__("Back", "fp")) %}
+
+<button onclick="window.history.back()" class="text-accent fp-text-body-18 fp-link-accent inline-flex items-center gap-10 {{ class }}">
+	{{ icon({ name: "anchor-left", w: 24, h: 24 }) }}
+	<span class="fp-text-body">{{ back_label }}</span>
+</button>

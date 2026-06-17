@@ -1,0 +1,64 @@
+{#
+ # DLC Single - Hero Section
+ # Categories, date, title, short description, includes, waterways, content
+ #}
+
+<section class="md:pt-60kalyuzhnyi@gmail.com relative pt-40">
+	<div class="relative z-10 container">
+		<div class="relative">
+			{% include "components/back-button.twig" with { class: "mb-40 lg:absolute lg:left-0 lg:top-6" } %}
+			<div class="lg:mx-auto lg:max-w-640 xl:max-w-756">
+				<div class="mb-24 flex flex-wrap items-center gap-x-32 gap-y-16 md:mb-40 xl:mb-60">
+					{% if categories %}
+						<div class="flex flex-wrap gap-8">
+							{% for category in categories %}
+								<span class="fp-badge">{{ category.name }}</span>
+							{% endfor %}
+						</div>
+					{% endif %}
+
+					<time class="fp-text-caption text-white/70" datetime="{{ post.date("Y-m-d") }}">{{ post.date("j.m.Y") }}</time>
+				</div>
+
+				<h1 class="h2 mb-24 md:mb-32">{{ post.title }}</h1>
+
+				<div class="space-y-40 lg:space-y-32">
+					{% if post.meta("short_description") %}
+						<p class="fp-text-body-article text-white/80">
+							{{ post.meta("short_description") }}
+						</p>
+					{% endif %}
+
+					{% if includes %}
+						<section>
+							<h3 class="fp-captital-title mb-16">{{ __("Pack Content", "fp") }}</h3>
+							<ul class="fp-text-body-small fp-list-square space-y-4 text-white/70">
+								{% for item in includes %}
+									<li>{{ item.name }}</li>
+								{% endfor %}
+							</ul>
+						</section>
+					{% endif %}
+
+					{% if waterways %}
+						<section>
+							<h3 class="fp-captital-title mb-16">{{ __("Waterways", "fp") }}</h3>
+							<ul class="fp-text-body-small fp-list-square space-y-4 text-white/70">
+								{% for item in waterways %}
+									<li>{{ item.name }}</li>
+								{% endfor %}
+							</ul>
+						</section>
+					{% endif %}
+				</div>
+
+				{% if post.content %}
+					<div class="fp-richtext fp-text-body-article pt-40 text-white/80 xl:pt-60">
+						{{ post.content }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="bg-pattern-wave absolute inset-x-0 top-0 z-0 h-730 mask-y-from-80% mask-y-to-100% lg:h-428"></div>
+</section>

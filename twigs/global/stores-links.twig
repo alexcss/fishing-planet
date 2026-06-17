@@ -1,11 +1,11 @@
 {% from "components/icon.twig" import icon %}
 
-{% if (global.stores|length) > 0 %}
+{% if (items|length) > 0 %}
 	<div class="flex w-fit flex-wrap gap-4 md:gap-10">
-		{% for store in global.stores %}
+		{% for store in items %}
 			<a
 				href="{{ store.url }}"
-				class="hover:bg-accent text-gray-stone flex size-40 items-center justify-center bg-white hover:text-white"
+				class="hover:bg-accent text-gray-stone flex size-40 items-center justify-center bg-white hover:text-black"
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="{{ store.icon }}"

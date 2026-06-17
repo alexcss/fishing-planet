@@ -54,6 +54,10 @@
 }
 
 /* Body text */
+@utility fp-text-body-18 {
+  @apply text-18/[1.45] font-normal -tracking-1;
+}
+
 @utility fp-text-body {
   @apply text-18/normal lg:text-20 font-normal ;
 }
@@ -88,4 +92,14 @@
 /* Gradient text */
 @utility text-gradient {
   @apply from-accent/3 to-accent bg-linear-to-br bg-clip-text text-transparent;
+}
+
+@utility fp-list-square {
+  & > li {
+    @apply relative pl-24;
+
+    &::before {
+      @apply content-[''] absolute left-0 top-0 size-8 m-6 size-8 bg-accent;
+    }
+  }
 }

@@ -45,7 +45,7 @@ class DLC extends Post_Type {
 			'rewrite'            => [
 				'slug' => self::SLUG,
 			],
-			'has_archive'        => true,
+			'has_archive'        => false,
 			'menu_icon'          => 'dashicons-awards',
 			'menu_position'      => 20,
 		];

@@ -8,11 +8,12 @@
 {% if post %}
 	{% set card_image = custom_image ? : post.thumbnail %}
 	{% set dlc_category = post.get_primary_category %}
+	{% set image_size = image_type == "wide" ? { w: 450, h: 254 } : { w: 413, h: 434 } %}
 
 	<article class="group relative space-y-24">
 		{% if card_image %}
 			<a href="{{ post.link }}" class="relative block overflow-hidden">
-				{{ image({ image: card_image, class: "w-full transition-transform duration-500 group-hover:scale-102", sizes: { w: 414, h: 434 } }) }}
+				{{ image({ image: card_image, class: "w-full transition-transform duration-500 group-hover:scale-102", sizes: image_size }) }}
 			</a>
 		{% endif %}
 

@@ -5,7 +5,7 @@
 		<button x-ref="prevBtn" class="{{ variant == "light" ? "fp-btn-sqr-light" }} fp-btn-sqr pointer-events-auto" aria-label="Previous slide">
 			{{ icon({ name: "arrow-l", w: 24, h: 24 }) }}
 		</button>
-		<div class="text-cente font-heading text-18 text-dark-gray tracking-3 min-w-30">
+		<div class="text-cente font-heading text-18 tracking-3 min-w-30 {{ text_variant == "light" ? "text-white/70" : "text-dark-gray" }}">
 			<span x-ref="currentSlide" class="text-accent">1</span>/{{ slides|length }}
 		</div>
 		<button x-ref="nextBtn" class="{{ variant == "light" ? "fp-btn-sqr-light" }} fp-btn-sqr pointer-events-auto" aria-label="Next slide">
