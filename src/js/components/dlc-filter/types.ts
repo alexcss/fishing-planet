@@ -30,8 +30,8 @@ export interface DlcPost {
 
 export interface Filters {
   category: string
-  include: string
-  waterway: string
+  include: string[]
+  waterway: string[]
   sort: string
 }
 

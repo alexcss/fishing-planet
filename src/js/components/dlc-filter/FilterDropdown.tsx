@@ -4,10 +4,11 @@ import type { FilterOption } from './types'
 interface FilterDropdownProps {
   label: string
   options: FilterOption[]
-  selected: string
-  onSelect: (value: string) => void
+  selected: string | string[]
+  onSelect: (value: string | string[]) => void
   searchPlaceholder?: string
   showSearch?: boolean
+  multi?: boolean
 }
 
 const FilterDropdown: React.FC<FilterDropdownProps> = ({
@@ -17,6 +18,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   onSelect,
   searchPlaceholder = 'Search...',
   showSearch = false,
+  multi = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -36,7 +38,50 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
 
   const filteredOptions = searchQuery ? options.filter((opt) => opt.name.toLowerCase().includes(searchQuery.toLowerCase())) : options
 
-  const selectedOption = options.find((opt) => opt.slug === selected)
+  // Normalize selected to array for internal use
+  const selectedArray = multi ? (selected as string[]) : selected ? [selected as string] : []
+
+  const selectedOption = multi
+    ? null
+    : options.find((opt) => opt.slug === selected)
+
+  // Display text for button
+  const displayLabel = multi
+    ? selectedArray.length > 0
+      ? `${label} (${selectedArray.length})`
+      : label
+    : selectedOption
+      ? selectedOption.name
+      : label
+
+  // Toggle selection for multi-select
+  const toggleSelection = (slug: string) => {
+    if (!multi) {
+      onSelect(slug)
+      setIsOpen(false)
+      return
+    }
+
+    const current = selected as string[]
+    const isSelected = current.includes(slug)
+    let newSelection: string[]
+
+    if (isSelected) {
+      newSelection = current.filter((s) => s !== slug)
+    } else {
+      newSelection = [...current, slug]
+    }
+
+    onSelect(newSelection)
+  }
+
+  // Check if option is selected
+  const isSelected = (slug: string): boolean => {
+    if (multi) {
+      return (selected as string[]).includes(slug)
+    }
+    return selected === slug
+  }
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -47,7 +92,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       >
         <span
           className="fp-captital-title min-w-0 truncate"
-          dangerouslySetInnerHTML={{ __html: selectedOption ? selectedOption.name : label }}
+          dangerouslySetInnerHTML={{ __html: displayLabel }}
         ></span>
         <svg className={`h-24 w-24 shrink-0 text-white transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
           <use href="#icon-arrow-down" />
@@ -71,17 +116,21 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
 
           {/* Options List */}
           <div className="fp-scrollbar-thin max-h-320 overflow-y-auto pb-20">
-            {/* All Option */}
+            {/* All Option - clears selection for multi, selects empty for single */}
             <button
               onClick={() => {
-                onSelect('')
-                setIsOpen(false)
+                if (multi) {
+                  onSelect([])
+                } else {
+                  onSelect('')
+                  setIsOpen(false)
+                }
               }}
               className="w-full px-20 transition-colors hover:bg-white/5"
             >
               <span className="flex items-center justify-between border-b border-white/15 py-16">
-                <span className={`font-heading text-24 leading-none uppercase ${selected === '' ? 'text-white' : 'text-white/50'}`}>All</span>
-                {selected === '' && (
+                <span className={`font-heading text-24 leading-none uppercase ${selectedArray.length === 0 ? 'text-white' : 'text-white/50'}`}>All</span>
+                {selectedArray.length === 0 && (
                   <svg className="h-24 w-24 text-white">
                     <use href="#icon-check" />
                   </svg>
@@ -90,28 +139,24 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
             </button>
 
             {/* Filtered Options */}
-            {filteredOptions.map((option, index) => (
-              <React.Fragment key={option.slug}>
-                <button
-                  onClick={() => {
-                    onSelect(option.slug)
-                    setIsOpen(false)
-                  }}
-                  className="w-full px-20 transition-colors hover:bg-white/5"
-                >
-                  <span className="flex items-center justify-between border-b border-white/15 py-16">
-                    <span
-                      className={`font-heading text-24 text-left leading-none uppercase ${selected === option.slug ? 'text-white' : 'text-white/50'}`}
-                      dangerouslySetInnerHTML={{ __html: option.name }}
-                    ></span>
-                    {selected === option.slug && (
-                      <svg className="h-24 w-24 text-white">
-                        <use href="#icon-check" />
-                      </svg>
-                    )}
-                  </span>
-                </button>
-              </React.Fragment>
+            {filteredOptions.map((option) => (
+              <button
+                key={option.slug}
+                onClick={() => toggleSelection(option.slug)}
+                className="w-full px-20 transition-colors hover:bg-white/5"
+              >
+                <span className="flex items-center justify-between border-b border-white/15 py-16">
+                  <span
+                    className={`font-heading text-24 text-left leading-none uppercase ${isSelected(option.slug) ? 'text-white' : 'text-white/50'}`}
+                    dangerouslySetInnerHTML={{ __html: option.name }}
+                  ></span>
+                  {isSelected(option.slug) && (
+                    <svg className="h-24 w-24 text-white">
+                      <use href="#icon-check" />
+                    </svg>
+                  )}
+                </span>
+              </button>
             ))}
           </div>
         </div>

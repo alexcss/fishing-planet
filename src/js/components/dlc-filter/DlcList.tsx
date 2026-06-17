@@ -23,53 +23,43 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
   const [totalPosts, setTotalPosts] = useState(initialTotalPosts || initialPosts.length)
   const isInitialMount = useRef(true)
 
+  // Helper to compare arrays
+  const arraysEqual = (a: string[], b: string[]): boolean => {
+    if (a.length !== b.length) return false
+    return [...a].sort().join(',') === [...b].sort().join(',')
+  }
+
   // Update URL with current state (only if changed)
   const updateUrl = useCallback((page: number, filters: Filters) => {
     if (typeof window === 'undefined') return
 
     const url = new URL(window.location.href)
     const currentCategory = url.searchParams.get('category') || ''
-    const currentInclude = url.searchParams.get('include') || ''
-    const currentWaterway = url.searchParams.get('waterway') || ''
+    const currentInclude = url.searchParams.get('include') ? url.searchParams.get('include')!.split(',') : []
+    const currentWaterway = url.searchParams.get('waterway') ? url.searchParams.get('waterway')!.split(',') : []
     const currentPage = parseInt(url.searchParams.get('page') || '1', 10)
 
     // Only update if something changed
     if (
       currentPage === page &&
       currentCategory === (filters.category || '') &&
-      currentInclude === (filters.include || '') &&
-      currentWaterway === (filters.waterway || '')
+      arraysEqual(currentInclude, filters.include) &&
+      arraysEqual(currentWaterway, filters.waterway)
     ) {
       return
     }
 
-    // Update page
-    if (page > 1) {
-      url.searchParams.set('page', page.toString())
-    } else {
-      url.searchParams.delete('page')
-    }
+    // Handle arrays - join with commas (manually build to avoid encoding)
+    const params: string[] = []
+    if (page > 1) params.push(`page=${page}`)
+    if (filters.category) params.push(`category=${encodeURIComponent(filters.category)}`)
+    if (filters.include.length > 0) params.push(`include=${filters.include.join(',')}`)
+    if (filters.waterway.length > 0) params.push(`waterway=${filters.waterway.join(',')}`)
 
-    // Update filters
-    if (filters.category) {
-      url.searchParams.set('category', filters.category)
-    } else {
-      url.searchParams.delete('category')
-    }
+    const queryString = params.length > 0 ? `?${params.join('&')}` : ''
+    const cleanUrl = `${url.pathname}${queryString}${url.hash}`
 
-    if (filters.include) {
-      url.searchParams.set('include', filters.include)
-    } else {
-      url.searchParams.delete('include')
-    }
-
-    if (filters.waterway) {
-      url.searchParams.set('waterway', filters.waterway)
-    } else {
-      url.searchParams.delete('waterway')
-    }
-
-    window.history.replaceState({}, '', url.toString())
+    window.history.replaceState({}, '', cleanUrl)
   }, [])
 
   // Fetch posts
@@ -84,8 +74,8 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
         })
 
         if (currentFilters.category) params.append('category', currentFilters.category)
-        if (currentFilters.include) params.append('include', currentFilters.include)
-        if (currentFilters.waterway) params.append('waterway', currentFilters.waterway)
+        if (currentFilters.include.length > 0) params.append('include', currentFilters.include.join(','))
+        if (currentFilters.waterway.length > 0) params.append('waterway', currentFilters.waterway.join(','))
         if (currentFilters.sort) params.append('sort', currentFilters.sort)
 
         const response = await fetch(`${apiEndpoint}?${params}`)

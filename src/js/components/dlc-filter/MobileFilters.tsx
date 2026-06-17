@@ -4,7 +4,7 @@ import type { FilterData, Filters } from './types'
 interface MobileFiltersProps {
   filterData: FilterData
   filters: Filters
-  onFilterChange: (key: keyof Filters, value: string) => void
+  onFilterChange: (key: keyof Filters, value: string | string[]) => void
   onClearFilters: () => void
   activeFilterCount: number
 }
@@ -71,21 +71,28 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
       <div>
         <label className="block font-heading text-24 text-white mb-16">Pack Content</label>
         <div className="space-y-12">
-          <button
-            onClick={() => onFilterChange('include', '')}
-            className={`w-full text-left font-heading text-24 ${filters.include === '' ? 'text-white' : 'text-white/70'}`}
-          >
-            All
-          </button>
-          {filterData.includes.map(item => (
-            <button
-              key={item.slug}
-              onClick={() => onFilterChange('include', item.slug)}
-              className={`w-full text-left font-heading text-24 ${filters.include === item.slug ? 'text-sand' : 'text-sand'}`}
-            >
-              {item.name} ({item.count})
-            </button>
-          ))}
+          {filterData.includes.map(item => {
+            const isSelected = filters.include.includes(item.slug)
+            return (
+              <button
+                key={item.slug}
+                onClick={() => {
+                  const newSelection = isSelected
+                    ? filters.include.filter(s => s !== item.slug)
+                    : [...filters.include, item.slug]
+                  onFilterChange('include', newSelection)
+                }}
+                className={`w-full text-left font-heading text-24 flex items-center justify-between ${isSelected ? 'text-sand' : 'text-white/70'}`}
+              >
+                <span>{item.name}</span>
+                {isSelected && (
+                  <svg className="h-24 w-24 text-white">
+                    <use href="#icon-check" />
+                  </svg>
+                )}
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -93,22 +100,28 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
       <div>
         <label className="block font-heading text-24 text-white mb-16">Waterway</label>
         <div className="space-y-12">
-          <button
-            onClick={() => onFilterChange('waterway', '')}
-            className={`w-full text-left font-heading text-24 ${filters.waterway === '' ? 'text-white' : 'text-white/70'}`}
-          >
-            All
-          </button>
-          {filterData.waterways.map(waterway => (
-            <button
-              key={waterway.slug}
-              onClick={() => onFilterChange('waterway', waterway.slug)}
-              className={`w-full text-left font-heading text-24 flex justify-between ${filters.waterway === waterway.slug ? 'text-sand' : 'text-sand'}`}
-            >
-              <span>{waterway.name}</span>
-              <span className="text-white/30">({waterway.count})</span>
-            </button>
-          ))}
+          {filterData.waterways.map(waterway => {
+            const isSelected = filters.waterway.includes(waterway.slug)
+            return (
+              <button
+                key={waterway.slug}
+                onClick={() => {
+                  const newSelection = isSelected
+                    ? filters.waterway.filter(s => s !== waterway.slug)
+                    : [...filters.waterway, waterway.slug]
+                  onFilterChange('waterway', newSelection)
+                }}
+                className={`w-full text-left font-heading text-24 flex items-center justify-between ${isSelected ? 'text-sand' : 'text-white/70'}`}
+              >
+                <span>{waterway.name}</span>
+                {isSelected && (
+                  <svg className="h-24 w-24 text-white">
+                    <use href="#icon-check" />
+                  </svg>
+                )}
+              </button>
+            )
+          })}
         </div>
       </div>
 

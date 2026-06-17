@@ -100,18 +100,22 @@ class DLC_Api {
 		}
 
 		if ( $include ) {
-			$tax_query[] = [
+			$include_terms = array_filter( explode( ',', $include ) );
+			$tax_query[]   = [
 				'taxonomy' => 'dlc_includes',
 				'field'    => 'slug',
-				'terms'    => $include,
+				'terms'    => $include_terms,
+				'operator' => 'IN',
 			];
 		}
 
 		if ( $waterway ) {
-			$tax_query[] = [
+			$waterway_terms = array_filter( explode( ',', $waterway ) );
+			$tax_query[]    = [
 				'taxonomy' => 'dlc_waterways',
 				'field'    => 'slug',
-				'terms'    => $waterway,
+				'terms'    => $waterway_terms,
+				'operator' => 'IN',
 			];
 		}
 

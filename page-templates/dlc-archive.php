@@ -30,8 +30,19 @@ $waterways = Timber::get_terms( [
 // Get initial page and filters from URL
 $initial_page    = isset( $_GET['page'] ) ? max( 1, intval( $_GET['page'] ) ) : 1;
 $filter_category = isset( $_GET['category'] ) ? sanitize_text_field( $_GET['category'] ) : '';
-$filter_include  = isset( $_GET['include'] ) ? sanitize_text_field( $_GET['include'] ) : '';
-$filter_waterway = isset( $_GET['waterway'] ) ? sanitize_text_field( $_GET['waterway'] ) : '';
+
+// Handle comma-separated values for multi-select filters
+$filter_include = [];
+if ( isset( $_GET['include'] ) ) {
+	$raw_include    = is_array( $_GET['include'] ) ? implode( ',', $_GET['include'] ) : $_GET['include'];
+	$filter_include = array_map( 'sanitize_text_field', array_filter( explode( ',', $raw_include ) ) );
+}
+
+$filter_waterway = [];
+if ( isset( $_GET['waterway'] ) ) {
+	$raw_waterway    = is_array( $_GET['waterway'] ) ? implode( ',', $_GET['waterway'] ) : $_GET['waterway'];
+	$filter_waterway = array_map( 'sanitize_text_field', array_filter( explode( ',', $raw_waterway ) ) );
+}
 
 // Initial DLC query for SSR (3 per page)
 $dlc_query = [
@@ -51,18 +62,20 @@ if ( $filter_category ) {
 		'terms'    => $filter_category,
 	];
 }
-if ( $filter_include ) {
+if ( ! empty( $filter_include ) ) {
 	$tax_query[] = [
 		'taxonomy' => 'dlc_includes',
 		'field'    => 'slug',
 		'terms'    => $filter_include,
+		'operator' => 'IN',
 	];
 }
-if ( $filter_waterway ) {
+if ( ! empty( $filter_waterway ) ) {
 	$tax_query[] = [
 		'taxonomy' => 'dlc_waterways',
 		'field'    => 'slug',
 		'terms'    => $filter_waterway,
+		'operator' => 'IN',
 	];
 }
 if ( ! empty( $tax_query ) ) {
@@ -160,8 +173,8 @@ $data = [
 	'initial_page'    => $initial_page,
 	'initial_filters' => [
 		'category' => $filter_category,
-		'include'  => $filter_include,
-		'waterway' => $filter_waterway,
+		'include'  => array_values( $filter_include ),
+		'waterway' => array_values( $filter_waterway ),
 		'sort'     => 'latest',
 	],
 ];
