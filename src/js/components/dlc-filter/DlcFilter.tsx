@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import FilterDropdown from './FilterDropdown'
 import DlcList from './DlcList'
 import MobileFilters from './MobileFilters'
+import DesktopSearch from './DesktopSearch'
 import type { FilterData, Filters, DlcPost } from './types'
 
 interface DlcFilterProps {
@@ -79,16 +80,7 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
           multi
         />
 
-        {/* Search Button */}
-        <div className="ml-auto">
-          <button className="fp-btn-corners size-64 bg-transparent" aria-label="Search">
-            <span>
-              <svg className="h-24 w-24 text-white">
-                <use href="#icon-search" />
-              </svg>
-            </span>
-          </button>
-        </div>
+        <DesktopSearch value={filters.search} onChange={(value) => handleFilterChange('search', value)} />
       </div>
 
       {/* Mobile Filters */}

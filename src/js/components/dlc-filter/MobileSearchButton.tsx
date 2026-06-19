@@ -30,7 +30,7 @@ const MobileSearchButton: React.FC<MobileSearchButtonProps> = ({ value, onChange
           placeholder="Search"
           minLength={3}
           maxLength={50}
-          className="fp-captital-title-sm w-full placeholder:text-white focus:outline-none"
+          className="fp-captital-title-sm w-full placeholder:text-white/50 focus:outline-none"
         />
       </span>
       {localValue && (
