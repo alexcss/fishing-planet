@@ -3,9 +3,25 @@ import type { DlcPost } from './types'
 
 interface DlcCardProps {
   dlc: DlcPost
+  highlight?: string
 }
 
-const DlcCard: React.FC<DlcCardProps> = ({ dlc }) => {
+const highlightText = (text: string, query: string): React.ReactNode => {
+  if (!query || query.trim().length < 2) return text
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const parts = text.split(new RegExp(`(${escaped})`, 'gi'))
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <mark key={i} className="bg-accent/30 text-white">
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  )
+}
+
+const DlcCard: React.FC<DlcCardProps> = ({ dlc, highlight }) => {
   return (
     <article className="group border-b border-white/15 pb-32">
       <div className="grid grid-cols-1 gap-32 md:gap-40 lg:grid-cols-24 lg:gap-40">
@@ -34,7 +50,7 @@ const DlcCard: React.FC<DlcCardProps> = ({ dlc }) => {
           {/* Title */}
           <h3 className="h4 group-hover:text-accent text-white transition-colors">
             <a href={dlc.permalink} className="no-underline">
-              {dlc.title}
+              {highlight ? highlightText(dlc.title, highlight) : dlc.title}
             </a>
           </h3>
 
@@ -63,7 +79,7 @@ const DlcCard: React.FC<DlcCardProps> = ({ dlc }) => {
         </div>
 
         {/* Image Side */}
-        <div className="lg:col-span-15 lg:col-span-17">
+        <div className="lg:col-span-15 xl:col-span-17">
           <a href={dlc.permalink} className="md:fp-block-corners relative block">
             <picture className="block overflow-hidden">
               {dlc.thumbnail ? (

@@ -120,7 +120,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
 
   return (
     <div id="dlc-list" className="space-y-32 xl:space-y-60">
-      <DlcGrid posts={posts} />
+      <DlcGrid posts={posts} highlight={filters.search} />
 
       {posts.length === 0 && !loading && <EmptyState />}
 

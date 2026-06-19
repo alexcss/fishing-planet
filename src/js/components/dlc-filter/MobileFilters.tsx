@@ -23,7 +23,7 @@ const filterSections = (filterData: FilterData): Array<{ key: AccordionKey; labe
 ]
 
 const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onSearchChange, onClearFilters, activeFilterCount }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const [accordion, setAccordion] = useState<Record<AccordionKey, boolean>>({
     category: false,
     include: false,
@@ -36,11 +36,7 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFi
 
   return (
     <div className="border border-white/15 bg-black lg:hidden">
-      <MobileFilterToggle
-        isOpen={isOpen}
-        activeFilterCount={activeFilterCount}
-        onToggle={() => setIsOpen(!isOpen)}
-      />
+      <MobileFilterToggle isOpen={isOpen} activeFilterCount={activeFilterCount} onToggle={() => setIsOpen(!isOpen)} />
 
       <div className={`fp-collapse ${isOpen ? 'open' : ''}`}>
         <div className="overflow-hidden">
