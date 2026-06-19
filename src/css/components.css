@@ -143,6 +143,15 @@
   @apply bg-cover bg-center bg-no-repeat bg-(image:--section-image-bg-mobile) lg:bg-(image:--section-image-bg-desktop);
 }
 
+@utility fp-collapse {
+  @apply grid transition-[grid-template-rows] duration-300 ease-in-out ;
+  @apply grid-rows-[0fr];
+
+  &.open {
+    @apply grid-rows-[1fr];
+  }
+}
+
 
 /* Links */
 @utility fp-link {
