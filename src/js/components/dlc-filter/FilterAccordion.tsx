@@ -13,6 +13,9 @@ interface FilterAccordionProps {
 
 const FilterAccordion: React.FC<FilterAccordionProps> = ({ label, isOpen, onToggle, options, selected, multi = false, onChange }) => {
   const isAllSelected = multi ? (selected as string[]).length === 0 : selected === ''
+  const selectedCount = multi ? (selected as string[]).length : selected !== '' ? 1 : 0
+  const singleSelectedName =
+    selectedCount === 1 ? (options.find((o) => (multi ? (selected as string[]).includes(o.slug) : o.slug === selected))?.name ?? null) : null
 
   const handleSelect = (slug: string) => {
     if (!multi) {
@@ -28,8 +31,9 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ label, isOpen, onTogg
 
   return (
     <div>
-      <button onClick={onToggle} className="bg-gray-gunmetal flex w-full items-center justify-between border border-white/15 p-12">
-        <span className="fp-captital-title">{label}</span>
+      <button onClick={onToggle} className="bg-gray-gunmetal flex w-full items-center justify-between gap-6 border border-white/15 p-12">
+        <span className="fp-captital-title">{singleSelectedName ?? label}</span>
+        {selectedCount > 1 && <span className="font-heading text-24/none ml-auto text-white/50">({selectedCount})</span>}
         <svg className={`text-gray h-24 w-24 transition-transform ${isOpen ? 'rotate-180' : ''}`}>
           <use href="#icon-arrow-down" />
         </svg>
