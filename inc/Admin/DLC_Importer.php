@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 class DLC_Importer {
 
 	const OPTION_SHEET_URL = 'fp_dlc_importer_sheet_url';
-	const MENU_SLUG        = 'fp-dlc-importer';
+	const MENU_SLUG = 'fp-dlc-importer';
 
 	private array $report = [
 		'added'   => 0,
@@ -33,7 +33,7 @@ class DLC_Importer {
 	}
 
 	public function enqueue_assets( string $hook ): void {
-		if ( 'dlc_page_' . self::MENU_SLUG !== $hook ) {
+		if ( 'page_' . self::MENU_SLUG !== $hook ) {
 			return;
 		}
 
@@ -210,10 +210,10 @@ class DLC_Importer {
 		if ( $existing_post ) {
 			$post_id = $existing_post;
 			$this->update_dlc_post( $post_id, $dlc_data );
-			$this->report['updated']++;
+			$this->report['updated'] ++;
 		} else {
 			$post_id = $this->create_dlc_post( $dlc_data );
-			$this->report['added']++;
+			$this->report['added'] ++;
 		}
 
 		$this->update_dlc_meta( $post_id, $dlc_data );
@@ -288,7 +288,7 @@ class DLC_Importer {
 				case 'dlc_category':
 				case 'dlc_includes':
 				case 'dlc_waterways':
-					$terms = $this->parse_multiline_field( $value );
+					$terms       = $this->parse_multiline_field( $value );
 					$valid_terms = array_filter( $terms, [ $this, 'is_valid_value' ] );
 					if ( ! empty( $valid_terms ) ) {
 						$data[ $column_name ] = array_values( $valid_terms );
@@ -302,7 +302,7 @@ class DLC_Importer {
 					break;
 
 				case 'gallery':
-					$urls = $this->parse_multiline_field( $value );
+					$urls       = $this->parse_multiline_field( $value );
 					$valid_urls = array_filter( $urls, [ $this, 'is_valid_url' ] );
 					if ( ! empty( $valid_urls ) ) {
 						$data['gallery'] = array_values( $valid_urls );
@@ -316,6 +316,7 @@ class DLC_Importer {
 
 	private function is_valid_value( string $value ): bool {
 		$trimmed = trim( $value );
+
 		return strlen( $trimmed ) >= 3;
 	}
 
@@ -324,6 +325,7 @@ class DLC_Importer {
 		if ( strlen( $trimmed ) < 3 ) {
 			return false;
 		}
+
 		return filter_var( $trimmed, FILTER_VALIDATE_URL ) !== false;
 	}
 
@@ -394,9 +396,9 @@ class DLC_Importer {
 
 	private function update_dlc_taxonomies( int $post_id, array $data ): void {
 		$taxonomies = [
-			'dlc_category'   => 'dlc_category',
-			'dlc_includes'   => 'dlc_includes',
-			'dlc_waterways'  => 'dlc_waterways',
+			'dlc_category'  => 'dlc_category',
+			'dlc_includes'  => 'dlc_includes',
+			'dlc_waterways' => 'dlc_waterways',
 		];
 
 		foreach ( $taxonomies as $data_key => $taxonomy ) {
@@ -432,6 +434,7 @@ class DLC_Importer {
 			if ( isset( $result->error_data['term_exists'] ) ) {
 				return $result->error_data['term_exists'];
 			}
+
 			return null;
 		}
 

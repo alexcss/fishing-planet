@@ -28,7 +28,7 @@ $waterways = Timber::get_terms( [
 ] );
 
 // Get initial page and filters from URL
-$initial_page    = isset( $_GET['page'] ) ? max( 1, intval( $_GET['page'] ) ) : 1;
+$initial_page    = isset( $_GET['pg'] ) ? max( 1, intval( $_GET['pg'] ) ) : 1;
 $filter_category = isset( $_GET['category'] ) ? sanitize_text_field( $_GET['category'] ) : '';
 $filter_search   = isset( $_GET['search'] ) ? sanitize_text_field( $_GET['search'] ) : '';
 

@@ -32,7 +32,7 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ label, isOpen, onTogg
   return (
     <div>
       <button onClick={onToggle} className="bg-gray-gunmetal flex w-full items-center justify-between gap-6 border border-white/15 p-12">
-        <span className="fp-captital-title">{singleSelectedName ?? label}</span>
+        <span className="fp-captital-title" dangerouslySetInnerHTML={{ __html: singleSelectedName ?? label }} />
         {selectedCount > 1 && <span className="font-heading text-24/none ml-auto text-white/50">({selectedCount})</span>}
         <svg className={`text-gray h-24 w-24 transition-transform ${isOpen ? 'rotate-180' : ''}`}>
           <use href="#icon-arrow-down" />

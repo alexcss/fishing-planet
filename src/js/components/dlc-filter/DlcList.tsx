@@ -22,6 +22,9 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
   const [totalPages, setTotalPages] = useState(initialTotalPosts ? Math.ceil(initialTotalPosts / PER_PAGE) : 1)
   const [totalPosts, setTotalPosts] = useState(initialTotalPosts || initialPosts.length)
   const isInitialMount = useRef(true)
+  const initialFiltersKey = useRef(
+    [filters.category, filters.search, filters.sort, [...filters.include].sort().join(','), [...filters.waterway].sort().join(',')].join('|')
+  )
 
   // Helper to compare arrays
   const arraysEqual = (a: string[], b: string[]): boolean => {
@@ -38,7 +41,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
     const currentInclude = url.searchParams.get('include') ? url.searchParams.get('include')!.split(',') : []
     const currentWaterway = url.searchParams.get('waterway') ? url.searchParams.get('waterway')!.split(',') : []
     const currentSearch = url.searchParams.get('search') || ''
-    const currentPage = parseInt(url.searchParams.get('page') || '1', 10)
+    const currentPage = parseInt(url.searchParams.get('pg') || '1', 10)
 
     // Only update if something changed
     if (
@@ -53,7 +56,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
 
     // Handle arrays - join with commas (manually build to avoid encoding)
     const params: string[] = []
-    if (page > 1) params.push(`page=${page}`)
+    if (page > 1) params.push(`pg=${page}`)
     if (filters.category) params.push(`category=${encodeURIComponent(filters.category)}`)
     if (filters.include.length > 0) params.push(`include=${filters.include.join(',')}`)
     if (filters.waterway.length > 0) params.push(`waterway=${filters.waterway.join(',')}`)
@@ -111,10 +114,22 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
 
   // Fetch when filters change (reset to page 1), but skip on initial mount
   useEffect(() => {
+    const currentKey = [
+      filters.category,
+      filters.search,
+      filters.sort,
+      [...filters.include].sort().join(','),
+      [...filters.waterway].sort().join(','),
+    ].join('|')
+
     if (isInitialMount.current) {
       isInitialMount.current = false
       return
     }
+
+    // Skip if filters haven't changed from initial (handles StrictMode double-invoke)
+    if (currentKey === initialFiltersKey.current) return
+
     fetchPosts(1, filters)
   }, [filters, fetchPosts])
 
