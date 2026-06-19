@@ -15,14 +15,14 @@ interface DlcFilterProps {
 }
 
 const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPosts, initialPage = 1, initialFilters, apiEndpoint }) => {
-  const [filters, setFilters] = useState<Filters>(
-    initialFilters || {
-      category: '',
-      include: [],
-      waterway: [],
-      sort: 'latest',
-    }
-  )
+  const [filters, setFilters] = useState<Filters>({
+    category: '',
+    include: [],
+    waterway: [],
+    sort: 'latest',
+    search: '',
+    ...initialFilters,
+  })
 
   // Handle filter changes
   const handleFilterChange = (key: keyof Filters, value: string | string[]) => {
@@ -39,6 +39,7 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
       include: [],
       waterway: [],
       sort: 'latest',
+      search: '',
     })
   }
 
@@ -95,6 +96,7 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
         filterData={filterData}
         filters={filters}
         onFilterChange={handleFilterChange}
+        onSearchChange={(value) => handleFilterChange('search', value)}
         onClearFilters={clearFilters}
         activeFilterCount={activeFilterCount}
       />

@@ -13,15 +13,6 @@
   @apply disabled:bg-gray disabled:text-white/70 disabled:cursor-not-allowed;
 }
 
-/* Legacy button styles */
-@utility fp-btn-legacy {
-  @apply inline-flex items-center justify-center gap-4 rounded-full px-19 py-8 h-44 border md:h-50 whitespace-nowrap;
-  @apply font-sans;
-  @apply bg-black text-white border-transparent;
-  @apply hover:bg-accent hover:text-white active:bg-accent active:text-white [&.active]:bg-accent [&.active]:text-white;
-  @apply disabled:bg-gray disabled:text-white disabled:border-gray disabled:opacity-70 disabled:cursor-not-allowed;
-}
-
 @utility fp-btn-light {
   @apply btn-base h-54 py-14;
   @apply bg-white text-black border-transparent;
@@ -66,10 +57,18 @@
 
 @utility fp-btn-corners {
   @apply size-40 flex items-center justify-center bg-gray-gunmetal border border-white/15 p-6 text-white relative;
-  @apply hover:not-disabled:border-accent hover:not-disabled:text-white hover:not-disabled:bg-accent;
-  @apply active:not-disabled:border-accent-active active:not-disabled:text-white active:not-disabled:bg-accent-active;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
-  @apply [&:not(a):not(button)]:pointer-events-none;
+
+  &:is(a, button) {
+    @apply hover:not-disabled:border-accent hover:not-disabled:text-white hover:not-disabled:bg-accent;
+    @apply active:not-disabled:border-accent-active active:not-disabled:text-white active:not-disabled:bg-accent-active;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+
+    &:hover, &:active {
+      &:before, &:after, & > span:before, & > span:after {
+        @apply opacity-0;
+      }
+    }
+  }
 
   &:before, &:after {
     @apply content-[''] absolute -inset-y-1 -left-1 border-t border-b w-6 border-sand transition-opacity duration-200 ease-in-out;
@@ -89,11 +88,6 @@
     }
   }
 
-  &:hover, &:active {
-    &:before, &:after, & > span:before, & > span:after {
-      @apply opacity-0;
-    }
-  }
 }
 
 /* Block links */

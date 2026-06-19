@@ -33,6 +33,7 @@ export interface Filters {
   include: string[]
   waterway: string[]
   sort: string
+  search: string
 }
 
 export interface DlcApiResponse {

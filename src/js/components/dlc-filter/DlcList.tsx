@@ -37,6 +37,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
     const currentCategory = url.searchParams.get('category') || ''
     const currentInclude = url.searchParams.get('include') ? url.searchParams.get('include')!.split(',') : []
     const currentWaterway = url.searchParams.get('waterway') ? url.searchParams.get('waterway')!.split(',') : []
+    const currentSearch = url.searchParams.get('search') || ''
     const currentPage = parseInt(url.searchParams.get('page') || '1', 10)
 
     // Only update if something changed
@@ -44,7 +45,8 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
       currentPage === page &&
       currentCategory === (filters.category || '') &&
       arraysEqual(currentInclude, filters.include) &&
-      arraysEqual(currentWaterway, filters.waterway)
+      arraysEqual(currentWaterway, filters.waterway) &&
+      currentSearch === (filters.search || '')
     ) {
       return
     }
@@ -55,6 +57,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
     if (filters.category) params.push(`category=${encodeURIComponent(filters.category)}`)
     if (filters.include.length > 0) params.push(`include=${filters.include.join(',')}`)
     if (filters.waterway.length > 0) params.push(`waterway=${filters.waterway.join(',')}`)
+    if (filters.search) params.push(`search=${encodeURIComponent(filters.search)}`)
 
     const queryString = params.length > 0 ? `?${params.join('&')}` : ''
     const cleanUrl = `${url.pathname}${queryString}${url.hash}`
@@ -77,6 +80,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
         if (currentFilters.include.length > 0) params.append('include', currentFilters.include.join(','))
         if (currentFilters.waterway.length > 0) params.append('waterway', currentFilters.waterway.join(','))
         if (currentFilters.sort) params.append('sort', currentFilters.sort)
+        if (currentFilters.search) params.append('search', currentFilters.search)
 
         const response = await fetch(`${apiEndpoint}?${params}`)
         const data: DlcApiResponse = await response.json()

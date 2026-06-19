@@ -62,6 +62,7 @@ class DLC_Api {
 		$include  = $request->get_param( 'include' );
 		$waterway = $request->get_param( 'waterway' );
 		$sort     = $request->get_param( 'sort' );
+		$search   = $request->get_param( 'search' );
 
 		$args = [
 			'post_type'      => 'dlc',
@@ -86,6 +87,10 @@ class DLC_Api {
 				$args['orderby'] = 'date';
 				$args['order']   = 'DESC';
 				break;
+		}
+
+		if ( $search ) {
+			$args['s'] = sanitize_text_field( $search );
 		}
 
 		// Tax query for filters

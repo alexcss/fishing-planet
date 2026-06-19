@@ -43,6 +43,10 @@
   @apply font-heading text-26/[0.9] font-bold uppercase md:text-32;
 }
 
+@utility fp-captital-title-sm {
+  @apply font-heading text-24/[0.9] font-bold uppercase;
+}
+
 /* Button text style from Figma */
 
 @utility fp-btn-text {

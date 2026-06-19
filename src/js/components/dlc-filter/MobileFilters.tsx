@@ -9,6 +9,7 @@ interface MobileFiltersProps {
   filterData: FilterData
   filters: Filters
   onFilterChange: (key: keyof Filters, value: string | string[]) => void
+  onSearchChange: (value: string) => void
   onClearFilters: () => void
   activeFilterCount: number
 }
@@ -21,7 +22,7 @@ const filterSections = (filterData: FilterData): Array<{ key: AccordionKey; labe
   { key: 'waterway', label: 'Waterway', options: filterData.waterways, multi: true },
 ]
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onClearFilters, activeFilterCount }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onSearchChange, onClearFilters, activeFilterCount }) => {
   const [isOpen, setIsOpen] = useState(true)
   const [accordion, setAccordion] = useState<Record<AccordionKey, boolean>>({
     category: false,
@@ -59,7 +60,7 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFi
 
             <div className="flex flex-col gap-8 py-24">
               {activeFilterCount > 0 && <MobileClearButton onClearFilters={onClearFilters} />}
-              <MobileSearchButton />
+              <MobileSearchButton value={filters.search} onChange={onSearchChange} />
             </div>
           </div>
         </div>

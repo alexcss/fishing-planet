@@ -30,6 +30,7 @@ $waterways = Timber::get_terms( [
 // Get initial page and filters from URL
 $initial_page    = isset( $_GET['page'] ) ? max( 1, intval( $_GET['page'] ) ) : 1;
 $filter_category = isset( $_GET['category'] ) ? sanitize_text_field( $_GET['category'] ) : '';
+$filter_search   = isset( $_GET['search'] ) ? sanitize_text_field( $_GET['search'] ) : '';
 
 // Handle comma-separated values for multi-select filters
 $filter_include = [];
@@ -52,6 +53,10 @@ $dlc_query = [
 	'orderby'        => 'date',
 	'order'          => 'DESC',
 ];
+
+if ( $filter_search ) {
+	$dlc_query['s'] = $filter_search;
+}
 
 // Apply URL filters to initial query
 $tax_query = [];
@@ -176,6 +181,7 @@ $data = [
 		'include'  => array_values( $filter_include ),
 		'waterway' => array_values( $filter_waterway ),
 		'sort'     => 'latest',
+		'search'   => $filter_search,
 	],
 ];
 
