@@ -66,6 +66,12 @@ class Helper {
 		return sprintf( '%s %s', $read_time, $time_text );
 	}
 
+	public static function steam_icon( string $text ): string {
+		$svg = '<svg class="inline-block align-middle mr-6" width="0.7em" height="0.7em" aria-hidden="true"><use href="#icon-steam"></use></svg>';
+
+		return preg_replace( '/\bsteam\b/i', $svg . 'Steam', $text );
+	}
+
 	/**
 	 * Returns page id by template file name
 	 *

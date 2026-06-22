@@ -22,7 +22,7 @@
 				{% if data.tagline %}
 					<div class="fp-block-corners w-full text-white max-lg:hidden lg:order-last lg:ml-auto lg:w-fit lg:px-60">
 						<p class="h5 text-center">
-							{{ data.tagline }}
+							{{ data.tagline|steam_icon }}
 						</p>
 					</div>
 				{% endif %}
@@ -48,7 +48,7 @@
 								<div class="relative -mt-16 md:row-span-3 md:mt-0 lg:hidden">
 									<div class="fp-block-corners text-white md:sticky md:top-120 lg:max-w-315">
 										<p class="h5 text-center">
-											{{ data.tagline }}
+											{{ data.tagline|steam_icon }}
 										</p>
 									</div>
 								</div>

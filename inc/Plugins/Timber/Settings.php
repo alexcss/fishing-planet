@@ -24,6 +24,7 @@ class Settings {
 		$twig->addFilter( new \Twig\TwigFilter( 'highlight_text', [ $helper, 'highlight_text' ] ) );
 		$twig->addFilter( new \Twig\TwigFilter( 'highlight_search', [ $helper, 'highlight_search' ] ) );
 		$twig->addFilter( new \Twig\TwigFilter( 'phone_url', [ $helper, 'phone_url' ] ) );
+		$twig->addFilter( new \Twig\TwigFilter( 'steam_icon', [ $helper, 'steam_icon' ], [ 'is_safe' => [ 'html' ] ] ) );
 		$twig->addFunction( new \Twig\TwigFunction( 'component', function ( $name, $args = [] ) {
 			return Timber::compile( "components/{$name}.twig", $args );
 		} ) );
