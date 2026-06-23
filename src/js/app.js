@@ -10,11 +10,13 @@ import Alpine from 'alpinejs'
 import videoSlider from './components/sliders.js'
 import playForFreePanel from './components/play-for-free-panel.js'
 import frontPageHeader from './components/front-page-header.js'
+import scrollProgress from './components/scroll-progress.js'
 
 window.Alpine = Alpine
 
 Alpine.data('videoSlider', videoSlider)
 Alpine.data('playForFreePanel', playForFreePanel)
 Alpine.data('frontPageHeader', frontPageHeader)
+Alpine.data('scrollProgress', scrollProgress)
 
 Alpine.start()

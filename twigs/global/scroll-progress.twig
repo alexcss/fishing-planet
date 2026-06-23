@@ -1,0 +1,15 @@
+{% set squares = 12 %}
+{% from "components/icon.twig" import icon %}
+
+<div
+	x-data="scrollProgress({{ squares }})"
+	class="fixed top-1/2 left-6 z-30 flex -translate-x-50 -translate-y-1/2 flex-col items-center gap-4 transition-transform max-md:hidden xl:left-16"
+	aria-hidden="true"
+>
+	{{ icon({ name: "anchor-down" }) }}
+	<div class="flex-col gap-2 md:flex">
+		{% for i in 1..squares %}
+			<span class="size-10 transition-colors" :class="{{ i }} <= filled ? 'bg-white/60' : 'bg-white/10'"></span>
+		{% endfor %}
+	</div>
+</div>
