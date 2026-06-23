@@ -4,6 +4,7 @@ import FilterAccordion from './FilterAccordion'
 import MobileFilterToggle from './MobileFilterToggle'
 import MobileSearchButton from './MobileSearchButton'
 import MobileClearButton from './MobileClearButton'
+import MobileWaterwayFilter from './MobileWaterwayFilter'
 
 interface MobileFiltersProps {
   filterData: FilterData
@@ -19,7 +20,6 @@ type AccordionKey = 'category' | 'include' | 'waterway'
 const filterSections = (filterData: FilterData): Array<{ key: AccordionKey; label: string; options: FilterOption[]; multi?: boolean }> => [
   { key: 'category', label: 'Category', options: filterData.categories },
   { key: 'include', label: 'Pack Content', options: filterData.includes, multi: true },
-  { key: 'waterway', label: 'Waterway', options: filterData.waterways, multi: true },
 ]
 
 const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onSearchChange, onClearFilters, activeFilterCount }) => {
@@ -53,6 +53,15 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFi
                 onChange={(val) => onFilterChange(key, val)}
               />
             ))}
+
+            <MobileWaterwayFilter
+              options={filterData.waterways}
+              selected={filters.waterway}
+              onChange={(val) => onFilterChange('waterway', val)}
+              isOpen={accordion.waterway}
+              onToggle={() => toggleAccordion('waterway')}
+              label="Waterway"
+            />
 
             <div className="flex flex-col gap-8 py-24">
               {activeFilterCount > 0 && <MobileClearButton onClearFilters={onClearFilters} />}
