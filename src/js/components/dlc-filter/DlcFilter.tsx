@@ -4,6 +4,7 @@ import FilterDropdown from './FilterDropdown'
 import DlcList from './DlcList'
 import MobileFilters from './MobileFilters'
 import DesktopSearch from './DesktopSearch'
+import WaterwayFilter from './WaterwayFilter'
 import type { FilterData, Filters, DlcPost } from './types'
 
 interface DlcFilterProps {
@@ -63,14 +64,11 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
           selected={filters.category}
           onSelect={(value) => handleFilterChange('category', value)}
         />
-        <FilterDropdown
+        <WaterwayFilter
           label="Waterway"
           options={filterData.waterways}
           selected={filters.waterway}
-          onSelect={(value) => handleFilterChange('waterway', value as string[])}
-          showSearch
-          searchPlaceholder="Search"
-          multi
+          onChange={(value) => handleFilterChange('waterway', value)}
         />
         <FilterDropdown
           label="Pack Content"

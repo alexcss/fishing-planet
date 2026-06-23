@@ -119,7 +119,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
                   onSelect('')
                 }
               }}
-              className="w-full px-20 transition-colors hover:bg-white/5"
+              className="w-full px-20 hover:bg-white/5"
             >
               <span className="flex items-center justify-between border-b border-white/15 py-16">
                 <span className={`font-heading text-24 leading-none uppercase ${selectedArray.length === 0 ? 'text-white' : 'text-white/50'}`}>
