@@ -5,7 +5,11 @@
 		{% for store in items %}
 			<a
 				href="{{ store.url }}"
-				class="hover:bg-accent text-gray-stone flex size-40 items-center justify-center bg-white hover:text-black"
+				class="hover:bg-accent flex size-40 items-center justify-center bg-white hover:text-black {{
+				variant == "dark"
+					? "text-black"
+					: "text-gray-stone"
+				}}"
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="{{ store.icon }}"
