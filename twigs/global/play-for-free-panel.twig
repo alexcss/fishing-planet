@@ -1,8 +1,8 @@
-{% from "components/icon.twig" import icon %}
-
 {% if (global.stores|length) > 0 %}
 	<div
-		class="bg-pattern-wave fixed -bottom-1 left-1/2 z-30 w-370 -translate-x-1/2 border border-white/10 bg-black p-10 pt-10 md:w-432 md:px-20 lg:w-fit xl:px-30 xl:pb-14"
+		class="bg-pattern-wave fixed -bottom-1 left-1/2 z-30 w-370 -translate-x-1/2 border border-white/10 bg-black p-10 pt-10 transition-transform duration-300 md:w-432 md:px-20 lg:w-fit xl:px-30 xl:pb-14"
+		x-data="playForFreePanel"
+		:class="{ 'translate-y-full': isFooterVisible }"
 	>
 		{% if global.stores_title %}
 			<p class="fp-captital-title-xs tracking-3 mb-12 text-center text-white/70">

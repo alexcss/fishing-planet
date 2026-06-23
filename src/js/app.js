@@ -8,9 +8,11 @@ import.meta.glob(['../../src/**', '!**/*.js', '!**/*.scss', '!**/*.css', '!**/*.
 
 import Alpine from 'alpinejs'
 import videoSlider from './components/sliders.js'
+import playForFreePanel from './components/play-for-free-panel.js'
 
 window.Alpine = Alpine
 
 Alpine.data('videoSlider', videoSlider)
+Alpine.data('playForFreePanel', playForFreePanel)
 
 Alpine.start()
