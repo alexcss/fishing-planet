@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useWaterwayGroups, groupOrder } from './useWaterwayGroups'
 import type { FilterOption } from './types'
 
 interface MobileWaterwayFilterProps {
@@ -10,31 +11,6 @@ interface MobileWaterwayFilterProps {
   label?: string
 }
 
-type WaterwayGroup = {
-  name: string
-  options: FilterOption[]
-}
-
-const groupOrder = ['Lakes', 'Oceans', 'Rivers', 'Ponds', 'Other']
-
-const getGroupName = (name: string): string => {
-  const lower = name.toLowerCase()
-  if (lower.includes('lake')) return 'Lakes'
-  if (lower.includes('ocean')) return 'Oceans'
-  if (lower.includes('river')) return 'Rivers'
-  if (lower.includes('pond')) return 'Ponds'
-  return 'Other'
-}
-
-const stripDifficultySuffix = (name: string): string => {
-  return name.replace(/\s*\/\s*(casual|normal|hardcore)$/i, '').trim()
-}
-
-const stripTypeWord = (name: string, group: string): string => {
-  const typeWord = group.toLowerCase().replace(/s$/, '')
-  return name.replace(new RegExp(`\\s*${typeWord}s?\\s*`, 'i'), '').trim()
-}
-
 const MobileWaterwayFilter: React.FC<MobileWaterwayFilterProps> = ({ options, selected, onChange, isOpen, onToggle, label = 'Waterway' }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
@@ -43,31 +19,7 @@ const MobileWaterwayFilter: React.FC<MobileWaterwayFilterProps> = ({ options, se
     return initial
   })
 
-  const groups: WaterwayGroup[] = React.useMemo(() => {
-    const map = new Map<string, FilterOption[]>()
-    options.forEach((opt) => {
-      const groupName = getGroupName(stripDifficultySuffix(opt.name))
-      const displayName = stripTypeWord(opt.name, groupName)
-      const existing = map.get(groupName) || []
-      map.set(groupName, [...existing, { ...opt, name: displayName }])
-    })
-
-    return (
-      groupOrder
-        .filter((name) => name === 'Other' || map.has(name))
-        .map((name) => ({ name, options: map.get(name) || [] }))
-    )
-  }, [options])
-
-  const filteredGroups = React.useMemo(() => {
-    if (!searchQuery) return groups
-    const q = searchQuery.toLowerCase()
-    return (
-      groups
-        .map((g) => ({ ...g, options: g.options.filter((o) => o.name.toLowerCase().includes(q)) }))
-        .filter((g) => g.options.length > 0)
-    )
-  }, [groups, searchQuery])
+  const filteredGroups = useWaterwayGroups(options, searchQuery)
 
   const toggleGroup = (name: string) => {
     setOpenGroups((prev) => ({ ...prev, [name]: !prev[name] }))
