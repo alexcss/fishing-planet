@@ -10,6 +10,7 @@ class Manager {
 		Options\GlobalOpt::class,
 		Page_Templates\Front_Page::class,
 		Page_Templates\About::class,
+		Page_Types\Blog::class,
 		Page_Templates\DLC_Archive::class,
 		Post_Types\Post::class,
 		Post_Types\DLC::class,

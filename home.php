@@ -23,9 +23,12 @@ $category_query = [
 
 $context = Timber::context();
 
+$posts_page_id = get_option( 'page_for_posts' );
+
 $data = [
-	'title'      => get_the_title( get_option( 'page_for_posts', true ) ),
+	'title'      => get_the_title( $posts_page_id ),
 	'categories' => Timber::get_terms( $category_query ),
+	'hero'       => get_field( 'hero', $posts_page_id ),
 ];
 
 $context = array_merge( $context, $data );

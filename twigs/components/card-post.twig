@@ -30,7 +30,7 @@
 			<h3 class="h4"><a href="{{ post.link }}" class="fp-link fp-stretched-link">{{ post.title }}</a></h3>
 			{% if post.excerpt %}
 				<p class="fp-text-body-small">
-					{{ post.excerpt }}
+					{{ post.excerpt.read_more("") }}
 				</p>
 			{% endif %}
 		</div>

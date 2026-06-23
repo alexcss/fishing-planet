@@ -1,0 +1,54 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<main class="pt-113 pb-80 xl:pt-144 xl:pb-130" id="blog-root">
+		<section class="relative pt-40 md:pt-60 xl:pt-100">
+			<div class="relative z-10 container">
+				<div class="mb-24 flex flex-col gap-24 md:mb-60 lg:flex-row lg:items-start">
+					{% if hero.subtitle %}
+						<p class="fp-text-small-description text-sand lg:order-1 lg:max-w-160">
+							{{ hero.subtitle }}
+						</p>
+					{% endif %}
+
+					<h1 class="h1">{{ hero.title ? : title }}</h1>
+				</div>
+			</div>
+		</section>
+
+		{# Blog Posts Grid #}
+		<section>
+			{% if (posts|length) > 0 %}
+				{% set is_two_cols = (posts|length) <= 2 %}
+
+				<div class="lg:border-t lg:border-b lg:border-white/15">
+					<div class="container">
+						<div
+							class="grid grid-cols-1 gap-40 md:grid-cols-3 md:gap-x-20 lg:gap-y-0 {{
+							is_two_cols
+								? "lg:gap-x-40 lg:grid-cols-2 xl:gap-x-80"
+								: "lg:gap-x-40"
+							}}"
+						>
+							{% for post in posts %}
+								<div class="relative md:col-span-2 lg:col-span-1 lg:py-30">
+									{% include "components/card-post.twig" with { post: post } %}
+									{% if not loop.first %}
+										<div class="absolute inset-y-0 -left-20 z-0 w-1 bg-white/15 max-lg:hidden {{ is_two_cols ? "xl:-left-40" }}"></div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				{% include "partial/pagination.twig" with { classes: "mt-80" } %}
+			{% else %}
+				<div class="container">
+					<p class="fp-text-body uppercase">
+						{{ __("No results", "fp") }}
+					</p>
+				</div>
+			{% endif %}
+		</section>
+	</main>
+{% endblock %}
