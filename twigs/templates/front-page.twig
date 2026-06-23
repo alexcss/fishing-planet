@@ -1,8 +1,17 @@
 {% extends "base.twig" %}
 
+{% block header %}
+	<div class="fp-header *:relative lg:-translate-y-full lg:transition-transform lg:duration-400" data-header-wrapper x-data="frontPageHeader()">
+		{% include "global/header.twig" %}
+	</div>
+	{% include "global/header-front-page.twig" %}
+{% endblock %}
+
 {% block content %}
 	<main>
-		{% include "templates/front-page/intro-section.twig" with { data: intro } %}
+		<div data-hero-section>
+			{% include "templates/front-page/intro-section.twig" with { data: intro } %}
+		</div>
 		{% include "templates/front-page/last-update-section.twig" with { data: last_update } %}
 		{% include "templates/front-page/latest-posts-section.twig" with { data: latest_dlc, show_gradient: true } %}
 		{% include "templates/front-page/about-section.twig" with { data: about } %}
