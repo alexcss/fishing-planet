@@ -4,7 +4,7 @@
  #}
 
 {% if data|length > 1 %}
-	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 pb-40 md:pb-0 bg-gray-matte" x-data="videoSlider()">
+	<section class="relative overflow-hidden px-18 md:px-0 pt-112 md:pt-0 pb-40 md:pb-0 bg-gray-matte" x-data="videoSlider()" data-hero-section>
 		<div class="swiper" x-ref="swiperContainer">
 			<div class="swiper-wrapper">
 				{% for slide in data %}
