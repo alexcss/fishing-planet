@@ -1,9 +1,9 @@
 {% from "components/buttons.twig" import button %}
 {% from "components/icon.twig" import icon %}
 
-<header class="fp-header no-hero-page:border-b border-white/15 bg-linear-to-b from-black to-transparent" data-header>
+<header class="fp-header no-hero-page:border-b pointer-events-none border-white/15 bg-linear-to-b from-black to-transparent" data-header>
 	<div class="py-28 xl:py-40">
-		<div class="container">
+		<div class="pointer-events-auto container">
 			<div class="flex flex-wrap items-center">
 				<div class="flex flex-1 items-center space-x-8">
 					<a class="fp-site-logo inline-flex" href="{{ site.url|e("esc_url") }}" rel="home" title="{{ site.name }}">

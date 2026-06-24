@@ -1,19 +1,7 @@
-<header class="fp-header absolute hidden lg:block">
-	<div class="py-28 lg:pt-40 xl:pt-60">
-		<div class="container">
-			<div class="flex flex-wrap items-start">
-				<div class="flex flex-1 items-center">
-					<a class="inline-flex w-260 xl:w-345" href="{{ site.url|e("esc_url") }}" rel="home" title="{{ site.name }}">
-						{% include "global/logo-xl.twig" %}
-					</a>
-				</div>
-				<nav class="flex flex-1 items-center justify-center pt-8">
-					{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-32 items-center" } %}
-				</nav>
-				<div class="flex flex-1 items-center justify-end pt-8">
-					{% include "global/stores-button.twig" with { link: header.button } %}
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
+<div
+	class="fp-header pointer-events-none *:static lg:-translate-y-full lg:transition-transform lg:duration-400"
+	data-header-wrapper
+	x-data="frontPageHeader()"
+>
+	{% include "global/header.twig" %}
+</div>
