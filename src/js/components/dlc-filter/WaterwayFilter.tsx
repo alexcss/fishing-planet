@@ -80,7 +80,7 @@ const WaterwayFilter: React.FC<WaterwayFilterProps> = ({ options, selected, onCh
 
           <div className="fp-scrollbar-thin mt-4 flex max-h-320 flex-col overflow-x-hidden overflow-y-scroll pb-20">
             <button onClick={() => onChange([])} className="pr-16 pl-20 hover:bg-white/5">
-              <span className="flex min-h-24 items-center justify-between border-b border-white/15 py-16">
+              <span className="flex min-h-57 items-center justify-between border-b border-white/15 py-16">
                 <span className={`fp-captital-title-sm ${selectedCount === 0 ? 'text-white' : 'text-white/70'}`}>All</span>
                 {selectedCount === 0 && (
                   <svg className="h-24 w-24 text-white">

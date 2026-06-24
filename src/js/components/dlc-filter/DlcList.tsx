@@ -22,9 +22,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
   const [totalPages, setTotalPages] = useState(initialTotalPosts ? Math.ceil(initialTotalPosts / PER_PAGE) : 1)
   const [totalPosts, setTotalPosts] = useState(initialTotalPosts || initialPosts.length)
   const isInitialMount = useRef(true)
-  const initialFiltersKey = useRef(
-    [filters.category, filters.search, filters.sort, [...filters.include].sort().join(','), [...filters.waterway].sort().join(',')].join('|')
-  )
+  const prevFiltersKey = useRef<string | null>(null)
 
   // Helper to compare arrays
   const arraysEqual = (a: string[], b: string[]): boolean => {
@@ -124,12 +122,14 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
 
     if (isInitialMount.current) {
       isInitialMount.current = false
+      prevFiltersKey.current = currentKey
       return
     }
 
-    // Skip if filters haven't changed from initial (handles StrictMode double-invoke)
-    if (currentKey === initialFiltersKey.current) return
+    // Skip if filters haven't changed since the last run (handles StrictMode double-invoke)
+    if (currentKey === prevFiltersKey.current) return
 
+    prevFiltersKey.current = currentKey
     fetchPosts(1, filters)
   }, [filters, fetchPosts])
 
