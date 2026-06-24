@@ -125,7 +125,6 @@
 
   /* Block indents */
   [class*="wp-image-"],
-  .wp-block-image,
   .wp-block-video,
   .wp-block-quote,
   .wp-block-table,
@@ -180,9 +179,8 @@
   }
 
   /* Image */
-  /* Image */
   .wp-block-image {
-    @apply flex flex-col gap-12 md:gap-20;
+    @apply flex flex-col gap-12 md:gap-20 my-32 md:my-40 xl:my-60;
 
     img {
       @apply m-0;
@@ -213,9 +211,9 @@
     }
 
     &.is-style-full-width {
-      @apply !w-screen relative;
-      margin-left: 50%;
-      transform: translateX(-50%);
+      @apply relative md:p-16 bg-no-repeat lg:w-[calc(min(100vw,1440px)-120px)] lg:ml-[50%] lg:-translate-x-1/2;
+      background-size: 100% 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='1320' height='757' viewBox='0 0 1320 757' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1303.5.5h16v16M16.5.5H.5v16M1303.5 756.5h16v-16M16.5 756.5H.5v-16' stroke='%23aaacaf'/%3E%3C/svg%3E");
 
       img {
         @apply w-full max-w-none;

@@ -42,7 +42,10 @@ class Core {
 		// remove blocks pattern
 		add_action( 'init', [ $this, 'remove_block_pattern' ] );
 		add_action( 'admin_init', [ $this, 'remove_patterns_menu_item' ], 100 );
-		
+
+		// register custom block styles
+		add_action( 'init', [ $this, 'register_block_styles' ] );
+
 	}
 
 	public function remove_block_pattern(): void {
@@ -106,6 +109,13 @@ class Core {
 		}
 
 		return $can_edit;
+	}
+
+	public function register_block_styles(): void {
+		register_block_style( 'core/image', [
+			'name'  => 'full-width',
+			'label' => __( 'Full Width', 'fp' ),
+		] );
 	}
 
 	public function allowed_blocks( $allowed_blocks ): array {
