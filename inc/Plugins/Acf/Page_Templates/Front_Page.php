@@ -187,13 +187,13 @@ class Front_Page extends Page_Template {
 					],
 				],
 				[
-					'label'        => __( 'Posts', 'fp' ),
+					'label'        => __( 'DLC', 'fp' ),
 					'name'         => 'posts',
 					'type'         => 'repeater',
 					'min'          => 0,
 					'max'          => 6,
 					'layout'       => 'block',
-					'button_label' => __( 'Add Post', 'fp' ),
+					'button_label' => __( 'Add DLC', 'fp' ),
 					'sub_fields'   => [
 						[
 							'label'        => __( 'Image', 'fp' ),
@@ -206,11 +206,11 @@ class Front_Page extends Page_Template {
 							],
 						],
 						[
-							'label'         => __( 'Post', 'fp' ),
+							'label'         => __( 'DLC', 'fp' ),
 							'name'          => 'post',
 							'type'          => 'relationship',
 							'elements'      => [ 'featured_image' ],
-							'post_type'     => [ 'post', 'dlc' ],
+							'post_type'     => [ 'dlc' ],
 							'filters'       => [ 'search', 'post_type' ],
 							'max'           => 1,
 							'return_format' => 'id',
@@ -372,7 +372,7 @@ class Front_Page extends Page_Template {
 							'name'          => 'post',
 							'type'          => 'relationship',
 							'elements'      => [ 'featured_image' ],
-							'post_type'     => [ 'post', 'dlc' ],
+							'post_type'     => [ 'post' ],
 							'filters'       => [ 'search', 'post_type' ],
 							'max'           => 1,
 							'return_format' => 'id',
