@@ -1,14 +1,23 @@
 {% extends "base.twig" %}
 
 {% block content %}
-	<main>
-		<div class="container">
-			<article>
-				<h1>{{ post.title }}</h1>
-				<div>
-					{{ post.content }}
+	<main class="pt-113 xl:pt-144">
+		<section class="relative pt-40 pb-40 md:pt-60 md:pb-60">
+			<div class="relative z-10 container">
+				<div class="relative">
+					{% include "components/back-button.twig" with { class: "mb-40 lg:absolute lg:left-0 lg:top-6" } %}
+					<div class="lg:mx-auto lg:max-w-640 xl:max-w-756">
+						<h1 class="h2 mb-24 md:mb-32">{{ post.title }}</h1>
+
+						{% if post.content %}
+							<div class="fp-richtext fp-text-body-article text-white/80">
+								{{ post.content }}
+							</div>
+						{% endif %}
+					</div>
 				</div>
-			</article>
-		</div>
+			</div>
+			<div class="bg-pattern-wave absolute inset-x-0 top-0 z-0 h-730 mask-y-from-80% mask-y-to-100% lg:h-428"></div>
+		</section>
 	</main>
 {% endblock %}

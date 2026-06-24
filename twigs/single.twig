@@ -1,14 +1,9 @@
 {% extends "base.twig" %}
 
 {% block content %}
-	<main>
-		<div class="container">
-			<article>
-				<h1>{{ post.title }}</h1>
-				<div>
-					{{ post.content }}
-				</div>
-			</article>
-		</div>
+	<main class="pt-113 xl:pt-144">
+		{% include "templates/single/hero-section.twig" %}
+		{% include "templates/single/content-section.twig" %}
+		{% include "templates/single/related-section.twig" %}
 	</main>
 {% endblock %}

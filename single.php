@@ -1,26 +1,32 @@
 <?php
 
 /**
- * The template for displaying all pages.
+ * The template for displaying single blog posts.
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site will use a
- * different template.
- *
- * @package  WordPress
- * @subpackage  Timber
- * @since    Timber 0.1
+ * @package Flex Press
  */
 
 defined( 'ABSPATH' ) || exit;
 
 $context = Timber::context();
+$post    = $context['post'];
 
-$data = [
-
+$related_args = [
+	'post_type'      => 'post',
+	'posts_per_page' => 3,
+	'post__not_in'   => [ $post->ID ],
+	'orderby'        => 'date',
+	'order'          => 'DESC',
 ];
 
-$context = array_merge( $context, $data );
+$categories = $post->categories;
+if ( ! empty( $categories ) ) {
+	$related_args['category__in'] = wp_list_pluck( $categories, 'id' );
+}
+
+$related = Timber::get_posts( $related_args );
+
+$context['related']   = $related;
+$context['blog_url'] = get_permalink( get_option( 'page_for_posts' ) ) ?: null;
 
 Timber::render( [ 'single.twig' ], $context );

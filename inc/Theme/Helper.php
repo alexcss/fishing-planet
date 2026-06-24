@@ -58,9 +58,9 @@ class Helper {
 		$read_time = (int) $minutes;
 
 		if ( $read_time === 1 ) {
-			$time_text = __( 'minute read', 'fp' );
+			$time_text = __( 'min read', 'fp' );
 		} else {
-			$time_text = __( 'minutes read', 'fp' );
+			$time_text = __( 'min read', 'fp' );
 		}
 
 		return sprintf( '%s %s', $read_time, $time_text );

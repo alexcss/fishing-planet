@@ -1,0 +1,18 @@
+{#
+ # Single Post - Content Section
+ # Featured image + main post content rendered with fp-richtext
+ #}
+
+{% from "components/image.twig" import image %}
+
+<section class="pt-0 pb-40 md:pb-60">
+	<div class="container">
+		<div class="lg:mx-auto lg:max-w-640 xl:max-w-756">
+			{% if post.content %}
+				<div class="fp-richtext fp-text-body-article text-white/80">
+					{{ post.content }}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>

@@ -18,7 +18,7 @@
 
 @variant headings (& :is(h1, h2, h3, h4, h5, h6));
 
-@variant no-hero-page (body:is(.page-template-dlc-archive, .single-dlc) &);
+@variant no-hero-page (body:is(.page-template-dlc-archive, .single-dlc, .single-post) &);
 
 @layer base {
   [x-cloak] {

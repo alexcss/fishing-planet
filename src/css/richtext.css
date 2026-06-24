@@ -8,19 +8,19 @@
   }
 
   & :is(h1, h2, h3, h4, h5, h6) {
-    @apply font-sans;
+    @apply font-heading text-white;
   }
 
   & :is(h1, h2, h3) {
-    @apply !mb-24 !mt-40;
+    @apply mb-24! mt-40! xl:mb-32! xl:mt-60!;
   }
 
   & :is(h4, h5, h6) {
-    @apply !mb-20 !mt-24;
+    @apply mb-20 mt-24 xl:mb-24 xl:mt-40;
   }
 
   & h1 {
-    @apply h1;
+    @apply h2;
   }
 
   & h2 {
@@ -64,7 +64,11 @@
   }
 
   & ul {
-    @apply pl-18 md:pl-24 *:pl-6;
+    @apply pl-18 md:pl-24 *:pl-6 list-[square];
+
+    li {
+      @apply marker:text-accent
+    }
 
     ul {
       @apply my-8
@@ -72,7 +76,7 @@
   }
 
   & a:not(:is(.action, .action-outline, .ghost)) {
-    @apply !fp-link no-underline;
+    @apply fp-link underline hover:no-underline;
   }
 
   & :not(pre) > code {
@@ -209,11 +213,12 @@
     }
 
     &.is-style-full-width {
+      @apply !w-screen relative;
+      margin-left: 50%;
+      transform: translateX(-50%);
 
       img {
-        @apply max-w-none;
-        margin-left: -10%;
-        width: 120% !important;
+        @apply w-full max-w-none;
       }
     }
   }

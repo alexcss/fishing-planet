@@ -1,0 +1,33 @@
+{#
+ # Single Post - Related Articles Section
+ # Related posts by category
+ #}
+
+{% if (related|length) > 0 %}
+	<section class="md:pt-60">
+		<div class="container">
+			<h2 class="h2 mb-40 md:mb-60">{{ __("Related Articles", "fp") }}</h2>
+		</div>
+		<div class="border-white/15 lg:border-t lg:border-b">
+			<div class="container">
+				<div class="grid grid-cols-1 gap-40 md:grid-cols-3 md:gap-x-20 md:gap-y-48 lg:gap-40">
+					{% for item in related %}
+						<div class="relative md:col-span-2 lg:col-span-1 lg:py-30">
+							{% include "components/card-post.twig" with { post: item } %}
+							{% if loop.index <= 2 %}
+								<div class="absolute inset-y-0 -right-20 z-0 w-1 bg-white/15 max-lg:hidden"></div>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		{% if blog_url %}
+			{% from "components/buttons.twig" import button %}
+			<div class="container mt-40 md:mt-60 flex justify-center">
+				{{ button({ link: { url: blog_url, title: __("View All", "fp") } }) }}
+			</div>
+		{% endif %}
+	</section>
+{% endif %}
