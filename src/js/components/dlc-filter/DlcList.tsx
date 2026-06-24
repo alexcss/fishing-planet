@@ -134,14 +134,14 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
   }, [filters, fetchPosts])
 
   return (
-    <div id="dlc-list" className="space-y-32 xl:space-y-60">
+    <div id="dlc-list" className="relative space-y-32 xl:space-y-60">
+      {loading && <LoadingIndicator />}
+
       <DlcGrid posts={posts} highlight={filters.search} />
 
       {posts.length === 0 && !loading && <EmptyState />}
 
       {!loading && totalPages > 1 && <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />}
-
-      {loading && <LoadingIndicator />}
     </div>
   )
 }
