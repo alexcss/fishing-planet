@@ -2,7 +2,10 @@
 {% from "components/icon.twig" import icon %}
 
 <header class="fp-header no-hero-page:border-b pointer-events-none border-white/15" data-header>
-	<div class="bg-linear-to-b from-black to-black/0 py-28 xl:py-40">
+	<div
+		class="bg-linear-to-b from-black to-black/0 py-28 transition-[padding] duration-300 ease-in-out xl:py-40 [&.fp-scrolled]:py-14"
+		x-data="headerScroll()"
+	>
 		<div class="pointer-events-auto container">
 			<div class="flex flex-wrap items-center">
 				<div class="flex flex-1 items-center space-x-8">
