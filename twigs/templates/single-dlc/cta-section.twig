@@ -13,8 +13,8 @@
 					<div class="space-y-32 md:space-y-40">
 						<h2 class="h2">{{ __("Get this pack and start fishing immediately", "fp") }}</h2>
 
-						<div class="relative inline-block" x-data="{ open: false }">
-							<button class="fp-btn" @click="open = !open">{{ __("Get the pack", "fp") }}</button>
+						<div class="relative inline-block" x-data="{ open: false }" @click.outside="open = false">
+							<button class="fp-btn" @click.prevent="open = !open">{{ __("Get the pack", "fp") }}</button>
 
 							<div
 								class="bg-gray-tar absolute top-full left-1/2 z-20 mt-16 w-166 -translate-x-1/2 border border-white/15 p-18 md:w-180"
