@@ -7,9 +7,10 @@ interface WaterwayFilterProps {
   selected: string[]
   onChange: (value: string[]) => void
   label?: string
+  availableSlugs?: string[]
 }
 
-const WaterwayFilter: React.FC<WaterwayFilterProps> = ({ options, selected, onChange, label = 'Waterway' }) => {
+const WaterwayFilter: React.FC<WaterwayFilterProps> = ({ options, selected, onChange, label = 'Waterway', availableSlugs }) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -107,23 +108,27 @@ const WaterwayFilter: React.FC<WaterwayFilterProps> = ({ options, selected, onCh
                 <div className={`fp-collapse ${openGroups[group.name] ? 'open' : ''}`}>
                   <div className="overflow-hidden">
                     <div className="space-y-20 px-20 pt-4 pb-20">
-                      {group.options.map((option) => (
-                        <button
-                          key={option.slug}
-                          onClick={() => toggleSelection(option.slug)}
-                          className="group flex min-h-24 w-full items-center justify-between text-white/70 hover:text-white"
-                        >
-                          <span className={`fp-captital-title-sm flex items-center gap-12 ${isSelected(option.slug) ? 'text-white' : ''}`}>
-                            <span className={`size-8 shrink-0 bg-white/15 transition-colors group-hover:bg-white`}></span>
-                            {option.name}
-                          </span>
-                          {isSelected(option.slug) && (
-                            <svg className="h-24 w-24 text-white">
-                              <use href="#icon-check" />
-                            </svg>
-                          )}
-                        </button>
-                      ))}
+                      {group.options.map((option) => {
+                        const isAvailable = !availableSlugs || isSelected(option.slug) || availableSlugs.includes(option.slug)
+                        return (
+                          <button
+                            key={option.slug}
+                            onClick={() => isAvailable && toggleSelection(option.slug)}
+                            disabled={!isAvailable}
+                            className={`group flex min-h-24 w-full items-center justify-between ${isAvailable ? 'text-white/70 hover:text-white' : 'cursor-not-allowed opacity-20'}`}
+                          >
+                            <span className={`fp-captital-title-sm flex items-center gap-12 ${isSelected(option.slug) ? 'text-white' : ''}`}>
+                              <span className={`size-8 shrink-0 bg-white/15 transition-colors ${isAvailable ? 'group-hover:bg-white' : ''}`}></span>
+                              {option.name}
+                            </span>
+                            {isSelected(option.slug) && (
+                              <svg className="h-24 w-24 text-white">
+                                <use href="#icon-check" />
+                              </svg>
+                            )}
+                          </button>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>

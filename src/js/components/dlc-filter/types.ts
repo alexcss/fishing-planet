@@ -36,7 +36,14 @@ export interface Filters {
   search: string
 }
 
+export interface AvailableTerms {
+  categories: string[]
+  includes: string[]
+  waterways: string[]
+}
+
 export interface DlcApiResponse {
   posts: DlcPost[]
   total: number
+  available_terms?: AvailableTerms
 }

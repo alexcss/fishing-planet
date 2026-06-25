@@ -3,7 +3,7 @@ import DlcGrid from './DlcGrid'
 import EmptyState from './EmptyState'
 import Pagination from './Pagination'
 import LoadingIndicator from './LoadingIndicator'
-import type { DlcPost, Filters, DlcApiResponse } from './types'
+import type { DlcPost, Filters, DlcApiResponse, AvailableTerms } from './types'
 
 const PER_PAGE = 3
 
@@ -13,9 +13,10 @@ interface DlcListProps {
   initialPage?: number
   filters: Filters
   apiEndpoint: string
+  onAvailableTermsChange?: (terms: AvailableTerms) => void
 }
 
-const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, initialPage = 1, filters, apiEndpoint }) => {
+const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, initialPage = 1, filters, apiEndpoint, onAvailableTermsChange }) => {
   const [posts, setPosts] = useState<DlcPost[]>(initialPosts)
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(initialPage)
@@ -91,6 +92,9 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
         setTotalPages(Math.ceil(data.total / PER_PAGE))
         setCurrentPage(page)
         updateUrl(page, currentFilters)
+        if (data.available_terms && onAvailableTermsChange) {
+          onAvailableTermsChange(data.available_terms)
+        }
       } catch (error) {
         console.error('Error fetching DLCs:', error)
       } finally {

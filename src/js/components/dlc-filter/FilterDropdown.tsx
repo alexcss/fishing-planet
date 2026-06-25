@@ -9,6 +9,7 @@ interface FilterDropdownProps {
   searchPlaceholder?: string
   showSearch?: boolean
   multi?: boolean
+  availableSlugs?: string[]
 }
 
 const FilterDropdown: React.FC<FilterDropdownProps> = ({
@@ -19,6 +20,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   searchPlaceholder = 'Search...',
   showSearch = false,
   multi = false,
+  availableSlugs,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -134,21 +136,29 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
             </button>
 
             {/* Filtered Options */}
-            {filteredOptions.map((option) => (
-              <button key={option.slug} onClick={() => toggleSelection(option.slug)} className="w-full px-20 transition-colors hover:bg-white/5">
-                <span className="flex items-center justify-between border-b border-white/15 py-16">
-                  <span
-                    className={`font-heading text-24 text-left leading-none uppercase ${isSelected(option.slug) ? 'text-white' : 'text-white/50'}`}
-                    dangerouslySetInnerHTML={{ __html: option.name }}
-                  ></span>
-                  {isSelected(option.slug) && (
-                    <svg className="h-24 w-24 text-white">
-                      <use href="#icon-check" />
-                    </svg>
-                  )}
-                </span>
-              </button>
-            ))}
+            {filteredOptions.map((option) => {
+              const isAvailable = !availableSlugs || isSelected(option.slug) || availableSlugs.includes(option.slug)
+              return (
+                <button
+                  key={option.slug}
+                  onClick={() => isAvailable && toggleSelection(option.slug)}
+                  disabled={!isAvailable}
+                  className={`w-full px-20 transition-colors ${isAvailable ? 'hover:bg-white/5' : 'cursor-not-allowed opacity-20'}`}
+                >
+                  <span className="flex items-center justify-between border-b border-white/15 py-16">
+                    <span
+                      className={`font-heading text-24 text-left leading-none uppercase ${isSelected(option.slug) ? 'text-white' : 'text-white/50'}`}
+                      dangerouslySetInnerHTML={{ __html: option.name }}
+                    ></span>
+                    {isSelected(option.slug) && (
+                      <svg className="h-24 w-24 text-white">
+                        <use href="#icon-check" />
+                      </svg>
+                    )}
+                  </span>
+                </button>
+              )
+            })}
           </div>
         </div>
       )}

@@ -9,9 +9,10 @@ interface FilterAccordionProps {
   selected: string | string[]
   multi?: boolean
   onChange: (value: string | string[]) => void
+  availableSlugs?: string[]
 }
 
-const FilterAccordion: React.FC<FilterAccordionProps> = ({ label, isOpen, onToggle, options, selected, multi = false, onChange }) => {
+const FilterAccordion: React.FC<FilterAccordionProps> = ({ label, isOpen, onToggle, options, selected, multi = false, onChange, availableSlugs }) => {
   const isAllSelected = multi ? (selected as string[]).length === 0 : selected === ''
   const selectedCount = multi ? (selected as string[]).length : selected !== '' ? 1 : 0
   const singleSelectedName =
@@ -52,20 +53,24 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ label, isOpen, onTogg
                 </svg>
               )}
             </button>
-            {options.map((opt) => (
-              <button
-                key={opt.slug}
-                onClick={() => handleSelect(opt.slug)}
-                className={`font-heading text-24/none flex w-full items-center justify-between border-b border-white/15 py-16 text-left uppercase transition-colors ${isSelected(opt.slug) ? 'text-white' : 'text-white/70'}`}
-              >
-                <span dangerouslySetInnerHTML={{ __html: opt.name }} />
-                {isSelected(opt.slug) && (
-                  <svg className="h-24 w-24 text-white">
-                    <use href="#icon-check" />
-                  </svg>
-                )}
-              </button>
-            ))}
+            {options.map((opt) => {
+              const isAvailable = !availableSlugs || isSelected(opt.slug) || availableSlugs.includes(opt.slug)
+              return (
+                <button
+                  key={opt.slug}
+                  onClick={() => isAvailable && handleSelect(opt.slug)}
+                  disabled={!isAvailable}
+                  className={`font-heading text-24/none flex w-full items-center justify-between border-b border-white/15 py-16 text-left uppercase transition-colors ${isSelected(opt.slug) ? 'text-white' : isAvailable ? 'text-white/70' : 'cursor-not-allowed opacity-20'}`}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: opt.name }} />
+                  {isSelected(opt.slug) && (
+                    <svg className="h-24 w-24 text-white">
+                      <use href="#icon-check" />
+                    </svg>
+                  )}
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>

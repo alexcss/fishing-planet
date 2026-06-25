@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { FilterData, FilterOption, Filters } from './types'
+import type { FilterData, FilterOption, Filters, AvailableTerms } from './types'
 import FilterAccordion from './FilterAccordion'
 import MobileFilterToggle from './MobileFilterToggle'
 import MobileSearchButton from './MobileSearchButton'
@@ -13,6 +13,7 @@ interface MobileFiltersProps {
   onSearchChange: (value: string) => void
   onClearFilters: () => void
   activeFilterCount: number
+  availableTerms?: AvailableTerms | null
 }
 
 type AccordionKey = 'category' | 'include' | 'waterway'
@@ -22,7 +23,7 @@ const filterSections = (filterData: FilterData): Array<{ key: AccordionKey; labe
   { key: 'include', label: 'Pack Content', options: filterData.includes, multi: true },
 ]
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onSearchChange, onClearFilters, activeFilterCount }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onSearchChange, onClearFilters, activeFilterCount, availableTerms }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [accordion, setAccordion] = useState<Record<AccordionKey, boolean>>({
     category: false,
@@ -41,18 +42,22 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFi
       <div className={`fp-collapse ${isOpen ? 'open' : ''}`}>
         <div className="overflow-hidden">
           <div className="space-y-8 px-24">
-            {filterSections(filterData).map(({ key, label, options, multi }) => (
-              <FilterAccordion
-                key={key}
-                label={label}
-                isOpen={accordion[key]}
-                onToggle={() => toggleAccordion(key)}
-                options={options}
-                selected={filters[key]}
-                multi={multi}
-                onChange={(val) => onFilterChange(key, val)}
-              />
-            ))}
+            {filterSections(filterData).map(({ key, label, options, multi }) => {
+              const availableSlugs = key === 'category' ? availableTerms?.categories : key === 'include' ? availableTerms?.includes : undefined
+              return (
+                <FilterAccordion
+                  key={key}
+                  label={label}
+                  isOpen={accordion[key]}
+                  onToggle={() => toggleAccordion(key)}
+                  options={options}
+                  selected={filters[key]}
+                  multi={multi}
+                  onChange={(val) => onFilterChange(key, val)}
+                  availableSlugs={availableSlugs}
+                />
+              )
+            })}
 
             <MobileWaterwayFilter
               options={filterData.waterways}
@@ -61,6 +66,7 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFi
               isOpen={accordion.waterway}
               onToggle={() => toggleAccordion('waterway')}
               label="Waterway"
+              availableSlugs={availableTerms?.waterways}
             />
 
             <div className="flex flex-col gap-8 py-24">

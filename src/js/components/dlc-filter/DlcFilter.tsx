@@ -5,7 +5,7 @@ import DlcList from './DlcList'
 import MobileFilters from './MobileFilters'
 import DesktopSearch from './DesktopSearch'
 import WaterwayFilter from './WaterwayFilter'
-import type { FilterData, Filters, DlcPost } from './types'
+import type { FilterData, Filters, DlcPost, AvailableTerms } from './types'
 
 interface DlcFilterProps {
   filterData: FilterData
@@ -17,6 +17,8 @@ interface DlcFilterProps {
 }
 
 const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPosts, initialPage = 1, initialFilters, apiEndpoint }) => {
+  const [availableTerms, setAvailableTerms] = useState<AvailableTerms | null>(null)
+
   const [filters, setFilters] = useState<Filters>({
     category: '',
     include: [],
@@ -63,18 +65,21 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
           options={filterData.categories}
           selected={filters.category}
           onSelect={(value) => handleFilterChange('category', value)}
+          availableSlugs={availableTerms?.categories}
         />
         <WaterwayFilter
           label="Waterway"
           options={filterData.waterways}
           selected={filters.waterway}
           onChange={(value) => handleFilterChange('waterway', value)}
+          availableSlugs={availableTerms?.waterways}
         />
         <FilterDropdown
           label="Pack Content"
           options={filterData.includes}
           selected={filters.include}
           onSelect={(value) => handleFilterChange('include', value as string[])}
+          availableSlugs={availableTerms?.includes}
           multi
         />
 
@@ -89,10 +94,11 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
         onSearchChange={(value) => handleFilterChange('search', value)}
         onClearFilters={clearFilters}
         activeFilterCount={activeFilterCount}
+        availableTerms={availableTerms}
       />
 
       {/* DLC List */}
-      <DlcList initialPosts={initialPosts} initialTotalPosts={totalPosts} initialPage={initialPage} filters={filters} apiEndpoint={apiEndpoint} />
+      <DlcList initialPosts={initialPosts} initialTotalPosts={totalPosts} initialPage={initialPage} filters={filters} apiEndpoint={apiEndpoint} onAvailableTermsChange={setAvailableTerms} />
     </div>
   )
 }

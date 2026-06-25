@@ -135,10 +135,95 @@ class DLC_Api {
 			$posts[] = $this->format_dlc_response( $post );
 		}
 
+		$available_terms = $this->get_available_terms( $args, $category, $include, $waterway );
+
 		return new \WP_REST_Response( [
-			'posts' => $posts,
-			'total' => $query->found_posts,
+			'posts'           => $posts,
+			'total'           => $query->found_posts,
+			'available_terms' => $available_terms,
 		], 200 );
+	}
+
+	/**
+	 * Get available term slugs for each taxonomy given the current filters.
+	 * For each taxonomy, applies all OTHER active filters so the UI can disable
+	 * options that would produce zero results.
+	 *
+	 * @param array  $base_args Base WP_Query args (without tax_query).
+	 * @param string $category  Active category slug.
+	 * @param string $include   Comma-separated include slugs.
+	 * @param string $waterway  Comma-separated waterway slugs.
+	 *
+	 * @return array{ categories: string[], includes: string[], waterways: string[] }
+	 */
+	private function get_available_terms( array $base_args, string $category, string $include, string $waterway ): array {
+		$include_terms  = $include ? array_filter( explode( ',', $include ) ) : [];
+		$waterway_terms = $waterway ? array_filter( explode( ',', $waterway ) ) : [];
+
+		$taxon_map = [
+			'categories' => 'dlc_category',
+			'includes'   => 'dlc_includes',
+			'waterways'  => 'dlc_waterways',
+		];
+
+		$result = [];
+
+		foreach ( $taxon_map as $key => $taxonomy ) {
+			// Build tax_query with all filters EXCEPT the current taxonomy
+			$tax_query = [];
+
+			if ( $taxonomy !== 'dlc_category' && $category ) {
+				$tax_query[] = [
+					'taxonomy' => 'dlc_category',
+					'field'    => 'slug',
+					'terms'    => $category,
+				];
+			}
+
+			if ( $taxonomy !== 'dlc_includes' && ! empty( $include_terms ) ) {
+				$tax_query[] = [
+					'taxonomy' => 'dlc_includes',
+					'field'    => 'slug',
+					'terms'    => $include_terms,
+					'operator' => 'IN',
+				];
+			}
+
+			if ( $taxonomy !== 'dlc_waterways' && ! empty( $waterway_terms ) ) {
+				$tax_query[] = [
+					'taxonomy' => 'dlc_waterways',
+					'field'    => 'slug',
+					'terms'    => $waterway_terms,
+					'operator' => 'IN',
+				];
+			}
+
+			$query_args = array_merge( $base_args, [
+				'posts_per_page' => -1,
+				'paged'          => 1,
+				'fields'         => 'ids',
+			] );
+			unset( $query_args['tax_query'] );
+
+			if ( ! empty( $tax_query ) ) {
+				$query_args['tax_query'] = $tax_query;
+			}
+
+			$post_ids = get_posts( $query_args );
+
+			if ( empty( $post_ids ) ) {
+				$result[ $key ] = [];
+				continue;
+			}
+
+			$terms = wp_get_object_terms( $post_ids, $taxonomy, [
+				'fields' => 'slugs',
+			] );
+
+			$result[ $key ] = is_wp_error( $terms ) ? [] : array_values( array_unique( $terms ) );
+		}
+
+		return $result;
 	}
 
 	/**
