@@ -7,11 +7,13 @@
 						{% include "global/logo-xl.twig" %}
 					</a>
 				</div>
-				<nav class="flex flex-1 items-center justify-center pt-8">
-					{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-32 items-center" } %}
-				</nav>
-				<div class="flex flex-1 items-center justify-end pt-8">
-					{% include "global/stores-button.twig" with { link: header.button } %}
+				<div class="flex flex-2 items-center">
+					<nav class="flex flex-1 items-center justify-center pt-8">
+						{% include "partial/menu.twig" with { items: menu.desktop_nav.get_items, class: "flex space-x-32 items-center" } %}
+					</nav>
+					<div class="flex flex-1 items-center justify-end pt-8">
+						{% include "global/stores-button.twig" with { link: header.button } %}
+					</div>
 				</div>
 			</div>
 		</div>

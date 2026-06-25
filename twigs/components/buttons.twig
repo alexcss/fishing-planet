@@ -11,7 +11,7 @@
 			{{ props.props }}
 		>
 			{{ props.link.title }}
-			{{ icon({ name: props.icon }) }}
+			{{ icon({ name: props.icon, w: props.icon_w, h: props.icon_h }) }}
 		</a>
 	{% endif %}
 {% endmacro %}
