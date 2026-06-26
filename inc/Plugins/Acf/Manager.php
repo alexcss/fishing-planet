@@ -12,6 +12,7 @@ class Manager {
 		Page_Templates\About::class,
 		Page_Types\Blog::class,
 		Page_Templates\DLC_Archive::class,
+		Page_Templates\Support::class,
 		Post_Types\Post::class,
 		Post_Types\DLC::class,
 	];

@@ -1,9 +1,9 @@
 
-body .editor-styles-wrapper {
+.editor-styles-wrapper {
   @apply space-y-20 md:space-y-24 fp-text-body !p-8 antialiased font-sans;
 
   & :is(h1, h2, h3, h4, h5, h6) {
-    @apply !font-sans;
+    @apply !font-heading;
   }
 
   & :is(h1, h2, h3, h4, h5, h6) :where(strong, b, span) {

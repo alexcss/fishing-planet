@@ -1,0 +1,102 @@
+@layer base {
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=number],
+  input[type=tel],
+  input[type=url],
+  input[type=search], textarea, select {
+    @apply border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
+    @apply font-heading text-24/none font-bold;
+    @apply hover:border-white/70;
+    @apply focus:border-white/90;
+    @apply focus:not-placeholder-shown:invalid:border-red;
+    @apply disabled:bg-gray disabled:text-gray disabled:border-gray;
+
+    .fp-form-dark & {
+      @apply text-white placeholder:text-gray bg-transparent;
+      @apply hover:border-white;
+      @apply focus:border-accent;
+      @apply focus:not-placeholder-shown:invalid:border-red;
+      @apply disabled:bg-gray disabled:text-gray disabled:border-gray;
+    }
+  }
+
+  select {
+    @apply appearance-none bg-no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.1 8c.39 0 .63.43.42.77l-4.13 6.55a.5.5 0 0 1-.85 0L7.47 8.76A.5.5 0 0 1 7.9 8h8.2Z' fill='%23111'/%3E%3C/svg%3E");
+    background-position: right 19px center;
+  }
+
+  select:not(:focus):invalid {
+    @apply text-gray
+  }
+
+  /* Checkbox Styles */
+  input[type="checkbox"] {
+    @apply appearance-none cursor-pointer outline-none bg-no-repeat bg-center align-middle shrink-0 bg-transparent;
+    @apply relative inline-flex items-center justify-center m-6 w-24 h-24;
+    @apply border-[1.5px] border-black transition rounded-xs duration-200 bg-white;
+    @apply hover:border-gray;
+    @apply focus:border-accent;
+    @apply checked:border-black checked:bg-black;
+    @apply disabled:bg-gray disabled:border-gray disabled:cursor-not-allowed disabled:opacity-50;
+
+    .fp-form-dark & {
+      @apply border-gray bg-transparent;
+      @apply hover:border-white;
+      @apply focus:border-accent;
+      @apply checked:border-white checked:bg-white;
+
+    }
+  }
+
+  input[type="checkbox"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 9.4-4-4L1.4 4 4 6.6 10.6 0 12 1.4l-8 8Z' fill='%23fff'/%3E%3C/svg%3E");
+
+    .fp-form-dark & {
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 9.4-4-4L1.4 4 4 6.6 10.6 0 12 1.4l-8 8Z' fill='%23000'/%3E%3C/svg%3E");
+    }
+  }
+
+  [type='search']::-webkit-search-cancel-button {
+    @apply appearance-none hidden;
+  }
+
+}
+
+@layer utilities {
+  .fp-file-input-label {
+    @apply min-w-0 truncate;
+  }
+
+  .fp-file-input {
+    @apply grow flex min-w-0;
+
+    [type="file"] {
+      @apply hidden;
+    }
+
+    .wpcf7-form-control-wrap {
+      @apply static;
+    }
+  }
+}
+
+.fp-form {
+  .wpcf7-spinner {
+    @apply absolute left-full ml-12 top-1/2 -translate-y-1/2;
+  }
+
+  .wpcf7-form-control-wrap {
+    @apply block;
+  }
+
+  .wpcf7-not-valid-tip {
+    @apply text-red text-12 absolute left-0 top-full mt-2;
+  }
+}
+
+.wpcf7-response-output {
+  @apply hidden
+}

@@ -1,0 +1,9 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<main class="pt-113 xl:pt-144">
+		{% include "templates/support/hero-section.twig" with { data: hero } %}
+		{% include "templates/support/faq-section.twig" with { data: faq } %}
+		{% include "templates/support/contact-section.twig" with { data: contact } %}
+	</main>
+{% endblock %}

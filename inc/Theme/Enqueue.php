@@ -20,12 +20,13 @@ class Enqueue {
 		add_action( 'wp_enqueue_scripts', [ $this, 'cf7_js_styles' ] );
 		add_action( 'login_enqueue_scripts', [ $this, 'login_stylesheet' ], 20 );
 		add_action( 'enqueue_block_editor_assets', [ $this, 'admin_styles_and_scripts' ], 999, 2 );
-		add_action( 'init', [ $this, 'admin_editor_style' ] );
+		add_action( 'after_setup_theme', [ $this, 'admin_editor_style' ] );
 
 	}
 
 	public function admin_editor_style(): void {
-		add_editor_style( THEME_URI . 'dist/css/admin.css' );
+		add_theme_support( 'editor-styles' );
+		add_editor_style( Assets::requireUrl( 'src/css/admin/admin.css' ) );
 	}
 
 	public function admin_styles_and_scripts(): void {
@@ -51,9 +52,9 @@ class Enqueue {
 		] );
 
 		// Enqueue DLC Archive script on DLC archive template
-		if (is_page_template('page-templates/dlc-archive.php')) {
-			wp_enqueue_script('dlc-archive', Assets::requireUrl('src/js/dlc-archive.tsx'), [], null);
-			wp_script_add_data('dlc-archive', 'module', true);
+		if ( is_page_template( 'page-templates/dlc-archive.php' ) ) {
+			wp_enqueue_script( 'dlc-archive', Assets::requireUrl( 'src/js/dlc-archive.tsx' ), [], null );
+			wp_script_add_data( 'dlc-archive', 'module', true );
 		}
 
 		if ( ! is_user_logged_in() ) {
@@ -86,9 +87,9 @@ class Enqueue {
 	// Dequeue cf7/captcha scripts and styles, preventing them from loading everywhere
 	public function cf7_js_styles(): void {
 		if ( ! has_block( 'acf/fp-contact-form' ) ) {
-			wp_dequeue_script( 'contact-form-7' );
-			wp_dequeue_style( 'contact-form-7' );
-			remove_action( 'wp_enqueue_scripts', 'wpcf7_recaptcha_enqueue_scripts', 20 );
+//			wp_dequeue_script( 'contact-form-7' );
+//			wp_dequeue_style( 'contact-form-7' );
+//			remove_action( 'wp_enqueue_scripts', 'wpcf7_recaptcha_enqueue_scripts', 20 );
 		}
 	}
 }

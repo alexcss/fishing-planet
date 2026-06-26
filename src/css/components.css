@@ -15,7 +15,7 @@
 
 @utility fp-btn-light {
   @apply btn-base h-54 py-14;
-  @apply bg-white text-black border-transparent;
+  @apply bg-white text-dark-gray border-transparent;
   @apply hover:bg-accent hover:text-white active:bg-accent active:text-white [&.active]:bg-accent [&.active]:text-white;
 }
 
@@ -70,8 +70,16 @@
     }
   }
 
+  @apply group-hover/btn:not-disabled:bg-accent group-hover/btn:not-disabled:border-accent;
+
   &:before, &:after {
     @apply content-[''] absolute -inset-y-1 -left-1 border-t border-b w-6 border-sand transition-opacity duration-200 ease-in-out;
+  }
+
+  .group\/btn:hover & {
+    &:before, &:after, & > span:before, & > span:after {
+      @apply opacity-0;
+    }
   }
 
   &:after {
