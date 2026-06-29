@@ -175,5 +175,44 @@ class Career extends Page_Template {
 				],
 			],
 		] );
+
+
+		$this->add_tab( __( 'Contact Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Contact Section', 'fp' ),
+			'name'       => 'contact',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 2,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '100',
+					],
+				],
+				[
+					'label'        => __( 'CF7 Shortcode', 'fp' ),
+					'name'         => 'cf7_shortcode',
+					'type'         => 'text',
+					'instructions' => __( 'Paste the Contact Form 7 shortcode here, e.g. [contact-form-7 id="123"]', 'fp' ),
+					'wrapper'      => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'      => __( 'Image', 'fp' ),
+					'name'       => 'image',
+					'type'       => 'image',
+					'mime_types' => 'jpg, jpeg, png, webp',
+					'wrapper'    => [
+						'width' => '50',
+					],
+				],
+			],
+		] );
 	}
 }

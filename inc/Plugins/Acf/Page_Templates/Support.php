@@ -157,7 +157,7 @@ class Support extends Page_Template {
 					'type'         => 'text',
 					'instructions' => __( 'Paste the Contact Form 7 shortcode here, e.g. [contact-form-7 id="123"]', 'fp' ),
 					'wrapper'      => [
-						'width' => '100',
+						'width' => '50',
 					],
 				],
 				[
@@ -166,7 +166,7 @@ class Support extends Page_Template {
 					'type'       => 'image',
 					'mime_types' => 'jpg, jpeg, png, webp',
 					'wrapper'    => [
-						'width' => '100',
+						'width' => '50',
 					],
 				],
 			],
