@@ -12,8 +12,8 @@
 		<div class="absolute inset-0 z-0">
 			{% if data.bg_image_mobile %}
 				<picture>
-					<source media="(min-width: 768px)" srcset="{{ data.bg_image_desktop.url }}" />
-					{{ image({ image: data.bg_image_mobile, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1920, h: 1080 } }) }}
+					<source media="(min-width: 768px)" srcset="{{ data.bg_image_desktop.url|resize(1920, 1080, "center")|towebp(80) }}" />
+					{{ image({ image: data.bg_image_mobile, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1080, h: 1920 } }) }}
 				</picture>
 			{% else %}
 				{{ image({ image: data.bg_image_desktop, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1920, h: 1080 } }) }}

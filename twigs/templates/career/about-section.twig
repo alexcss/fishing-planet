@@ -1,0 +1,35 @@
+{#
+# Career About Section
+# Full-width background image section with title and WYSIWYG text
+#}
+
+{% from "components/image.twig" import image %}
+
+{% if data and data.bg_image_desktop %}
+	<section class="relative overflow-hidden">
+		<div class="absolute inset-0 z-0">
+			{% if data.bg_image_mobile %}
+				<picture>
+					<source media="(min-width: 768px)" srcset="{{ data.bg_image_desktop.url|resize(1920, 1080, "center")|towebp(80) }}" />
+					{{ image({ image: data.bg_image_mobile, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1080, h: 1920 } }) }}
+				</picture>
+			{% else %}
+				{{ image({ image: data.bg_image_desktop, wrap_class: "h-full w-full", class: "h-full w-full object-cover", sizes: { w: 1920, h: 1080 } }) }}
+			{% endif %}
+			<div class="from-black-true/0 to-black-true/50 absolute inset-0 bg-linear-to-b"></div>
+		</div>
+
+		<div class="relative z-10 container flex min-h-lvh items-center py-60 md:py-80 xl:py-100">
+			<div class="max-w-532 space-y-24 md:space-y-32 lg:ml-60">
+				{% if data.title %}
+					<h2 class="h2">{{ data.title }}</h2>
+				{% endif %}
+				{% if data.text %}
+					<div class="fp-text-body-small fp-richtext text-white/90">
+						{{ data.text|raw }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</section>
+{% endif %}

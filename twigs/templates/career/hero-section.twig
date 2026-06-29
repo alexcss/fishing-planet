@@ -1,0 +1,68 @@
+{#
+# Career Hero Section
+# Title, subtitle, tagline, image, text and CTA button
+#}
+
+{% from "components/buttons.twig" import button %}
+{% from "components/image.twig" import image %}
+
+{% if data %}
+	<section class="relative pt-40 pb-60 md:pt-60 md:pb-80 xl:pt-100 xl:pb-120">
+		<div class="relative z-10 container xl:pb-40">
+			<div class="flex flex-col gap-24 md:items-start lg:flex-row lg:justify-between">
+				{% if data.title %}
+					<div class="flex flex-col items-start gap-24 md:flex-row md:gap-20">
+						{% if data.subtitle %}
+							<p class="fp-text-small-description text-sand mt-2 md:order-1 md:max-w-120 md:pt-2 xl:pt-4">
+								{{ data.subtitle }}
+							</p>
+						{% endif %}
+						<h1 class="h1">{{ data.title }}</h1>
+					</div>
+				{% endif %}
+
+				{% if data.tagline %}
+					<div class="fp-block-corners w-full text-white max-lg:hidden md:ml-auto lg:max-w-300">
+						<p class="h5 text-center">
+							{{ data.tagline }}
+						</p>
+					</div>
+				{% endif %}
+			</div>
+
+			<div
+				class="mt-32 grid grid-cols-1 items-start gap-40 md:mt-60 lg:grid-cols-2 lg:items-start lg:gap-32 xl:grid-cols-24 xl:items-center xl:gap-40"
+			>
+				{% if data.image %}
+					<div class="space-y-24 xl:col-span-15">
+						<div class="md:fp-block-corners">
+							{{ image({ image: data.image, wrap_class: "w-full", class: "w-full", sizes: { w: 776, h: 605 } }) }}
+						</div>
+						{% if data.tagline %}
+							<div class="fp-block-corners w-full text-white lg:hidden">
+								<p class="h5 text-center">
+									{{ data.tagline }}
+								</p>
+							</div>
+						{% endif %}
+					</div>
+				{% endif %}
+
+				<div class="space-y-24 md:max-w-lg md:space-y-32 lg:max-w-none xl:col-span-9">
+					{% if data.text %}
+						{% if data.text_title %}
+							<h2 class="h3">{{ data.text_title }}</h2>
+						{% endif %}
+						<div class="fp-text-body-small fp-richtext text-white/90">
+							{{ data.text|raw }}
+						</div>
+					{% endif %}
+
+					{{ button({ link: data.button, class: "mt-8 md:mt-0" }) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-pattern-wave absolute inset-0 mask-y-from-60% mask-y-to-100% opacity-60"></div>
+	</section>
+{% endif %}
