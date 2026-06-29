@@ -64,7 +64,25 @@
   }
 
   & ol {
-    @apply space-y-20;
+    @apply space-y-20 md:space-y-32;
+    counter-reset: list-item;
+
+    li {
+      counter-increment: list-item;
+      @apply relative pl-44;
+
+      &::before {
+        @apply absolute left-0 top-0 size-32 flex items-center justify-center bg-contain font-mono text-16/none text-gray;
+        background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H32V32H0V0Z' fill='black' fill-opacity='0.1'/%3E%3Cpath d='M31.5 0.5V31.5H0.5V0.5H31.5Z' stroke='white' stroke-opacity='0.15'/%3E%3Cpath d='M27.5 31.5H31.5V27.5' stroke='%23DBA66D'/%3E%3Cpath d='M4.5 31.5H0.5V27.5' stroke='%23DBA66D'/%3E%3Cpath d='M27.5 0.5H31.5V4.5' stroke='%23DBA66D'/%3E%3Cpath d='M4.5 0.5H0.5V4.5' stroke='%23DBA66D'/%3E%3C/svg%3E");
+        content: "0" counter(list-item);
+      }
+
+      &:nth-child(n+10) {
+        &::before {
+          content: counter(list-item);
+        }
+      }
+    }
   }
 
   & ul {
@@ -216,8 +234,8 @@
 
     &.is-style-full-width {
       @apply relative md:p-16 bg-no-repeat lg:w-[calc(min(100vw,1440px)-120px)] lg:ml-[50%] lg:-translate-x-1/2;
-      background-size: 100% 100%;
       background-image: url("data:image/svg+xml,%3Csvg width='1320' height='757' viewBox='0 0 1320 757' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1303.5.5h16v16M16.5.5H.5v16M1303.5 756.5h16v-16M16.5 756.5H.5v-16' stroke='%23aaacaf'/%3E%3C/svg%3E");
+      background-size: 100% 100%;
 
       img {
         @apply w-full max-w-none;
