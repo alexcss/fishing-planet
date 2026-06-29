@@ -12,11 +12,15 @@
   }
 
   & :is(h1, h2, h3) {
-    @apply mb-24! mt-40! xl:mb-32! xl:mt-60!;
+    @apply mb-20 mt-36 xl:mb-26 xl:mt-54;
   }
 
   & :is(h4, h5, h6) {
     @apply mb-20 mt-32;
+  }
+
+  & :is(h1,h2) + :is(h2,h3,h4,h5) {
+    @apply mt-20 xl:mt-26;
   }
 
   & h1 {
@@ -244,5 +248,15 @@
 
   & > :last-child {
     @apply !mb-0;
+  }
+}
+
+@utility fp-richtext-career {
+  h1, h2 {
+    @apply h4;
+  }
+
+  & :is(h3, h4, h5) {
+    @apply h5;
   }
 }

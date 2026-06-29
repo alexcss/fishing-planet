@@ -10,6 +10,8 @@ class Manager {
 		DLC_Category::class,
 		DLC_Includes::class,
 		DLC_Waterways::class,
+		Department::class,
+		Location::class,
 	];
 
 	public function __construct() {

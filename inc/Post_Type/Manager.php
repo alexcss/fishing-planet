@@ -8,6 +8,7 @@ class Manager {
 
 	private array $post_types = [
 		DLC::class,
+		Career::class,
 	];
 
 

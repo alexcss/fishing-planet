@@ -1,0 +1,16 @@
+{#
+ # Single Career - Apply Form Section
+ # Contact Form 7 apply form from the Career page ACF
+ #}
+
+<section id="apply-form" class="relative pt-0 pb-60 md:pb-80 xl:pb-100">
+	<div class="container">
+		<div class="lg:mx-auto lg:max-w-640 xl:max-w-756">
+			{% if apply_form %}
+				<div class="fp-cf7">
+					{{ fn('do_shortcode', apply_form) }}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>

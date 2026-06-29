@@ -288,5 +288,23 @@ class Career extends Page_Template {
 				],
 			],
 		] );
+
+		$this->add_tab( __( 'Single Career Settings', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Single Career Settings', 'fp' ),
+			'name'       => 'single_career_settings',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'        => __( 'Apply Form Shortcode', 'fp' ),
+					'name'         => 'form',
+					'type'         => 'text',
+					'instructions' => __( 'Paste the Contact Form 7 shortcode here, e.g. [contact-form-7 id="123"]', 'fp' ),
+					'wrapper'      => [
+						'width' => '100',
+					],
+				],
+			],
+		] );
 	}
 }
