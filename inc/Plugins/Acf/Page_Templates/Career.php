@@ -109,7 +109,7 @@ class Career extends Page_Template {
 					'label'        => __( 'Text', 'fp' ),
 					'name'         => 'text',
 					'type'         => 'wysiwyg',
-					'toolbar'      => 'full',
+					'toolbar'      => 'base',
 					'media_upload' => 0,
 					'instructions' => __( 'Text content shown next to the image', 'fp' ),
 					'wrapper'      => [
@@ -147,7 +147,7 @@ class Career extends Page_Template {
 					'label'        => __( 'Text', 'fp' ),
 					'name'         => 'text',
 					'type'         => 'wysiwyg',
-					'toolbar'      => 'full',
+					'toolbar'      => 'simple',
 					'media_upload' => 0,
 					'instructions' => __( 'Text content shown over the background image', 'fp' ),
 					'wrapper'      => [

@@ -52,6 +52,14 @@ class Support {
 			'underline',
 			'link',
 		];
+		$toolbars['Base'][1]   = [
+			'bold',
+			'italic',
+			'underline',
+			'link',
+			'bullist',
+			'numlist',
+		];
 
 		return $toolbars;
 	}
