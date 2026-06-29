@@ -1,0 +1,56 @@
+{#
+# Career Values Section
+# Interactive letter word with scrollable content panel
+#}
+
+{% if data and data.items %}
+	<section x-data="{ active: 0 }" class="relative py-60 md:py-80 xl:py-100">
+		<div class="container xl:pt-32">
+			{% if data.title %}
+				<h2 class="h2 mb-32 text-left md:mb-40 md:text-center xl:mb-56">{{ data.title }}</h2>
+			{% endif %}
+
+			<div
+				class="no-scrollbar max-lg:verflow-x-auto -mx-16 mb-20 flex gap-12 overflow-y-hidden px-16 pb-20 md:-mx-32 md:mb-40 md:gap-24 md:px-32 lg:mx-0 lg:justify-between lg:px-0"
+			>
+				{% for item in data.items %}
+					<button
+						type="button"
+						class="fp-btn-corners fp-btn-corners-lg fp-btn-corners-transparent font-heading text-70/none xl:text-80 size-125 lg:h-auto lg:w-full lg:max-w-144"
+						:class="{ 'active': active === {{ loop.index0 }} }"
+						@click="active = {{ loop.index0 }}"
+						aria-label="{{ item.title }}"
+					>
+						<span>{{ item.letter }}</span>
+					</button>
+				{% endfor %}
+			</div>
+
+			{% for item in data.items %}
+				<div
+					x-show="active === {{ loop.index0 }}"
+					{{ not loop.first ? "x-cloak" }}
+					class="fp-scrollbar-thin h-600 overflow-y-auto border border-white/15 p-20 md:h-450 md:p-32 lg:h-375 xl:p-40 xl:pr-56"
+				>
+					<div class="flex flex-col items-start gap-32 md:gap-40 lg:flex-row">
+						<div class="space-y-16 md:space-y-24 lg:sticky lg:top-0 lg:w-5/12 xl:w-4/12">
+							{% if item.title %}
+								<h3 class="h4 first-letter:text-accent xl:max-w-390">{{ item.title }}</h3>
+							{% endif %}
+							{% if item.excerpt %}
+								<p class="fp-text-body-small text-white/80 xl:max-w-320">
+									{{ item.excerpt }}
+								</p>
+							{% endif %}
+						</div>
+						{% if item.text %}
+							<div class="fp-text-body-small fp-richtext text-white/90 lg:w-7/12 xl:ml-auto xl:w-7/12">
+								{{ item.text|raw }}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+{% endif %}

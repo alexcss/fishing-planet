@@ -5,7 +5,8 @@
   input[type=number],
   input[type=tel],
   input[type=url],
-  input[type=search], textarea, select {
+  input[type=file]
+  input[type=search], textarea, select, .wpcf7-form-control-wrap:has([type='file']) {
     @apply border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
     @apply font-heading text-24/none font-bold;
     @apply hover:border-white/70;
@@ -13,13 +14,6 @@
     @apply focus:not-placeholder-shown:invalid:border-red;
     @apply disabled:bg-gray disabled:text-gray disabled:border-gray;
 
-    .fp-form-dark & {
-      @apply text-white placeholder:text-gray bg-transparent;
-      @apply hover:border-white;
-      @apply focus:border-accent;
-      @apply focus:not-placeholder-shown:invalid:border-red;
-      @apply disabled:bg-gray disabled:text-gray disabled:border-gray;
-    }
   }
 
   select {
@@ -85,7 +79,7 @@
 
 .fp-form {
   .wpcf7-spinner {
-    @apply absolute left-full ml-12 top-1/2 -translate-y-1/2;
+    @apply absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none mr-12;
   }
 
   .wpcf7-form-control-wrap {
@@ -94,6 +88,10 @@
 
   .wpcf7-not-valid-tip {
     @apply text-red text-12 absolute left-0 top-full mt-2;
+  }
+
+  .wpcf7-form-control-wrap:has([type='file']) {
+
   }
 }
 

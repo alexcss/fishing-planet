@@ -9,6 +9,7 @@ $context = Timber::context();
 $data    = [
 	'hero'    => get_field( 'hero' ),
 	'about'   => get_field( 'about' ),
+	'values'  => get_field( 'values' ),
 	'contact' => get_field( 'contact' ),
 ];
 

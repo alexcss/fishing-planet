@@ -176,6 +176,80 @@ class Career extends Page_Template {
 			],
 		] );
 
+		$this->add_tab( __( 'Values Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Values Section', 'fp' ),
+			'name'       => 'values',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'        => __( 'Title', 'fp' ),
+					'name'         => 'title',
+					'type'         => 'textarea',
+					'maxlength'    => 300,
+					'rows'         => 3,
+					'new_lines'    => 'br',
+					'instructions' => __( 'Maximum 300 characters', 'fp' ),
+					'wrapper'      => [
+						'width' => '100',
+					],
+				],
+				[
+					'label'        => __( 'Items', 'fp' ),
+					'name'         => 'items',
+					'type'         => 'repeater',
+					'min'          => 1,
+					'max'          => 20,
+					'layout'       => 'block',
+					'button_label' => __( 'Add Value Item', 'fp' ),
+					'sub_fields'   => [
+						[
+							'label'        => __( 'Letter', 'fp' ),
+							'name'         => 'letter',
+							'type'         => 'text',
+							'required'     => 1,
+							'maxlength'    => 1,
+							'instructions' => __( 'Single character displayed in the word', 'fp' ),
+							'wrapper'      => [
+								'width' => '20',
+							],
+						],
+						[
+							'label'     => __( 'Title', 'fp' ),
+							'name'      => 'title',
+							'type'      => 'textarea',
+							'new_lines' => 'br',
+							'rows'      => 2,
+							'required'  => 1,
+							'maxlength' => 200,
+							'wrapper'   => [
+								'width' => '40',
+							],
+						],
+						[
+							'label'     => __( 'Excerpt', 'fp' ),
+							'name'      => 'excerpt',
+							'type'      => 'textarea',
+							'maxlength' => 500,
+							'rows'      => 3,
+							'wrapper'   => [
+								'width' => '40',
+							],
+						],
+						[
+							'label'        => __( 'Text', 'fp' ),
+							'name'         => 'text',
+							'type'         => 'wysiwyg',
+							'toolbar'      => 'full',
+							'media_upload' => 0,
+							'wrapper'      => [
+								'width' => '100',
+							],
+						],
+					],
+				],
+			],
+		] );
 
 		$this->add_tab( __( 'Contact Section', 'fp' ) );
 		$this->add_field( [

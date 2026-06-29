@@ -56,14 +56,17 @@
 }
 
 @utility fp-btn-corners {
-  @apply size-40 flex items-center justify-center bg-gray-gunmetal border border-white/15 p-6 text-white relative;
+  --corner-size: 6px;
+
+  @apply aspect-square size-40 flex items-center justify-center bg-gray-gunmetal border border-white/15 p-(--corner-size) text-white relative;
 
   &:is(a, button) {
     @apply hover:not-disabled:border-accent hover:not-disabled:text-white hover:not-disabled:bg-accent;
     @apply active:not-disabled:border-accent-active active:not-disabled:text-white active:not-disabled:bg-accent-active;
+    @apply [&.active]:not-disabled:border-accent-active [&.active]:not-disabled:text-white [&.active]:not-disabled:bg-accent-active;
     @apply disabled:cursor-not-allowed disabled:opacity-50;
 
-    &:hover, &:active {
+    &:hover, &:active, &.active {
       &:before, &:after, & > span:before, & > span:after {
         @apply opacity-0;
       }
@@ -73,7 +76,7 @@
   @apply group-hover/btn:not-disabled:bg-accent group-hover/btn:not-disabled:border-accent;
 
   &:before, &:after {
-    @apply content-[''] absolute -inset-y-1 -left-1 border-t border-b w-6 border-sand transition-opacity duration-200 ease-in-out;
+    @apply content-[''] absolute -inset-y-1 -left-1 border-t border-b w-(--corner-size) border-sand transition-opacity duration-200 ease-in-out;
   }
 
   .group\/btn:hover & {
@@ -88,16 +91,30 @@
 
   & > span {
     &:before, &:after {
-      @apply content-[''] absolute -inset-x-1 -top-1 border-l border-r h-6 border-sand transition-opacity duration-200 ease-in-out;
+      @apply content-[''] absolute -inset-x-1 -top-1 border-l border-r h-(--corner-size) border-sand transition-opacity duration-200 ease-in-out;
     }
 
     &:after {
       @apply -bottom-1 top-auto
     }
   }
-
 }
 
+@utility fp-btn-corners-lg {
+  --corner-size: 12px;
+}
+@utility fp-btn-corners-transparent {
+  @apply bg-transparent;
+  &:is(a, button) {
+    @apply hover:not-disabled:border-white/15 hover:not-disabled:text-white hover:not-disabled:bg-white/5;
+
+    &:hover {
+      &:before, &:after, & > span:before, & > span:after {
+        @apply opacity-100;
+      }
+    }
+  }
+}
 /* Block links */
 
 @utility fp-link-image {
