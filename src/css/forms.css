@@ -26,7 +26,11 @@
     }
 
     select {
-      @apply text-gray
+      @apply text-gray;
+
+      option[value=""] {
+        @apply hidden;
+      }
     }
 
     select:has(option:not([value=""]):checked) {
