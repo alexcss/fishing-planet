@@ -6,7 +6,7 @@
   input[type=tel],
   input[type=url],
   input[type=file]
-  input[type=search], textarea, select, .wpcf7-form-control-wrap:has([type='file']) {
+  input[type=search], textarea, select {
     @apply border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
     @apply font-heading text-24/none font-bold;
     @apply hover:border-white/70;
@@ -63,18 +63,6 @@
   .fp-file-input-label {
     @apply min-w-0 truncate;
   }
-
-  .fp-file-input {
-    @apply grow flex min-w-0;
-
-    [type="file"] {
-      @apply hidden;
-    }
-
-    .wpcf7-form-control-wrap {
-      @apply static;
-    }
-  }
 }
 
 .fp-form {
@@ -89,12 +77,46 @@
   .wpcf7-not-valid-tip {
     @apply text-red text-12 absolute left-0 top-full mt-2;
   }
-
-  .wpcf7-form-control-wrap:has([type='file']) {
-
-  }
 }
 
 .wpcf7-response-output {
   @apply hidden
+}
+
+.fp-input-file {
+  @apply px-10 py-26 text-center border border-dashed border-white/50 text-sand fp-text-small-description relative transition hover:border-white/80 hover:bg-white/5;
+
+  &:before {
+    content: attr(data-input-file);
+    padding: inherit;
+    @apply absolute inset-0 w-full h-full bg-white/5 items-center justify-center overflow-hidden hidden;
+  }
+
+  &.has-file {
+    @apply border-sand;
+
+    &:before {
+      @apply flex;
+    }
+
+    & > span:not(.wpcf7-form-control-wrap) {
+      @apply invisible;
+    }
+  }
+
+  &:has(.wpcf7-not-valid-tip) {
+    @apply border-red;
+  }
+
+  input, .wpcf7-form-control-wrap {
+    @apply absolute inset-0 w-full h-full cursor-pointer;
+  }
+
+  input {
+    @apply opacity-0
+  }
+
+  .wpcf7-not-valid-tip {
+    @apply border-0 text-left pt-4;
+  }
 }

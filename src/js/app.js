@@ -12,6 +12,7 @@ import playForFreePanel from './components/play-for-free-panel.js'
 import frontPageHeader from './components/front-page-header.js'
 import scrollProgress from './components/scroll-progress.js'
 import headerScroll from './components/header-scroll.js'
+import CF7 from './components/CF7.js'
 
 window.Alpine = Alpine
 
@@ -22,3 +23,7 @@ Alpine.data('scrollProgress', scrollProgress)
 Alpine.data('headerScroll', headerScroll)
 
 Alpine.start()
+
+document.addEventListener('DOMContentLoaded', () => {
+  CF7()
+})
