@@ -1,66 +1,71 @@
 @layer base {
-  input[type=text],
-  input[type=password],
-  input[type=email],
-  input[type=number],
-  input[type=tel],
-  input[type=url],
-  input[type=file]
-  input[type=search], textarea, select {
-    @apply border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
-    @apply font-heading text-24/none font-bold;
-    @apply hover:border-white/70;
-    @apply focus:border-white/90;
-    @apply focus:not-placeholder-shown:invalid:border-red;
-    @apply disabled:bg-gray disabled:text-gray disabled:border-gray;
+  .fp-form {
 
-  }
 
-  select {
-    @apply appearance-none bg-no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.1 8c.39 0 .63.43.42.77l-4.13 6.55a.5.5 0 0 1-.85 0L7.47 8.76A.5.5 0 0 1 7.9 8h8.2Z' fill='%23ffffffa8'/%3E%3C/svg%3E");
-    background-position: right 19px center;
-  }
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    input[type=number],
+    input[type=tel],
+    input[type=url],
+    input[type=file],
+    input[type=search], textarea, select {
+      @apply border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
+      @apply font-heading text-24/none font-bold;
+      @apply hover:border-white/70;
+      @apply focus:border-white/90;
+      @apply focus:not-placeholder-shown:invalid:border-red;
+      @apply disabled:bg-gray disabled:text-gray disabled:border-gray;
 
-  select {
-    @apply text-gray
-  }
+    }
 
-  select:has(option:not([value=""]):checked) {
-    @apply text-white;
-  }
+    select {
+      @apply appearance-none bg-no-repeat;
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.1 8c.39 0 .63.43.42.77l-4.13 6.55a.5.5 0 0 1-.85 0L7.47 8.76A.5.5 0 0 1 7.9 8h8.2Z' fill='%23ffffffa8'/%3E%3C/svg%3E");
+      background-position: right 19px center;
+    }
 
-  /* Checkbox Styles */
-  input[type="checkbox"] {
-    @apply appearance-none cursor-pointer outline-none bg-no-repeat bg-center align-middle shrink-0 bg-transparent;
-    @apply relative inline-flex items-center justify-center m-6 w-24 h-24;
-    @apply border-[1.5px] border-black transition rounded-xs duration-200 bg-white;
-    @apply hover:border-gray;
-    @apply focus:border-accent;
-    @apply checked:border-black checked:bg-black;
-    @apply disabled:bg-gray disabled:border-gray disabled:cursor-not-allowed disabled:opacity-50;
+    select {
+      @apply text-gray
+    }
 
-    .fp-form-dark & {
-      @apply border-gray bg-transparent;
-      @apply hover:border-white;
+    select:has(option:not([value=""]):checked) {
+      @apply text-white;
+    }
+
+    /* Checkbox Styles */
+
+    input[type="checkbox"] {
+      @apply appearance-none cursor-pointer outline-none bg-no-repeat bg-center align-middle shrink-0 bg-transparent;
+      @apply relative inline-flex items-center justify-center m-6 w-24 h-24;
+      @apply border-[1.5px] border-black transition rounded-xs duration-200 bg-white;
+      @apply hover:border-gray;
       @apply focus:border-accent;
-      @apply checked:border-white checked:bg-white;
+      @apply checked:border-black checked:bg-black;
+      @apply disabled:bg-gray disabled:border-gray disabled:cursor-not-allowed disabled:opacity-50;
 
+      .fp-form-dark & {
+        @apply border-gray bg-transparent;
+        @apply hover:border-white;
+        @apply focus:border-accent;
+        @apply checked:border-white checked:bg-white;
+
+      }
     }
-  }
 
-  input[type="checkbox"]:checked {
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 9.4-4-4L1.4 4 4 6.6 10.6 0 12 1.4l-8 8Z' fill='%23fff'/%3E%3C/svg%3E");
+    input[type="checkbox"]:checked {
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 9.4-4-4L1.4 4 4 6.6 10.6 0 12 1.4l-8 8Z' fill='%23fff'/%3E%3C/svg%3E");
 
-    .fp-form-dark & {
-      background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 9.4-4-4L1.4 4 4 6.6 10.6 0 12 1.4l-8 8Z' fill='%23000'/%3E%3C/svg%3E");
+      .fp-form-dark & {
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 9.4-4-4L1.4 4 4 6.6 10.6 0 12 1.4l-8 8Z' fill='%23000'/%3E%3C/svg%3E");
+      }
     }
-  }
 
-  [type='search']::-webkit-search-cancel-button {
-    @apply appearance-none hidden;
-  }
+    [type='search']::-webkit-search-cancel-button {
+      @apply appearance-none hidden;
+    }
 
+  }
 }
 
 @layer utilities {

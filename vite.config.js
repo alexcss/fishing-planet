@@ -14,6 +14,7 @@ const entries = [
   './src/css/admin/dlc-importer.css',
   './src/js/app.js',
   './src/js/dlc-archive.tsx',
+  './src/js/career.tsx',
   './src/js/admin.js',
   './src/js/admin/dlc-importer.js',
 ]

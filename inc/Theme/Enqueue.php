@@ -57,6 +57,12 @@ class Enqueue {
 			wp_script_add_data( 'dlc-archive', 'module', true );
 		}
 
+		// Enqueue Career script on Career page template
+		if ( is_page_template( 'page-templates/career.php' ) ) {
+			wp_enqueue_script( 'career', Assets::requireUrl( 'src/js/career.tsx' ), [], null );
+			wp_script_add_data( 'career', 'module', true );
+		}
+
 		if ( ! is_user_logged_in() ) {
 			// Deregister the jquery version bundled with WordPress.
 			wp_deregister_script( 'jquery' );

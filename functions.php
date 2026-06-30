@@ -50,6 +50,7 @@ if ( file_exists( $composer_autoload ) ) {
 
 	/* API */
 	new FP\Api\DLC_Api();
+	new FP\Api\Career_Api();
 
 } elseif ( ! is_admin() ) {
 	wp_die( 'Pls install composer dependency' );

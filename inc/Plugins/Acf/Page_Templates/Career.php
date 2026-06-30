@@ -251,6 +251,48 @@ class Career extends Page_Template {
 			],
 		] );
 
+		$this->add_tab( __( 'Jobs Grid Section', 'fp' ) );
+		$this->add_field( [
+			'label'      => __( 'Jobs Grid Section', 'fp' ),
+			'name'       => 'jobs',
+			'type'       => 'group',
+			'sub_fields' => [
+				[
+					'label'     => __( 'Title', 'fp' ),
+					'name'      => 'title',
+					'type'      => 'textarea',
+					'maxlength' => 200,
+					'rows'      => 2,
+					'new_lines' => 'br',
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'     => __( 'Tagline', 'fp' ),
+					'name'      => 'tagline',
+					'type'      => 'textarea',
+					'maxlength' => 300,
+					'new_lines' => 'br',
+					'rows'      => 2,
+					'wrapper'   => [
+						'width' => '50',
+					],
+				],
+				[
+					'label'         => __( 'Jobs Per Page', 'fp' ),
+					'name'          => 'jobs_per_page',
+					'type'          => 'number',
+					'default_value' => 6,
+					'min'           => 1,
+					'max'           => 24,
+					'wrapper'       => [
+						'width' => '50',
+					],
+				],
+			],
+		] );
+
 		$this->add_tab( __( 'Contact Section', 'fp' ) );
 		$this->add_field( [
 			'label'      => __( 'Contact Section', 'fp' ),
