@@ -21,7 +21,7 @@ $career_page_id = Helper::get_page_id_by_template( 'page-templates/career.php' )
 $apply_form = '';
 if ( $career_page_id ) {
 	$settings   = get_field( 'single_career_settings', $career_page_id );
-	$apply_form = $settings['form'] ?? '';
+	$apply_form = $settings;
 }
 
 $context['departments'] = $departments;

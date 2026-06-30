@@ -296,7 +296,16 @@ class Career extends Page_Template {
 			'type'       => 'group',
 			'sub_fields' => [
 				[
-					'label'        => __( 'Apply Form Shortcode', 'fp' ),
+					'label'     => __( 'Apply Form Title', 'fp' ),
+					'name'      => 'form_title',
+					'type'      => 'text',
+					'maxlength' => 100,
+					'wrapper'   => [
+						'width' => '100',
+					],
+				],
+				[
+					'label'        => __( 'Apply Form Title', 'fp' ),
 					'name'         => 'form',
 					'type'         => 'text',
 					'instructions' => __( 'Paste the Contact Form 7 shortcode here, e.g. [contact-form-7 id="123"]', 'fp' ),
