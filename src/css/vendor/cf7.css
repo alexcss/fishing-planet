@@ -1,25 +1,43 @@
-.wpcf7 .screen-reader-response {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  word-wrap: normal !important;
-  word-break: normal !important;
-}
+.wpcf7 {
+  .screen-reader-response {
+    @apply absolute overflow-hidden h-px w-px -m-px p-0 border-0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    word-break: normal !important;
+    word-wrap: normal !important;
+  }
 
-.wpcf7 .hidden-fields-container {
-  display: none;
-}
+  .hidden-fields-container {
+    @apply hidden;
+  }
 
-.wpcf7 form.init .wpcf7-response-output,
-.wpcf7 form.resetting .wpcf7-response-output,
-.wpcf7 form.submitting .wpcf7-response-output {
-  display: none;
+  form.init .wpcf7-response-output,
+  form.resetting .wpcf7-response-output,
+  form.submitting .wpcf7-response-output {
+    @apply hidden;
+  }
+
+  [inert] {
+    @apply opacity-50;
+  }
+
+  input[type="file"] {
+    @apply cursor-pointer;
+  }
+
+  input[type="file"]:disabled {
+    @apply cursor-default;
+  }
+
+  .wpcf7-submit:disabled {
+    @apply cursor-not-allowed;
+  }
+
+  input[type="url"],
+  input[type="email"],
+  input[type="tel"] {
+    direction: ltr;
+  }
 }
 
 
@@ -32,19 +50,11 @@
 }
 
 .use-floating-validation-tip .wpcf7-not-valid-tip {
-  position: relative;
-  top: -2ex;
-  left: 1em;
-  z-index: 100;
-  border: 1px solid #dc3232;
-  background: #fff;
-  padding: .2em .8em;
-  width: 24em;
+  @apply relative z-100 border border-red bg-white py-[0.2em] px-[0.8em] w-[24em];
 }
 
 .wpcf7-list-item {
-  display: inline-block;
-  margin: 0 0 0 1em;
+  @apply inline-block;
 }
 
 .wpcf7-list-item-label::before,
@@ -53,80 +63,32 @@
 }
 
 .wpcf7-spinner {
-  visibility: hidden;
-  display: inline-block;
-  background-color: #23282d; /* Dark Gray 800 */
-  opacity: 0.75;
-  width: 24px;
-  height: 24px;
-  border: none;
-  border-radius: 100%;
-  padding: 0;
-  margin: 0 24px;
-  position: relative;
-}
-
-.wpcf7-spinner {
-  @apply absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none mr-12;
+  @apply invisible inline-block bg-[#23282d] opacity-75 size-24 rounded-full p-0 mx-24 absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none mr-12;
 }
 
 form.submitting .wpcf7-spinner {
-  visibility: visible;
+  @apply visible;
 }
 
 .wpcf7-spinner::before {
+  @apply absolute bg-[#fbfbfc] top-4 left-4 size-6 rounded-full border-0 animate-[spin_1000ms_linear_infinite];
   content: '';
-  position: absolute;
-  background-color: #fbfbfc; /* Light Gray 100 */
-  top: 4px;
-  left: 4px;
-  width: 6px;
-  height: 6px;
-  border: none;
-  border-radius: 100%;
   transform-origin: 8px 8px;
-  animation-name: spin;
-  animation-duration: 1000ms;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .wpcf7-spinner::before {
-    animation-name: blink;
-    animation-duration: 2000ms;
+    @apply animate-[blink_2000ms];
   }
-}
-
-.wpcf7 [inert] {
-  opacity: 0.5;
-}
-
-.wpcf7 input[type="file"] {
-  cursor: pointer;
-}
-
-.wpcf7 input[type="file"]:disabled {
-  cursor: default;
-}
-
-.wpcf7 .wpcf7-submit:disabled {
-  cursor: not-allowed;
-}
-
-.wpcf7 input[type="url"],
-.wpcf7 input[type="email"],
-.wpcf7 input[type="tel"] {
-  direction: ltr;
 }
 
 .wpcf7-reflection > output {
   display: list-item;
-  list-style: none;
+  @apply list-none;
 }
 
 .wpcf7-reflection > output[hidden] {
-  display: none;
+  @apply hidden;
 }
 
 
