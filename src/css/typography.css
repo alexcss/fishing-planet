@@ -12,7 +12,7 @@
 }
 
 @utility h1 {
-  @apply text-70/[0.8] md:text-90 xl:text-100 h-base;
+  @apply text-70/[0.8] md:text-90 xl:text-100 h-base -tracking-1;
 }
 
 @utility h2 {
@@ -20,7 +20,7 @@
 }
 
 @utility h3 {
-  @apply text-50/[0.9] lg:text-60 xl:text-70 h-base;
+  @apply text-50/[0.9] lg:text-60 xl:text-70 h-base tracking-1;
 }
 
 @utility h4 {

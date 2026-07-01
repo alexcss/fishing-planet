@@ -9,11 +9,11 @@
 {% if data %}
 	<section class="relative pt-40 pb-60 md:pt-60 md:pb-80 xl:pt-100 xl:pb-120">
 		<div class="relative z-10 container xl:pb-40">
-			<div class="flex flex-col gap-24 md:items-start lg:flex-row lg:justify-between">
+			<div class="flex flex-col gap-24 md:items-start lg:flex-row lg:items-center lg:justify-between">
 				{% if data.title %}
 					<div class="flex flex-col items-start gap-24 md:flex-row md:gap-20">
 						{% if data.subtitle %}
-							<p class="fp-text-small-description text-sand mt-2 md:order-1 md:max-w-120 md:pt-2 xl:pt-4">
+							<p class="fp-text-small-description text-sand md:order-1 md:max-w-120 md:pt-2 xl:pt-4">
 								{{ data.subtitle }}
 							</p>
 						{% endif %}
@@ -34,7 +34,7 @@
 				class="mt-32 grid grid-cols-1 items-start gap-40 md:mt-60 lg:grid-cols-2 lg:items-start lg:gap-32 xl:grid-cols-24 xl:items-center xl:gap-40"
 			>
 				{% if data.image %}
-					<div class="space-y-24 xl:col-span-15">
+					<div class="max-lg:space-y-24 xl:col-span-15">
 						<div class="md:fp-block-corners">
 							{{ image({ image: data.image, wrap_class: "w-full", class: "w-full", sizes: { w: 776, h: 605 } }) }}
 						</div>
@@ -48,7 +48,7 @@
 					</div>
 				{% endif %}
 
-				<div class="space-y-24 md:max-w-lg md:space-y-32 lg:max-w-none xl:col-span-9">
+				<div class="space-y-24 md:max-w-lg md:space-y-28 lg:max-w-none xl:col-span-9">
 					{% if data.text %}
 						{% if data.text_title %}
 							<h2 class="h3">{{ data.text_title }}</h2>
