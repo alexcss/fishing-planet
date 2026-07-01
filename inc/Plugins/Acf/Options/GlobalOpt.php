@@ -149,13 +149,7 @@ class GlobalOpt extends Options_Page {
 					'type'          => 'text',
 					'default_value' => 'Subscribe for updates',
 					'maxlength'     => 100,
-				],
-				[
-					'label'        => __( 'Form Shortcode', 'fp' ),
-					'name'         => 'form_shortcode',
-					'type'         => 'text',
-					'instructions' => __( 'Enter the form shortcode (e.g., [contact-form-7 id="123"])', 'fp' ),
-				],
+				]
 			],
 		] );
 	}

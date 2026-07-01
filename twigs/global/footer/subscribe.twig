@@ -1,12 +1,17 @@
-{% if subscribe.title or subscribe.form_shortcode %}
+{% if subscribe.title %}
 	<div class="space-y-16 lg:py-12">
 		{% if subscribe.title %}
 			<h5 class="fp-title-footer">{{ subscribe.title }}</h5>
 		{% endif %}
-		{% if subscribe.form_shortcode %}
-			<div class="subscribe-form">
-				{{ fn("do_shortcode", subscribe.form_shortcode) }}
-			</div>
-		{% endif %}
+		<div class="fp-subscribe-form fp-form"></div>
 	</div>
+
+	<script>
+		!function (t, e, c, n) { var s = e.createElement(c); s.async = 1, s.src = 'https://statics.yespo.io/scripts/' + n + '.js'; var r = e.scripts[0];
+		r.parentNode.insertBefore(s, r); var f = function () { f.c(arguments); }; f.q = []; f.c = function () { f.q.push(arguments); }; t['eS'] = t['eS']
+		|| f; }(window, document, 'script', '88113AB295C64284B40DBFC8585AF35D');
+	</script>
+	<script>
+		eS('init');
+	</script>
 {% endif %}
