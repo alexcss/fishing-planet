@@ -6,6 +6,7 @@
 @import './typography.css';
 @import './components.css';
 @import './forms.css';
+@import './vendor/cf7.css';
 @import './richtext.css';
 @import './utilities.css';
 

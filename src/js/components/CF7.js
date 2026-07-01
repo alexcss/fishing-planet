@@ -7,6 +7,7 @@ const CF7 = () => {
 
   forms.forEach((form) => {
     const inputFileWrap = form.querySelector('[data-input-file]')
+
     if (!inputFileWrap) return
 
     let inputFile = inputFileWrap.querySelector("[type='file']")
@@ -29,6 +30,18 @@ const CF7 = () => {
         inputFileWrap.classList.remove('has-file')
         inputFileWrap.dataset.inputFile = ''
       }
+    })
+  })
+
+  forms.forEach((form) => {
+    const formMessage = form.querySelector('[data-form-message]')
+
+    if (!formMessage) return
+
+    formMessage.addEventListener('click', () => {
+      const formEl = form.querySelector('.wpcf7-form')
+      if (!formEl) return
+      formEl.classList.remove('sent')
     })
   })
 }

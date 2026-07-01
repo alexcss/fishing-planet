@@ -92,9 +92,9 @@ class Enqueue {
 
 	// Dequeue cf7/captcha scripts and styles, preventing them from loading everywhere
 	public function cf7_js_styles(): void {
+		wp_dequeue_style( 'contact-form-7' );
 		if ( ! has_block( 'acf/fp-contact-form' ) ) {
 //			wp_dequeue_script( 'contact-form-7' );
-//			wp_dequeue_style( 'contact-form-7' );
 //			remove_action( 'wp_enqueue_scripts', 'wpcf7_recaptcha_enqueue_scripts', 20 );
 		}
 	}

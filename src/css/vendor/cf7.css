@@ -1,0 +1,172 @@
+.wpcf7 .screen-reader-response {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  word-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.wpcf7 .hidden-fields-container {
+  display: none;
+}
+
+.wpcf7 form.init .wpcf7-response-output,
+.wpcf7 form.resetting .wpcf7-response-output,
+.wpcf7 form.submitting .wpcf7-response-output {
+  display: none;
+}
+
+
+.wpcf7-form-control-wrap {
+  @apply block relative;
+}
+
+.wpcf7-not-valid-tip {
+  @apply text-red text-12 absolute left-0 top-full mt-2;
+}
+
+.use-floating-validation-tip .wpcf7-not-valid-tip {
+  position: relative;
+  top: -2ex;
+  left: 1em;
+  z-index: 100;
+  border: 1px solid #dc3232;
+  background: #fff;
+  padding: .2em .8em;
+  width: 24em;
+}
+
+.wpcf7-list-item {
+  display: inline-block;
+  margin: 0 0 0 1em;
+}
+
+.wpcf7-list-item-label::before,
+.wpcf7-list-item-label::after {
+  content: " ";
+}
+
+.wpcf7-spinner {
+  visibility: hidden;
+  display: inline-block;
+  background-color: #23282d; /* Dark Gray 800 */
+  opacity: 0.75;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 100%;
+  padding: 0;
+  margin: 0 24px;
+  position: relative;
+}
+
+.wpcf7-spinner {
+  @apply absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none mr-12;
+}
+
+form.submitting .wpcf7-spinner {
+  visibility: visible;
+}
+
+.wpcf7-spinner::before {
+  content: '';
+  position: absolute;
+  background-color: #fbfbfc; /* Light Gray 100 */
+  top: 4px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border: none;
+  border-radius: 100%;
+  transform-origin: 8px 8px;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wpcf7-spinner::before {
+    animation-name: blink;
+    animation-duration: 2000ms;
+  }
+}
+
+.wpcf7 [inert] {
+  opacity: 0.5;
+}
+
+.wpcf7 input[type="file"] {
+  cursor: pointer;
+}
+
+.wpcf7 input[type="file"]:disabled {
+  cursor: default;
+}
+
+.wpcf7 .wpcf7-submit:disabled {
+  cursor: not-allowed;
+}
+
+.wpcf7 input[type="url"],
+.wpcf7 input[type="email"],
+.wpcf7 input[type="tel"] {
+  direction: ltr;
+}
+
+.wpcf7-reflection > output {
+  display: list-item;
+  list-style: none;
+}
+
+.wpcf7-reflection > output[hidden] {
+  display: none;
+}
+
+
+.wpcf7-form {
+  .fp-form-message {
+    @apply absolute flex flex-col items-center justify-center inset-0 m-0 p-20 md:p-40 bg-black bg-pattern-wave text-white h3 text-center cursor-pointer translate-y-full transition duration-300 ease-in-out;
+
+    &:after {
+      @apply content-[''] absolute top-0 right-0 size-24 md:size-32 m-12 md:m-32 transition bg-center bg-no-repeat bg-contain hover:opacity-50;
+      background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.04455 27.5555L3.55566 25.0666L13.5112 15.1111L3.55566 5.15551L6.04455 2.66663L16.0001 12.6222L25.9557 2.66663L28.4446 5.15551L18.489 15.1111L28.4446 25.0666L25.9557 27.5555L16.0001 17.6L6.04455 27.5555Z' fill='white'/%3E%3C/svg%3E%0A");
+    }
+  }
+
+  &.sent {
+    .fp-form-message {
+      @apply translate-y-0;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
