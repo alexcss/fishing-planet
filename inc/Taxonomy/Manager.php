@@ -8,6 +8,7 @@ class Manager {
 
 	private array $taxonomies = [
 		DLC_Category::class,
+		DLC_Fishing_Style::class,
 		DLC_Includes::class,
 		DLC_Waterways::class,
 		Department::class,
