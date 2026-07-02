@@ -123,7 +123,7 @@ class Support extends Page_Template {
 							'label'        => __( 'Answer', 'fp' ),
 							'name'         => 'text',
 							'type'         => 'wysiwyg',
-							'toolbar'      => 'basic',
+							'toolbar'      => 'full',
 							'media_upload' => 0,
 							'wrapper'      => [
 								'width' => '100',
