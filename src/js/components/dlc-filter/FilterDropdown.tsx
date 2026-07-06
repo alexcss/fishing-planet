@@ -151,7 +151,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
                       dangerouslySetInnerHTML={{ __html: option.name }}
                     ></span>
                     {isSelected(option.slug) && (
-                      <svg className="h-24 w-24 text-white">
+                      <svg className="h-24 w-24 shrink-0 text-white">
                         <use href="#icon-check" />
                       </svg>
                     )}

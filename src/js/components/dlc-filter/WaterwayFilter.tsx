@@ -117,7 +117,9 @@ const WaterwayFilter: React.FC<WaterwayFilterProps> = ({ options, selected, onCh
                             disabled={!isAvailable}
                             className={`group flex min-h-24 w-full items-center justify-between ${isAvailable ? 'text-white/70 hover:text-white' : 'cursor-not-allowed opacity-20'}`}
                           >
-                            <span className={`fp-captital-title-sm flex items-center gap-12 ${isSelected(option.slug) ? 'text-white' : ''}`}>
+                            <span
+                              className={`fp-captital-title-sm flex items-center gap-12 text-left ${isSelected(option.slug) ? 'text-white' : ''}`}
+                            >
                               <span className={`size-8 shrink-0 bg-white/15 transition-colors ${isAvailable ? 'group-hover:bg-white' : ''}`}></span>
                               {option.name}
                             </span>
