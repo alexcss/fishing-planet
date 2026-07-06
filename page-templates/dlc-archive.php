@@ -27,6 +27,11 @@ $waterways = Timber::get_terms( [
 	'hide_empty' => true,
 ] );
 
+$fishing_styles = Timber::get_terms( [
+	'taxonomy'   => 'dlc_fishing_style',
+	'hide_empty' => true,
+] );
+
 // Get initial page and filters from URL
 $initial_page    = isset( $_GET['pg'] ) ? max( 1, intval( $_GET['pg'] ) ) : 1;
 $filter_category = isset( $_GET['category'] ) ? sanitize_text_field( $_GET['category'] ) : '';
@@ -43,6 +48,12 @@ $filter_waterway = [];
 if ( isset( $_GET['waterway'] ) ) {
 	$raw_waterway    = is_array( $_GET['waterway'] ) ? implode( ',', $_GET['waterway'] ) : $_GET['waterway'];
 	$filter_waterway = array_map( 'sanitize_text_field', array_filter( explode( ',', $raw_waterway ) ) );
+}
+
+$filter_fishing_style = [];
+if ( isset( $_GET['fishing_style'] ) ) {
+	$raw_fishing_style    = is_array( $_GET['fishing_style'] ) ? implode( ',', $_GET['fishing_style'] ) : $_GET['fishing_style'];
+	$filter_fishing_style = array_map( 'sanitize_text_field', array_filter( explode( ',', $raw_fishing_style ) ) );
 }
 
 // Initial DLC query for SSR (3 per page)
@@ -83,6 +94,14 @@ if ( ! empty( $filter_waterway ) ) {
 		'operator' => 'IN',
 	];
 }
+if ( ! empty( $filter_fishing_style ) ) {
+	$tax_query[] = [
+		'taxonomy' => 'dlc_fishing_style',
+		'field'    => 'slug',
+		'terms'    => $filter_fishing_style,
+		'operator' => 'IN',
+	];
+}
 if ( ! empty( $tax_query ) ) {
 	$dlc_query['tax_query'] = $tax_query;
 }
@@ -96,6 +115,7 @@ $dlc_posts_array = array_values( is_array( $dlc_posts ) ? $dlc_posts : iterator_
 $categories_array = array_values( is_array( $categories ) ? $categories : iterator_to_array( $categories ) );
 $includes_array   = array_values( is_array( $includes ) ? $includes : iterator_to_array( $includes ) );
 $waterways_array  = array_values( is_array( $waterways ) ? $waterways : iterator_to_array( $waterways ) );
+$fishing_styles_array  = array_values( is_array( $fishing_styles ) ? $fishing_styles : iterator_to_array( $fishing_styles ) );
 
 // Prepare data for React component
 $filter_data = [
@@ -123,6 +143,14 @@ $filter_data = [
 			'count' => $term->count,
 		];
 	}, $waterways_array ),
+	'fishing_styles'  => array_map( function ( $term ) {
+		return [
+			'id'    => $term->term_id,
+			'slug'  => $term->slug,
+			'name'  => $term->name,
+			'count' => $term->count,
+		];
+	}, $fishing_styles_array ),
 ];
 
 // Prepare initial posts for React
@@ -177,11 +205,12 @@ $data = [
 	'total_posts'     => $total_posts_count,
 	'initial_page'    => $initial_page,
 	'initial_filters' => [
-		'category' => $filter_category,
-		'include'  => array_values( $filter_include ),
-		'waterway' => array_values( $filter_waterway ),
-		'sort'     => 'latest',
-		'search'   => $filter_search,
+		'category'      => $filter_category,
+		'include'       => array_values( $filter_include ),
+		'waterway'      => array_values( $filter_waterway ),
+		'fishing_style' => array_values( $filter_fishing_style ),
+		'sort'          => 'latest',
+		'search'        => $filter_search,
 	],
 ];
 

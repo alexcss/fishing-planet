@@ -57,7 +57,7 @@ const DesktopSearch: React.FC<DesktopSearchProps> = ({ value, onChange }) => {
         className="fp-btn-corners flex aspect-auto h-64 w-fit items-center bg-transparent p-0 focus-within:border-white/20"
       >
         <span>
-          <span className={`flex w-0 flex-1 items-center overflow-hidden transition-[width] ${isOpen ? 'w-230' : ''}`}>
+          <span className={`flex w-0 flex-1 items-center overflow-hidden transition-[width] ${isOpen ? 'lg:w-160 xl:w-200' : ''}`}>
             <span className="flex-1 pl-20">
               <input
                 ref={inputRef}

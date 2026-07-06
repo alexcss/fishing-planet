@@ -83,13 +83,13 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   }
 
   return (
-    <div ref={dropdownRef} className="relative w-220 xl:w-280">
+    <div ref={dropdownRef} className="relative w-220 shrink-2 xl:w-250">
       {/* Dropdown Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex h-64 w-full items-center justify-between gap-12 border border-white/15 bg-black px-24 py-20 text-left transition-colors hover:border-white/30"
       >
-        <span className="fp-captital-title min-w-0 truncate" dangerouslySetInnerHTML={{ __html: displayLabel }}></span>
+        <span className="fp-captital-title lg:text-28 min-w-0 truncate" dangerouslySetInnerHTML={{ __html: displayLabel }}></span>
         <svg className={`h-24 w-24 shrink-0 text-white transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
           <use href="#icon-arrow-down" />
         </svg>

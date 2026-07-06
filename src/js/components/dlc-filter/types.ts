@@ -9,6 +9,7 @@ export interface FilterData {
   categories: FilterOption[]
   includes: FilterOption[]
   waterways: FilterOption[]
+  fishing_styles: FilterOption[]
 }
 
 export interface DlcCategory {
@@ -32,6 +33,7 @@ export interface Filters {
   category: string
   include: string[]
   waterway: string[]
+  fishing_style: string[]
   sort: string
   search: string
 }
@@ -40,6 +42,7 @@ export interface AvailableTerms {
   categories: string[]
   includes: string[]
   waterways: string[]
+  fishing_styles: string[]
 }
 
 export interface DlcApiResponse {

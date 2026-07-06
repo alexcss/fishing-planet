@@ -16,19 +16,29 @@ interface MobileFiltersProps {
   availableTerms?: AvailableTerms | null
 }
 
-type AccordionKey = 'category' | 'include' | 'waterway'
+type AccordionKey = 'category' | 'include' | 'waterway' | 'fishing_style'
 
 const filterSections = (filterData: FilterData): Array<{ key: AccordionKey; label: string; options: FilterOption[]; multi?: boolean }> => [
   { key: 'category', label: 'Category', options: filterData.categories },
+  { key: 'fishing_style', label: 'Fishing Style', options: filterData.fishing_styles, multi: true },
   { key: 'include', label: 'Pack Content', options: filterData.includes, multi: true },
 ]
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFilterChange, onSearchChange, onClearFilters, activeFilterCount, availableTerms }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({
+  filterData,
+  filters,
+  onFilterChange,
+  onSearchChange,
+  onClearFilters,
+  activeFilterCount,
+  availableTerms,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [accordion, setAccordion] = useState<Record<AccordionKey, boolean>>({
     category: false,
     include: false,
     waterway: false,
+    fishing_style: false,
   })
 
   const toggleAccordion = (key: AccordionKey) => {
@@ -43,7 +53,14 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ filterData, filters, onFi
         <div className="overflow-hidden">
           <div className="space-y-8 px-24">
             {filterSections(filterData).map(({ key, label, options, multi }) => {
-              const availableSlugs = key === 'category' ? availableTerms?.categories : key === 'include' ? availableTerms?.includes : undefined
+              const availableSlugs =
+                key === 'category'
+                  ? availableTerms?.categories
+                  : key === 'include'
+                    ? availableTerms?.includes
+                    : key === 'fishing_style'
+                      ? availableTerms?.fishing_styles
+                      : undefined
               return (
                 <FilterAccordion
                   key={key}

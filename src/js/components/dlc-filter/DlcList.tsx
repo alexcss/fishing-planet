@@ -39,6 +39,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
     const currentCategory = url.searchParams.get('category') || ''
     const currentInclude = url.searchParams.get('include') ? url.searchParams.get('include')!.split(',') : []
     const currentWaterway = url.searchParams.get('waterway') ? url.searchParams.get('waterway')!.split(',') : []
+    const currentFishingStyle = url.searchParams.get('fishing_style') ? url.searchParams.get('fishing_style')!.split(',') : []
     const currentSearch = url.searchParams.get('search') || ''
     const currentPage = parseInt(url.searchParams.get('pg') || '1', 10)
 
@@ -48,6 +49,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
       currentCategory === (filters.category || '') &&
       arraysEqual(currentInclude, filters.include) &&
       arraysEqual(currentWaterway, filters.waterway) &&
+      arraysEqual(currentFishingStyle, filters.fishing_style) &&
       currentSearch === (filters.search || '')
     ) {
       return
@@ -59,6 +61,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
     if (filters.category) params.push(`category=${encodeURIComponent(filters.category)}`)
     if (filters.include.length > 0) params.push(`include=${filters.include.join(',')}`)
     if (filters.waterway.length > 0) params.push(`waterway=${filters.waterway.join(',')}`)
+    if (filters.fishing_style.length > 0) params.push(`fishing_style=${filters.fishing_style.join(',')}`)
     if (filters.search) params.push(`search=${encodeURIComponent(filters.search)}`)
 
     const queryString = params.length > 0 ? `?${params.join('&')}` : ''
@@ -81,6 +84,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
         if (currentFilters.category) params.append('category', currentFilters.category)
         if (currentFilters.include.length > 0) params.append('include', currentFilters.include.join(','))
         if (currentFilters.waterway.length > 0) params.append('waterway', currentFilters.waterway.join(','))
+        if (currentFilters.fishing_style.length > 0) params.append('fishing_style', currentFilters.fishing_style.join(','))
         if (currentFilters.sort) params.append('sort', currentFilters.sort)
         if (currentFilters.search) params.append('search', currentFilters.search)
 
@@ -122,6 +126,7 @@ const DlcList: React.FC<DlcListProps> = ({ initialPosts, initialTotalPosts, init
       filters.sort,
       [...filters.include].sort().join(','),
       [...filters.waterway].sort().join(','),
+      [...filters.fishing_style].sort().join(','),
     ].join('|')
 
     if (isInitialMount.current) {

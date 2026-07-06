@@ -40,6 +40,9 @@ class DLC_Api {
 					'waterway' => [
 						'default' => '',
 					],
+					'fishing_style' => [
+						'default' => '',
+					],
 					'sort'     => [
 						'default' => 'latest',
 					],
@@ -60,8 +63,9 @@ class DLC_Api {
 		$per_page = $request->get_param( 'per_page' );
 		$category = $request->get_param( 'category' );
 		$include  = $request->get_param( 'include' );
-		$waterway = $request->get_param( 'waterway' );
-		$sort     = $request->get_param( 'sort' );
+		$waterway     = $request->get_param( 'waterway' );
+		$fishing_style = $request->get_param( 'fishing_style' );
+		$sort          = $request->get_param( 'sort' );
 		$search   = $request->get_param( 'search' );
 
 		$args = [
@@ -124,6 +128,16 @@ class DLC_Api {
 			];
 		}
 
+		if ( $fishing_style ) {
+			$fishing_style_terms = array_filter( explode( ',', $fishing_style ) );
+			$tax_query[]         = [
+				'taxonomy' => 'dlc_fishing_style',
+				'field'    => 'slug',
+				'terms'    => $fishing_style_terms,
+				'operator' => 'IN',
+			];
+		}
+
 		if ( ! empty( $tax_query ) ) {
 			$args['tax_query'] = $tax_query;
 		}
@@ -135,7 +149,7 @@ class DLC_Api {
 			$posts[] = $this->format_dlc_response( $post );
 		}
 
-		$available_terms = $this->get_available_terms( $args, $category, $include, $waterway );
+		$available_terms = $this->get_available_terms( $args, $category, $include, $waterway, $fishing_style );
 
 		return new \WP_REST_Response( [
 			'posts'           => $posts,
@@ -149,21 +163,24 @@ class DLC_Api {
 	 * For each taxonomy, applies all OTHER active filters so the UI can disable
 	 * options that would produce zero results.
 	 *
-	 * @param array  $base_args Base WP_Query args (without tax_query).
-	 * @param string $category  Active category slug.
-	 * @param string $include   Comma-separated include slugs.
-	 * @param string $waterway  Comma-separated waterway slugs.
+	 * @param array  $base_args    Base WP_Query args (without tax_query).
+	 * @param string $category     Active category slug.
+	 * @param string $include      Comma-separated include slugs.
+	 * @param string $waterway     Comma-separated waterway slugs.
+	 * @param string $fishing_style Comma-separated fishing style slugs.
 	 *
-	 * @return array{ categories: string[], includes: string[], waterways: string[] }
+	 * @return array{ categories: string[], includes: string[], waterways: string[], fishing_styles: string[] }
 	 */
-	private function get_available_terms( array $base_args, string $category, string $include, string $waterway ): array {
-		$include_terms  = $include ? array_filter( explode( ',', $include ) ) : [];
-		$waterway_terms = $waterway ? array_filter( explode( ',', $waterway ) ) : [];
+	private function get_available_terms( array $base_args, string $category, string $include, string $waterway, string $fishing_style ): array {
+		$include_terms       = $include ? array_filter( explode( ',', $include ) ) : [];
+		$waterway_terms      = $waterway ? array_filter( explode( ',', $waterway ) ) : [];
+		$fishing_style_terms = $fishing_style ? array_filter( explode( ',', $fishing_style ) ) : [];
 
 		$taxon_map = [
-			'categories' => 'dlc_category',
-			'includes'   => 'dlc_includes',
-			'waterways'  => 'dlc_waterways',
+			'categories'     => 'dlc_category',
+			'includes'       => 'dlc_includes',
+			'waterways'      => 'dlc_waterways',
+			'fishing_styles' => 'dlc_fishing_style',
 		];
 
 		$result = [];
@@ -194,6 +211,15 @@ class DLC_Api {
 					'taxonomy' => 'dlc_waterways',
 					'field'    => 'slug',
 					'terms'    => $waterway_terms,
+					'operator' => 'IN',
+				];
+			}
+
+			if ( $taxonomy !== 'dlc_fishing_style' && ! empty( $fishing_style_terms ) ) {
+				$tax_query[] = [
+					'taxonomy' => 'dlc_fishing_style',
+					'field'    => 'slug',
+					'terms'    => $fishing_style_terms,
 					'operator' => 'IN',
 				];
 			}

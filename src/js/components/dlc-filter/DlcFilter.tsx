@@ -23,6 +23,7 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
     category: '',
     include: [],
     waterway: [],
+    fishing_style: [],
     sort: 'latest',
     search: '',
     ...initialFilters,
@@ -42,6 +43,7 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
       category: '',
       include: [],
       waterway: [],
+      fishing_style: [],
       sort: 'latest',
       search: '',
     })
@@ -53,6 +55,7 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
     if (filters.category) count++
     if (filters.include.length > 0) count += filters.include.length
     if (filters.waterway.length > 0) count += filters.waterway.length
+    if (filters.fishing_style.length > 0) count += filters.fishing_style.length
     return count
   }, [filters])
 
@@ -66,6 +69,14 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
           selected={filters.category}
           onSelect={(value) => handleFilterChange('category', value)}
           availableSlugs={availableTerms?.categories}
+        />
+        <FilterDropdown
+          label="Fishing Style"
+          options={filterData.fishing_styles}
+          selected={filters.fishing_style}
+          onSelect={(value) => handleFilterChange('fishing_style', value as string[])}
+          availableSlugs={availableTerms?.fishing_styles}
+          multi
         />
         <WaterwayFilter
           label="Waterway"
@@ -98,7 +109,14 @@ const DlcFilter: React.FC<DlcFilterProps> = ({ filterData, initialPosts, totalPo
       />
 
       {/* DLC List */}
-      <DlcList initialPosts={initialPosts} initialTotalPosts={totalPosts} initialPage={initialPage} filters={filters} apiEndpoint={apiEndpoint} onAvailableTermsChange={setAvailableTerms} />
+      <DlcList
+        initialPosts={initialPosts}
+        initialTotalPosts={totalPosts}
+        initialPage={initialPage}
+        filters={filters}
+        apiEndpoint={apiEndpoint}
+        onAvailableTermsChange={setAvailableTerms}
+      />
     </div>
   )
 }
