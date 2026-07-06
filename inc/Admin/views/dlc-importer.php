@@ -1,72 +1,18 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-
-$success = isset( $_GET['success'] ) ? sanitize_text_field( wp_unslash( $_GET['success'] ) ) : '';
-$error   = isset( $_GET['error'] ) ? sanitize_text_field( wp_unslash( $_GET['error'] ) ) : '';
-$added   = isset( $_GET['added'] ) ? intval( $_GET['added'] ) : 0;
-$updated = isset( $_GET['updated'] ) ? intval( $_GET['updated'] ) : 0;
-$errors  = isset( $_GET['errors'] ) ? intval( $_GET['errors'] ) : 0;
-
-$error_details = get_transient( 'fp_dlc_import_errors' );
-if ( $error_details ) {
-	delete_transient( 'fp_dlc_import_errors' );
-}
 ?>
 
 <div class="wrap fp-dlc-importer">
 	<h1><?php esc_html_e( 'DLC Importer from Google Sheets', 'fp' ); ?></h1>
 
-	<?php if ( $success === 'sync_complete' ) : ?>
-		<div class="notice notice-success is-dismissible">
-			<p>
-				<strong><?php esc_html_e( 'Sync completed successfully!', 'fp' ); ?></strong>
-			</p>
-			<ul>
-				<li><?php printf( esc_html__( 'Added: %d DLC', 'fp' ), $added ); ?></li>
-				<li><?php printf( esc_html__( 'Updated: %d DLC', 'fp' ), $updated ); ?></li>
-				<?php if ( $errors > 0 ) : ?>
-					<li class="error-count"><?php printf( esc_html__( 'Errors: %d', 'fp' ), $errors ); ?></li>
-				<?php endif; ?>
-			</ul>
-		</div>
-
-		<?php if ( ! empty( $error_details ) ) : ?>
-			<div class="notice notice-error">
-				<p><strong><?php esc_html_e( 'Import Errors:', 'fp' ); ?></strong></p>
-				<ul>
-					<?php foreach ( $error_details as $error_msg ) : ?>
-						<li><?php echo esc_html( $error_msg ); ?></li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		<?php endif; ?>
-	<?php endif; ?>
-
-	<?php if ( $error === 'no_url' ) : ?>
-		<div class="notice notice-error is-dismissible">
-			<p><?php esc_html_e( 'Please enter a Google Sheets URL.', 'fp' ); ?></p>
-		</div>
-	<?php endif; ?>
-
-	<?php if ( $error === 'invalid_url' ) : ?>
-		<div class="notice notice-error is-dismissible">
-			<p><?php esc_html_e( 'Invalid Google Sheets URL. Please check the URL and try again.', 'fp' ); ?></p>
-		</div>
-	<?php endif; ?>
-
-	<?php if ( $error === 'fetch_failed' ) : ?>
-		<div class="notice notice-error is-dismissible">
-			<p><?php esc_html_e( 'Failed to fetch data from Google Sheets. Make sure the sheet is publicly accessible.', 'fp' ); ?></p>
-		</div>
-	<?php endif; ?>
+	<div class="notice notice-error is-dismissible" id="fp-import-error" hidden>
+		<p id="fp-import-error-message"></p>
+	</div>
 
 	<div class="fp-importer-card">
 		<h2><?php esc_html_e( 'Import Settings', 'fp' ); ?></h2>
 
-		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" id="fp-dlc-sync-form">
-			<?php wp_nonce_field( 'fp_dlc_sync' ); ?>
-			<input type="hidden" name="action" value="fp_dlc_sync">
-
+		<form id="fp-dlc-sync-form">
 			<table class="form-table">
 				<tr>
 					<th scope="row">
@@ -95,6 +41,29 @@ if ( $error_details ) {
 				</button>
 			</p>
 		</form>
+
+		<div class="fp-import-progress" id="fp-import-progress" hidden>
+			<div class="fp-progress-bar">
+				<div class="fp-progress-bar-fill" id="fp-progress-fill" style="width: 0%"></div>
+			</div>
+			<p class="fp-progress-status">
+				<span id="fp-progress-text"><?php esc_html_e( 'Preparing import...', 'fp' ); ?></span>
+				<span id="fp-progress-count"></span>
+			</p>
+		</div>
+
+		<div class="fp-import-report" id="fp-import-report" hidden>
+			<h3><?php esc_html_e( 'Sync Report', 'fp' ); ?></h3>
+			<ul>
+				<li><?php esc_html_e( 'Added:', 'fp' ); ?> <strong id="fp-report-added">0</strong></li>
+				<li><?php esc_html_e( 'Updated:', 'fp' ); ?> <strong id="fp-report-updated">0</strong></li>
+				<li class="error-count" id="fp-report-errors-row" hidden><?php esc_html_e( 'Errors:', 'fp' ); ?> <strong id="fp-report-errors">0</strong></li>
+			</ul>
+			<div id="fp-report-error-list" hidden>
+				<p><strong><?php esc_html_e( 'Import Errors:', 'fp' ); ?></strong></p>
+				<ul id="fp-report-error-items"></ul>
+			</div>
+		</div>
 	</div>
 
 	<div class="fp-importer-card">
@@ -108,6 +77,7 @@ if ( $error_details ) {
 					<li><code>title</code> - <?php esc_html_e( 'DLC title (required)', 'fp' ); ?></li>
 					<li><code>short_description</code> - <?php esc_html_e( 'Short description', 'fp' ); ?></li>
 					<li><code>content</code> - <?php esc_html_e( 'Full content/description', 'fp' ); ?></li>
+					<li><code>release_date</code> - <?php esc_html_e( 'Post publish date', 'fp' ); ?></li>
 				</ul>
 			</div>
 
@@ -117,6 +87,7 @@ if ( $error_details ) {
 					<li><code>dlc_category</code> - <?php esc_html_e( 'DLC categories', 'fp' ); ?></li>
 					<li><code>dlc_includes</code> - <?php esc_html_e( 'What DLC includes', 'fp' ); ?></li>
 					<li><code>dlc_waterways</code> - <?php esc_html_e( 'Waterways', 'fp' ); ?></li>
+					<li><code>dlc_fishing_style</code> - <?php esc_html_e( 'Fishing styles', 'fp' ); ?></li>
 				</ul>
 			</div>
 

@@ -8,6 +8,8 @@ class DLC_Importer {
 
 	const OPTION_SHEET_URL = 'fp_dlc_importer_sheet_url';
 	const MENU_SLUG = 'fp-dlc-importer';
+	const TRANSIENT_DATA = 'fp_dlc_import_data';
+	const BATCH_SIZE = 5;
 
 	private array $report = [
 		'added'   => 0,
@@ -17,8 +19,9 @@ class DLC_Importer {
 
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'add_admin_menu' ] );
-		add_action( 'admin_post_fp_dlc_sync', [ $this, 'handle_sync' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'wp_ajax_fp_dlc_prepare', [ $this, 'ajax_prepare' ] );
+		add_action( 'wp_ajax_fp_dlc_import_batch', [ $this, 'ajax_import_batch' ] );
 	}
 
 	public function add_admin_menu(): void {
@@ -33,7 +36,7 @@ class DLC_Importer {
 	}
 
 	public function enqueue_assets( string $hook ): void {
-		if ( 'page_' . self::MENU_SLUG !== $hook ) {
+		if ( ! str_ends_with( $hook, 'page_' . self::MENU_SLUG ) ) {
 			return;
 		}
 
@@ -62,6 +65,12 @@ class DLC_Importer {
 				THEME_VERSION,
 				true
 			);
+
+			wp_localize_script( 'fp-dlc-importer', 'fpDlcImporter', [
+				'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
+				'nonce'     => wp_create_nonce( 'fp_dlc_sync' ),
+				'batchSize' => self::BATCH_SIZE,
+			] );
 		}
 	}
 
@@ -70,18 +79,22 @@ class DLC_Importer {
 		require THEME_DIR . 'inc/Admin/views/dlc-importer.php';
 	}
 
-	public function handle_sync(): void {
+	/**
+	 * Step 1: Fetch the sheet, store rows in a transient, return total row count.
+	 *
+	 * @action wp_ajax_fp_dlc_prepare
+	 */
+	public function ajax_prepare(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have permission to access this page.', 'fp' ) );
+			wp_send_json_error( [ 'message' => __( 'Permission denied.', 'fp' ) ], 403 );
 		}
 
-		check_admin_referer( 'fp_dlc_sync' );
+		check_ajax_referer( 'fp_dlc_sync' );
 
 		$sheet_url = isset( $_POST['sheet_url'] ) ? sanitize_text_field( wp_unslash( $_POST['sheet_url'] ) ) : '';
 
 		if ( empty( $sheet_url ) ) {
-			wp_safe_redirect( admin_url( 'edit.php?post_type=dlc&page=' . self::MENU_SLUG . '&error=no_url' ) );
-			exit;
+			wp_send_json_error( [ 'message' => __( 'Please enter a Google Sheets URL.', 'fp' ) ] );
 		}
 
 		update_option( self::OPTION_SHEET_URL, $sheet_url );
@@ -89,34 +102,90 @@ class DLC_Importer {
 		$csv_url = $this->convert_sheet_url_to_csv( $sheet_url );
 
 		if ( ! $csv_url ) {
-			wp_safe_redirect( admin_url( 'edit.php?post_type=dlc&page=' . self::MENU_SLUG . '&error=invalid_url' ) );
-			exit;
+			wp_send_json_error( [ 'message' => __( 'Invalid Google Sheets URL.', 'fp' ) ] );
 		}
 
 		$data = $this->fetch_csv_data( $csv_url );
 
-		if ( ! $data ) {
-			wp_safe_redirect( admin_url( 'edit.php?post_type=dlc&page=' . self::MENU_SLUG . '&error=fetch_failed' ) );
-			exit;
+		if ( ! $data || count( $data ) < 2 ) {
+			wp_send_json_error( [ 'message' => __( 'Failed to fetch data from Google Sheets. Make sure the sheet is publicly accessible.', 'fp' ) ] );
 		}
 
-		$this->import_dlc_data( $data );
+		$headers    = array_map( 'trim', $data[0] );
+		$rows       = array_slice( $data, 1 );
+		$column_map = $this->map_columns( $headers );
 
-		$redirect_url = add_query_arg(
-			[
-				'page'    => self::MENU_SLUG,
-				'success' => 'sync_complete',
-				'added'   => $this->report['added'],
-				'updated' => $this->report['updated'],
-				'errors'  => count( $this->report['errors'] ),
-			],
-			admin_url( 'edit.php?post_type=dlc' )
-		);
+		// Skip fully empty rows up front so progress is accurate.
+		$rows = array_values( array_filter( $rows, function ( $row ) {
+			return ! empty( array_filter( $row ) );
+		} ) );
 
-		set_transient( 'fp_dlc_import_errors', $this->report['errors'], 300 );
+		set_transient( $this->get_data_transient_key(), [
+			'column_map' => $column_map,
+			'rows'       => $rows,
+		], HOUR_IN_SECONDS );
 
-		wp_safe_redirect( $redirect_url );
-		exit;
+		wp_send_json_success( [
+			'total' => count( $rows ),
+		] );
+	}
+
+	/**
+	 * Step 2: Process a batch of rows starting at the given offset.
+	 *
+	 * @action wp_ajax_fp_dlc_import_batch
+	 */
+	public function ajax_import_batch(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( [ 'message' => __( 'Permission denied.', 'fp' ) ], 403 );
+		}
+
+		check_ajax_referer( 'fp_dlc_sync' );
+
+		$offset = isset( $_POST['offset'] ) ? absint( $_POST['offset'] ) : 0;
+
+		$import_data = get_transient( $this->get_data_transient_key() );
+
+		if ( ! $import_data || ! isset( $import_data['rows'], $import_data['column_map'] ) ) {
+			wp_send_json_error( [ 'message' => __( 'Import session expired. Please start the sync again.', 'fp' ) ] );
+		}
+
+		$rows       = $import_data['rows'];
+		$column_map = $import_data['column_map'];
+		$total      = count( $rows );
+		$batch      = array_slice( $rows, $offset, self::BATCH_SIZE, true );
+
+		foreach ( $batch as $row_index => $row ) {
+			try {
+				$this->import_single_dlc( $row, $column_map );
+			} catch ( \Exception $e ) {
+				$this->report['errors'][] = sprintf(
+					__( 'Row %d: %s', 'fp' ),
+					$row_index + 2,
+					$e->getMessage()
+				);
+			}
+		}
+
+		$processed = min( $offset + self::BATCH_SIZE, $total );
+		$done      = $processed >= $total;
+
+		if ( $done ) {
+			delete_transient( $this->get_data_transient_key() );
+		}
+
+		wp_send_json_success( [
+			'processed' => $processed,
+			'total'     => $total,
+			'added'     => $this->report['added'],
+			'updated'   => $this->report['updated'],
+			'errors'    => $this->report['errors'],
+			'done'      => $done,
+		] );
+	}
+
+	private function get_data_transient_key(): string {
+		return self::TRANSIENT_DATA . '_' . get_current_user_id();
 	}
 
 	private function convert_sheet_url_to_csv( string $url ): ?string {
@@ -141,6 +210,15 @@ class DLC_Importer {
 			return null;
 		}
 
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return null;
+		}
+
+		$content_type = wp_remote_retrieve_header( $response, 'content-type' );
+		if ( $content_type && str_contains( $content_type, 'text/html' ) ) {
+			return null;
+		}
+
 		$body = wp_remote_retrieve_body( $response );
 
 		if ( empty( $body ) ) {
@@ -159,33 +237,6 @@ class DLC_Importer {
 		fclose( $stream );
 
 		return $data;
-	}
-
-	private function import_dlc_data( array $data ): void {
-		if ( empty( $data ) || count( $data ) < 2 ) {
-			return;
-		}
-
-		$headers = array_map( 'trim', $data[0] );
-		$rows    = array_slice( $data, 1 );
-
-		$column_map = $this->map_columns( $headers );
-
-		foreach ( $rows as $row_index => $row ) {
-			if ( empty( array_filter( $row ) ) ) {
-				continue;
-			}
-
-			try {
-				$this->import_single_dlc( $row, $column_map );
-			} catch ( \Exception $e ) {
-				$this->report['errors'][] = sprintf(
-					__( 'Row %d: %s', 'fp' ),
-					$row_index + 2,
-					$e->getMessage()
-				);
-			}
-		}
 	}
 
 	private function map_columns( array $headers ): array {
@@ -285,9 +336,16 @@ class DLC_Importer {
 					}
 					break;
 
+				case 'release_date':
+					if ( $this->is_valid_value( $value ) && strtotime( $value ) !== false ) {
+						$data['release_date'] = $value;
+					}
+					break;
+
 				case 'dlc_category':
 				case 'dlc_includes':
 				case 'dlc_waterways':
+				case 'dlc_fishing_style':
 					$terms       = $this->parse_multiline_field( $value );
 					$valid_terms = array_filter( $terms, [ $this, 'is_valid_value' ] );
 					if ( ! empty( $valid_terms ) ) {
@@ -350,6 +408,12 @@ class DLC_Importer {
 			'post_type'    => 'dlc',
 		];
 
+		if ( ! empty( $data['release_date'] ) ) {
+			$timestamp                 = strtotime( $data['release_date'] );
+			$post_data['post_date']     = gmdate( 'Y-m-d H:i:s', $timestamp );
+			$post_data['post_date_gmt'] = get_gmt_from_date( $post_data['post_date'] );
+		}
+
 		$post_id = wp_insert_post( $post_data );
 
 		if ( is_wp_error( $post_id ) ) {
@@ -365,6 +429,13 @@ class DLC_Importer {
 			'post_title'   => $data['title'],
 			'post_content' => $data['content'] ?? '',
 		];
+
+		if ( ! empty( $data['release_date'] ) ) {
+			$timestamp                 = strtotime( $data['release_date'] );
+			$post_data['post_date']     = gmdate( 'Y-m-d H:i:s', $timestamp );
+			$post_data['post_date_gmt'] = get_gmt_from_date( $post_data['post_date'] );
+			$post_data['edit_date']     = true;
+		}
 
 		$result = wp_update_post( $post_data );
 
@@ -396,9 +467,10 @@ class DLC_Importer {
 
 	private function update_dlc_taxonomies( int $post_id, array $data ): void {
 		$taxonomies = [
-			'dlc_category'  => 'dlc_category',
-			'dlc_includes'  => 'dlc_includes',
-			'dlc_waterways' => 'dlc_waterways',
+			'dlc_category'      => 'dlc_category',
+			'dlc_includes'      => 'dlc_includes',
+			'dlc_waterways'     => 'dlc_waterways',
+			'dlc_fishing_style' => 'dlc_fishing_style',
 		];
 
 		foreach ( $taxonomies as $data_key => $taxonomy ) {
