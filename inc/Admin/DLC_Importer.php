@@ -22,6 +22,7 @@ class DLC_Importer {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'wp_ajax_fp_dlc_prepare', [ $this, 'ajax_prepare' ] );
 		add_action( 'wp_ajax_fp_dlc_import_batch', [ $this, 'ajax_import_batch' ] );
+		add_action( 'wp_ajax_fp_dlc_image_progress', [ $this, 'ajax_image_progress' ] );
 	}
 
 	public function add_admin_menu(): void {
@@ -125,8 +126,22 @@ class DLC_Importer {
 			'rows'       => $rows,
 		], HOUR_IN_SECONDS );
 
+		$total_images = 0;
+		foreach ( $rows as $row ) {
+			$dlc_data = $this->parse_row_data( $row, $column_map );
+			if ( ! empty( $dlc_data['thumbnail'] ) ) {
+				$total_images ++;
+			}
+			if ( ! empty( $dlc_data['gallery'] ) ) {
+				$total_images += count( $dlc_data['gallery'] );
+			}
+		}
+
+		$this->reset_image_progress( $total_images );
+
 		wp_send_json_success( [
-			'total' => count( $rows ),
+			'total'        => count( $rows ),
+			'total_images' => $total_images,
 		] );
 	}
 
@@ -186,6 +201,56 @@ class DLC_Importer {
 
 	private function get_data_transient_key(): string {
 		return self::TRANSIENT_DATA . '_' . get_current_user_id();
+	}
+
+	private function get_image_progress_transient_key(): string {
+		return 'fp_dlc_import_image_progress_' . get_current_user_id();
+	}
+
+	private function reset_image_progress( int $total ): void {
+		set_transient( $this->get_image_progress_transient_key(), [
+			'processed' => 0,
+			'total'     => $total,
+		], HOUR_IN_SECONDS );
+	}
+
+	private function increment_image_progress(): void {
+		$key  = $this->get_image_progress_transient_key();
+		$data = get_transient( $key );
+
+		if ( $data && isset( $data['processed'] ) ) {
+			$data['processed'] ++;
+			set_transient( $key, $data, HOUR_IN_SECONDS );
+		}
+	}
+
+	/**
+	 * Poll endpoint for image upload progress.
+	 *
+	 * @action wp_ajax_fp_dlc_image_progress
+	 */
+	public function ajax_image_progress(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( [ 'message' => __( 'Permission denied.', 'fp' ) ], 403 );
+		}
+
+		check_ajax_referer( 'fp_dlc_sync' );
+
+		$data = get_transient( $this->get_image_progress_transient_key() );
+
+		if ( ! $data ) {
+			wp_send_json_success( [
+				'processed' => 0,
+				'total'     => 0,
+				'done'      => true,
+			] );
+		}
+
+		wp_send_json_success( [
+			'processed' => (int) $data['processed'],
+			'total'     => (int) $data['total'],
+			'done'      => $data['processed'] >= $data['total'],
+		] );
 	}
 
 	private function convert_sheet_url_to_csv( string $url ): ?string {
@@ -556,6 +621,8 @@ class DLC_Importer {
 	}
 
 	private function get_or_upload_image( string $image_url, int $post_id ): ?int {
+		$this->increment_image_progress();
+
 		global $wpdb;
 
 		$existing = $wpdb->get_var(

@@ -52,6 +52,16 @@ defined( 'ABSPATH' ) || exit;
 			</p>
 		</div>
 
+		<div class="fp-import-progress" id="fp-image-progress" hidden>
+			<div class="fp-progress-bar">
+				<div class="fp-progress-bar-fill fp-progress-bar-fill--images" id="fp-image-progress-fill" style="width: 0%"></div>
+			</div>
+			<p class="fp-progress-status">
+				<span id="fp-image-progress-text"><?php esc_html_e( 'Uploading images...', 'fp' ); ?></span>
+				<span id="fp-image-progress-count"></span>
+			</p>
+		</div>
+
 		<div class="fp-import-report" id="fp-import-report" hidden>
 			<h3><?php esc_html_e( 'Sync Report', 'fp' ); ?></h3>
 			<ul>

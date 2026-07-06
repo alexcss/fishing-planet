@@ -156,6 +156,10 @@
 	transition: width 0.3s ease;
 }
 
+.fp-progress-bar-fill--images {
+	background: #00a32a;
+}
+
 .fp-progress-status {
 	display: flex;
 	justify-content: space-between;

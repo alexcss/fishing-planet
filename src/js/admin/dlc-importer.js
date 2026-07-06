@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const reportErrorItems = document.getElementById('fp-report-error-items');
 	const errorNotice = document.getElementById('fp-import-error');
 	const errorMessage = document.getElementById('fp-import-error-message');
+	const imageProgressWrap = document.getElementById('fp-image-progress');
+	const imageProgressFill = document.getElementById('fp-image-progress-fill');
+	const imageProgressText = document.getElementById('fp-image-progress-text');
+	const imageProgressCount = document.getElementById('fp-image-progress-count');
 
 	if (!form || !button || typeof fpDlcImporter === 'undefined') {
 		return;
@@ -58,6 +62,33 @@ document.addEventListener('DOMContentLoaded', () => {
 		progressCount.textContent = `${processed} / ${total} (${percent}%)`;
 	};
 
+	const updateImageProgress = (processed, total) => {
+		const percent = total > 0 ? Math.round((processed / total) * 100) : 0;
+		imageProgressFill.style.width = `${percent}%`;
+		imageProgressText.textContent = processed >= total ? 'Images done' : 'Uploading images...';
+		imageProgressCount.textContent = total > 0 ? `${processed} / ${total} (${percent}%)` : '';
+	};
+
+	const pollImageProgress = async (totalImages, signal) => {
+		updateImageProgress(0, totalImages);
+		imageProgressWrap.hidden = false;
+
+		while (!signal.aborted) {
+			try {
+				const data = await ajax('fp_dlc_image_progress');
+				updateImageProgress(data.processed, data.total);
+
+				if (data.done || (data.processed >= data.total && data.total > 0)) {
+					break;
+				}
+
+				await new Promise((resolve) => setTimeout(resolve, 500));
+			} catch (e) {
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+			}
+		}
+	};
+
 	const showReport = () => {
 		reportAdded.textContent = totals.added;
 		reportUpdated.textContent = totals.updated;
@@ -89,10 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		progressCount.textContent = '';
 		progressFill.style.width = '0%';
 		progressWrap.hidden = false;
+		imageProgressWrap.hidden = true;
 		reportWrap.hidden = true;
 
 		const prepared = await ajax('fp_dlc_prepare', { sheet_url: sheetUrl });
 		const total = prepared.total;
+		const totalImages = prepared.total_images || 0;
 
 		if (total === 0) {
 			throw new Error('No rows found in the sheet.');
@@ -100,24 +133,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		updateProgress(0, total);
 
-		let offset = 0;
-		let done = false;
+		const abortController = new AbortController();
+		const imagePollPromise = totalImages > 0 ? pollImageProgress(totalImages, abortController.signal) : Promise.resolve();
 
-		while (!done) {
-			const batch = await ajax('fp_dlc_import_batch', { offset });
+		try {
+			let offset = 0;
+			let done = false;
 
-			totals.added += batch.added;
-			totals.updated += batch.updated;
-			totals.errors.push(...batch.errors);
+			while (!done) {
+				const batch = await ajax('fp_dlc_import_batch', { offset });
 
-			offset = batch.processed;
-			done = batch.done;
+				totals.added += batch.added;
+				totals.updated += batch.updated;
+				totals.errors.push(...batch.errors);
 
-			updateProgress(batch.processed, batch.total);
+				offset = batch.processed;
+				done = batch.done;
+
+				updateProgress(batch.processed, batch.total);
+			}
+
+			if (totalImages > 0) {
+				const finalImageData = await ajax('fp_dlc_image_progress');
+				updateImageProgress(finalImageData.processed, finalImageData.total);
+			}
+
+			progressText.textContent = 'Sync completed!';
+			showReport();
+		} finally {
+			abortController.abort();
+			await imagePollPromise;
 		}
-
-		progressText.textContent = 'Sync completed!';
-		showReport();
 	};
 
 	form.addEventListener('submit', async (e) => {
@@ -144,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		} catch (error) {
 			showError(error.message);
 			progressWrap.hidden = true;
+			imageProgressWrap.hidden = true;
 		} finally {
 			button.classList.remove('is-loading');
 			button.disabled = false;
