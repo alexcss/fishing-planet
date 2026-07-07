@@ -16,14 +16,14 @@ import CF7 from './components/CF7.js'
 
 window.Alpine = Alpine
 
-Alpine.data('videoSlider', videoSlider)
-Alpine.data('playForFreePanel', playForFreePanel)
-Alpine.data('frontPageHeader', frontPageHeader)
-Alpine.data('scrollProgress', scrollProgress)
-Alpine.data('headerScroll', headerScroll)
-
-Alpine.start()
-
 document.addEventListener('DOMContentLoaded', () => {
+  Alpine.data('videoSlider', videoSlider)
+  Alpine.data('playForFreePanel', playForFreePanel)
+  Alpine.data('frontPageHeader', frontPageHeader)
+  Alpine.data('scrollProgress', scrollProgress)
+  Alpine.data('headerScroll', headerScroll)
+
+  Alpine.start()
+
   CF7()
 })

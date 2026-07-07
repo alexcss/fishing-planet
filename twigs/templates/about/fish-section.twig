@@ -42,26 +42,22 @@
 				<div class="mb-40 md:mb-60 xl:mask-x-from-94% xl:mask-x-to-100%"
 				     x-data="videoSlider({
 				       	slidesPerView: 'auto',
-						spaceBetween: 20,
-						loop: true,
-						speed: 6000,
-						allowTouchMove: false,
-						autoplay: {
-						  delay: 1,
-						  disableOnInteraction: false
-						}
+								spaceBetween: 20,
+								loop: true,
+								speed: 5000,
+								allowTouchMove: false,
+								autoplay: {
+									delay: 1,
+									disableOnInteraction: false
+								}
 				      })"
 				>
 					<div class="swiper max-xl:overflow-visible" x-ref="swiperContainer">
 						<div class="swiper-wrapper ease-linear">
 							{% for fish_image in data.gallery %}
-								<div class="swiper-slide w-472">
-									{{ image({ image: fish_image, class: "w-472 h-182 object-contain", sizes: { w: 472 } }) }}
-								</div>
-							{% endfor %}
-							{% for fish_image in data.gallery %}
-								<div class="swiper-slide w-472">
-									{{ image({ image: fish_image, class: "w-472 h-182 object-contain", sizes: { w: 472 } }) }}
+								{% set width = 182 * fish_image.width/fish_image.height  %}
+								<div class="swiper-slide w-auto" style="width: {{width}}px">
+									{{ image({ image: fish_image, class: "w-auto h-182 object-contain", sizes: { w: width, h: 182 } }) }}
 								</div>
 							{% endfor %}
 						</div>
@@ -74,15 +70,15 @@
 				<div class=""
 				     x-data="videoSlider({
 				       	slidesPerView: 1,
-						spaceBetween: 18,
-						loop: false,
-						breakpoints: {
-							1024: {
-								allowTouchMove: false,
-								enabled: false,
-								spaceBetween: 0,
-							}
-						}
+								spaceBetween: 18,
+								loop: false,
+								breakpoints: {
+									1024: {
+										allowTouchMove: false,
+										enabled: false,
+										spaceBetween: 0,
+									}
+								}
 				      })"
 				>
 				  <div class="swiper max-lg:overflow-visible" x-ref="swiperContainer">
