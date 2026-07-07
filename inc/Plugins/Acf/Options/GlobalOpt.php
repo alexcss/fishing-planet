@@ -47,6 +47,7 @@ class GlobalOpt extends Options_Page {
 								'twitter'   => 'Twitter',
 								'instagram' => 'Instagram',
 								'linkedin'  => 'Linkedin',
+								'tiktok'    => 'TikTok',
 							],
 							'wrapper' => [
 								'width' => '50',
