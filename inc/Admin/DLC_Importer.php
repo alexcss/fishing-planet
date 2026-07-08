@@ -363,7 +363,7 @@ class DLC_Importer {
 
 			switch ( $column_name ) {
 				case 'title':
-					$clean_title = trim( $value, " \t\n\r\0\x0B\"'" );
+					$clean_title = $this->normalize_dashes( trim( $value, " \t\n\r\0\x0B\"'" ) );
 					if ( $this->is_valid_value( $clean_title ) ) {
 						$data['title'] = $clean_title;
 					}
@@ -412,6 +412,7 @@ class DLC_Importer {
 				case 'dlc_waterways':
 				case 'dlc_fishing_style':
 					$terms       = $this->parse_multiline_field( $value );
+					$terms       = array_map( [ $this, 'normalize_dashes' ], $terms );
 					$valid_terms = array_filter( $terms, [ $this, 'is_valid_value' ] );
 					if ( ! empty( $valid_terms ) ) {
 						$data[ $column_name ] = array_values( $valid_terms );
@@ -435,6 +436,14 @@ class DLC_Importer {
 		}
 
 		return $data;
+	}
+
+	private function normalize_dashes( string $value ): string {
+		return str_replace(
+			[ "\xE2\x80\x94", "\xE2\x80\x93", "\xE2\x80\x92", "\xE2\x80\x91", "\xE2\x80\x90" ],
+			'-',
+			$value
+		);
 	}
 
 	private function is_valid_value( string $value ): bool {
@@ -560,6 +569,12 @@ class DLC_Importer {
 
 	private function get_or_create_term( string $term_name, string $taxonomy ): ?int {
 		$term = get_term_by( 'name', $term_name, $taxonomy );
+
+		if ( $term ) {
+			return $term->term_id;
+		}
+
+		$term = get_term_by( 'slug', sanitize_title( $term_name ), $taxonomy );
 
 		if ( $term ) {
 			return $term->term_id;
