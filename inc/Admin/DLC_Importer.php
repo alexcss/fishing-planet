@@ -308,7 +308,7 @@ class DLC_Importer {
 		$map = [];
 
 		foreach ( $headers as $index => $header ) {
-			$map[ $index ] = trim( strtolower( $header ) );
+			$map[ $index ] = $this->normalize_dashes( trim( strtolower( $header ) ) );
 		}
 
 		return $map;
@@ -341,6 +341,21 @@ class DLC_Importer {
 		$query = new \WP_Query( [
 			'post_type'              => 'dlc',
 			'title'                  => $title,
+			'posts_per_page'         => 1,
+			'post_status'            => 'any',
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+		] );
+
+		if ( $query->have_posts() ) {
+			return $query->posts[0]->ID;
+		}
+
+		$slug  = sanitize_title( $title );
+		$query = new \WP_Query( [
+			'post_type'              => 'dlc',
+			'name'                   => $slug,
 			'posts_per_page'         => 1,
 			'post_status'            => 'any',
 			'no_found_rows'          => true,
@@ -440,8 +455,31 @@ class DLC_Importer {
 
 	private function normalize_dashes( string $value ): string {
 		return str_replace(
-			[ "\xE2\x80\x94", "\xE2\x80\x93", "\xE2\x80\x92", "\xE2\x80\x91", "\xE2\x80\x90" ],
+			[
+				"\xE2\x80\x94",
+				"\xE2\x80\x93",
+				"\xE2\x80\x92",
+				"\xE2\x80\x91",
+				"\xE2\x80\x90",
+				"\xE2\x80\x95",
+				"\xE2\x88\x92",
+			],
 			'-',
+			$value
+		);
+	}
+
+	private function normalize_quotes( string $value ): string {
+		return str_replace(
+			[
+				"\xE2\x80\x9C",
+				"\xE2\x80\x9D",
+				"\xE2\x80\x98",
+				"\xE2\x80\x99",
+				"\xE2\x80\xB9",
+				"\xE2\x80\xBA",
+			],
+			[ '"', '"', "'", "'", "'", "'" ],
 			$value
 		);
 	}
@@ -449,7 +487,7 @@ class DLC_Importer {
 	private function is_valid_value( string $value ): bool {
 		$trimmed = trim( $value );
 
-		return strlen( $trimmed ) >= 3;
+		return mb_strlen( $trimmed ) >= 3;
 	}
 
 	private function is_valid_url( string $url ): bool {
@@ -466,11 +504,11 @@ class DLC_Importer {
 			return [];
 		}
 
-		$value = trim( $value, " \t\n\r\0\x0B\"'" );
+		$value = $this->normalize_quotes( trim( $value, " \t\n\r\0\x0B\"'" ) );
 		$lines = preg_split( '/\r\n|\r|\n/', $value );
 
 		return array_values( array_filter( array_map( function ( $line ) {
-			return trim( $line, " \t\n\r\0\x0B\"'" );
+			return $this->normalize_quotes( trim( $line, " \t\n\r\0\x0B\"'" ) );
 		}, $lines ) ) );
 	}
 
