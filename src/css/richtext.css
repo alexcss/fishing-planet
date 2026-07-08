@@ -111,7 +111,16 @@
   }
 
   & :is(blockquote, .wp-block-quote) {
-    @apply p-24 md:p-40 text-black my-20 md:my-32 relative space-y-20 *:last:mb-0 *:first:mt-0;
+    @apply py-32 xl:py-40 border-white/15 border-t border-b text-white my-40 xl:my-60 relative space-y-24 *:last:mb-0 *:first:mt-0 *:h4 *:relative *:z-10 relative;
+
+    &:before {
+      @apply content-[''] block w-40 h-28 bg-contain bg-no-repeat bg-center mb-24 xl:mb-32;
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='28' viewBox='0 0 40 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_739_10156)'%3E%3Cpath d='M36.7059 0H28.2353L22.5882 11.2V28H39.5294V11.2H31.0588L36.7059 0ZM14.1176 0H5.64706L0 11.2V28H16.9412V11.2H8.47059L14.1176 0Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_739_10156'%3E%3Crect width='40' height='28' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+    }
+
+    &:after {
+      @apply content-[''] block bg-pattern-wave pointer-events-none absolute inset-y-0 w-screen left-1/2 -translate-x-1/2 mask-y-from-60% mask-y-to-100% opacity-60;
+    }
   }
 
   & table {
@@ -146,12 +155,24 @@
   }
 
   /* Block indents */
-  [class*="wp-image-"],
+  .wp-block-columns,
   .wp-block-video,
   .wp-block-quote,
   .wp-block-table,
   .wp-caption {
     @apply my-40 !w-full;
+  }
+
+  [class*="wp-image-"] {
+    @apply my-40 xl:my-60;
+  }
+
+  .wp-block-columns {
+    @apply gap-24;
+  }
+
+  .wp-block-column {
+    @apply *:my-0!;
   }
 
   .wp-caption {
@@ -205,31 +226,27 @@
     @apply flex flex-col gap-12 md:gap-20 my-32 md:my-40 xl:my-60;
 
     img {
-      @apply m-0;
+      @apply m-0 h-auto;
     }
 
-    img {
-      @apply m-0 w-full h-auto;
+    &.alignleft, &.alignright, &.aligncenter {
+      @apply w-fit;
     }
 
     &.alignleft, &.alignright, &.aligncenter, &.alignwide, &.alignfull {
-      @apply !float-none max-w-720 mx-auto;
+      @apply !float-none mx-auto block!;
 
       img {
         @apply !w-auto !float-none;
       }
     }
 
-    &.alignright {
-      img {
-        @apply ml-auto;
-      }
+    &.alignleft {
+      @apply mr-auto ml-0;
     }
 
-    &.aligncenter {
-      img {
-        @apply mx-auto;
-      }
+    &.alignright {
+      @apply ml-auto mr-0;
     }
 
     &.is-style-full-width {
@@ -244,7 +261,7 @@
   }
 
   .wp-element-caption {
-    @apply text-gray mt-0 *:!font-inherit;
+    @apply text-white/80 mt-0 *:!font-inherit;
   }
 
 

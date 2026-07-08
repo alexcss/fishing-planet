@@ -20,11 +20,13 @@ class Core {
 		'core/template',
 		'core/embed',
 		'core/html',
+		'core/columns',
+		'core/column',
 	];
 
 	// TODO: Refactor to use the main block array from Register.php
 	const CUSTOM_BLOCKS = [
-		'acf/fp-example',
+//		'acf/fp-example',
 	];
 
 	// Post types to disable Gutenberg for
