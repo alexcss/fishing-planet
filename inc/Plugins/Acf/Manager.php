@@ -16,6 +16,7 @@ class Manager {
 		Page_Templates\Career::class,
 		Post_Types\Post::class,
 		Post_Types\DLC::class,
+		Post_Types\Career::class,
 	];
 
 	public function __construct() {
