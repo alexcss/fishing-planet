@@ -24,6 +24,7 @@ if ( file_exists( $composer_autoload ) ) {
 
 	/* Theme */
 	new FP\Theme\Support();
+	new FP\Theme\Env();
 
 	new FP\Theme\Enqueue();
 	new FP\Theme\Comments();
@@ -43,6 +44,7 @@ if ( file_exists( $composer_autoload ) ) {
 	new FP\Plugins\Timber\Settings();
 	new FP\Plugins\Acf\Manager();
 	new FP\Plugins\Cf7();
+	new FP\Plugins\PeopleForce();
 	new FP\Plugins\Yoast();
 
 	/* Admin */

@@ -38,6 +38,10 @@
   input[type="tel"] {
     direction: ltr;
   }
+
+  .wpcf7-form-control-wrap:has(input[type="number"]) {
+    @apply flex-1;
+  }
 }
 
 

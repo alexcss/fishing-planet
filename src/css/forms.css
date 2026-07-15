@@ -10,7 +10,7 @@
     input[type=url],
     input[type=file],
     input[type=search], textarea, select {
-      @apply border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
+      @apply min-h-70 border border-white/50 bg-transparent px-16 py-18 md:px-24 md:py-20 text-white placeholder:text-dark-gray block w-full transition duration-200 outline-none;
       @apply font-heading text-24/none font-bold;
       @apply hover:border-white/70;
       @apply focus:border-white/90;
@@ -19,8 +19,13 @@
 
     }
 
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      @apply appearance-none;
+    }
+
     select {
-      @apply appearance-none bg-no-repeat;
+      @apply appearance-none bg-no-repeat pr-50 min-w-110;
       background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.1 8c.39 0 .63.43.42.77l-4.13 6.55a.5.5 0 0 1-.85 0L7.47 8.76A.5.5 0 0 1 7.9 8h8.2Z' fill='%23ffffffa8'/%3E%3C/svg%3E");
       background-position: right 19px center;
     }
