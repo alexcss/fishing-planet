@@ -5,6 +5,7 @@ declare ( strict_types=1 );
 namespace FP\Plugins\Timber;
 
 use Timber\Term;
+use Timber\Timber;
 
 /**
  * Class DLC
@@ -21,7 +22,7 @@ class DLC extends \Timber\Post {
 		$primary_id = $this->meta( '_yoast_wpseo_primary_dlc_category' );
 
 		if ( $primary_id ) {
-			$term = \Timber\Term::from( $primary_id );
+			$term = Timber::get_term( $primary_id );
 			if ( $term && $term->id ) {
 				return $term;
 			}
