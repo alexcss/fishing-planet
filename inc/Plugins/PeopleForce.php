@@ -51,8 +51,6 @@ class PeopleForce {
 
 		$form_type = $this->detect_form_type( $form_id, $container_id );
 
-		error_log( 'PeopleForce debug: form_id=' . $form_id . ' container_id=' . $container_id . ' type=' . ( $form_type ?: 'none' ) );
-
 		if ( ! $form_type ) {
 			return;
 		}
@@ -116,7 +114,8 @@ class PeopleForce {
 				$payload['desired_salary'] = (int) $salary_raw;
 			}
 
-			$currency_code = sanitize_text_field( $posted['salary-currency'] ?? '' );
+			$raw_currency  = $_POST['salary-currency'] ?? null;
+			$currency_code = sanitize_text_field( is_scalar( $raw_currency ) ? (string) $raw_currency : ( $posted['salary-currency'] ?? $posted['salary_currency'] ?? '' ) );
 
 			if ( '' !== $currency_code ) {
 				$payload['currency_code'] = strtoupper( $currency_code );
@@ -181,16 +180,12 @@ class PeopleForce {
 		$template    = get_page_template_slug( $container_id );
 		$career_page = Helper::get_page_id_by_template( self::TEMPLATE_CAREER );
 
-		error_log( 'PeopleForce debug detect: post_type=' . $post_type . ' template=' . $template . ' career_page=' . ( $career_page ?: 'none' ) );
-
 		// Job application form is embedded on single Career posts, but the
 		// CF7 shortcode is stored on the Career page template ACF group.
 		if ( 'career' === $post_type && $career_page ) {
 			$settings  = get_field( 'single_career_settings', $career_page );
 			$shortcode = $settings['form'] ?? '';
 			$matched_id = $this->get_shortcode_form_id( $shortcode );
-
-			error_log( 'PeopleForce debug job shortcode: ' . $shortcode . ' matched_id=' . $matched_id );
 
 			if ( $matched_id === $form_id ) {
 				return 'job';
