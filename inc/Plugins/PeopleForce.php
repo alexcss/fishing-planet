@@ -41,6 +41,10 @@ class PeopleForce {
 		$form_id      = (int) $contact_form->id();
 		$container_id = (int) ( $submission->get_meta( 'container_post_id' ) ?: get_queried_object_id() );
 
+		if ( ! $container_id ) {
+			$container_id = (int) Helper::get_page_id_by_template( self::TEMPLATE_CAREER );
+		}
+
 		if ( ! $form_id || ! $container_id ) {
 			return;
 		}
@@ -77,6 +81,23 @@ class PeopleForce {
 
 		$file_path = $this->get_uploaded_file_path( $submission, 'cv' );
 
+		$api_key = Env::get( self::API_KEY_NAME );
+
+		if ( ! $api_key ) {
+			$this->console_messages[] = __( 'PeopleForce API key is not configured.', 'fp' );
+
+			return;
+		}
+
+		$source_name = ( 'job' === $form_type ) ? self::SOURCE_JOB : self::SOURCE_OPEN;
+		$source_id   = $this->get_source_id( $source_name, (string) $api_key );
+
+		if ( $source_id ) {
+			$payload['source_id'] = $source_id;
+		} else {
+			$payload['source'] = $source_name;
+		}
+
 		if ( 'job' === $form_type ) {
 			$vacancy_id = get_field( 'people_force_id', $container_id );
 
@@ -86,7 +107,6 @@ class PeopleForce {
 				return;
 			}
 
-			$payload['source']       = self::SOURCE_JOB;
 			$payload['location']     = sanitize_text_field( $posted['location'] ?? '' );
 			$payload['portfolio']    = esc_url_raw( $posted['portfolio'] ?? '' );
 			$payload['applications'] = [ absint( $vacancy_id ) ];
@@ -102,16 +122,6 @@ class PeopleForce {
 			if ( '' !== $currency_code ) {
 				$payload['currency_code'] = strtoupper( $currency_code );
 			}
-		} else {
-			$payload['source'] = self::SOURCE_OPEN;
-		}
-
-		$api_key = Env::get( self::API_KEY_NAME );
-
-		if ( ! $api_key ) {
-			$this->console_messages[] = __( 'PeopleForce API key is not configured.', 'fp' );
-
-			return;
 		}
 
 		$existing_id  = $this->find_candidate_by_email( $email, (string) $api_key );
@@ -152,7 +162,11 @@ class PeopleForce {
 		error_log( 'PeopleForce debug: candidate_id=' . ( $candidate_id ?: 'none' ) );
 
 		if ( 'job' === $form_type && $candidate_id && ! empty( $vacancy_id ) ) {
-			$this->create_vacancy_application( (int) $vacancy_id, $candidate_id, (string) $api_key );
+			if ( $this->candidate_has_application_for_vacancy( $body, (int) $vacancy_id ) ) {
+				error_log( 'PeopleForce debug: candidate already applied to vacancy ' . $vacancy_id );
+			} else {
+				$this->create_vacancy_application( (int) $vacancy_id, $candidate_id, (string) $api_key );
+			}
 		}
 	}
 
@@ -332,6 +346,60 @@ class PeopleForce {
 	}
 
 	/**
+	 * Look up a PeopleForce source ID by its exact name.
+	 *
+	 * @param string $name    Source name.
+	 * @param string $api_key PeopleForce API key.
+	 *
+	 * @return int|null
+	 */
+	private function get_source_id( string $name, string $api_key ): ?int {
+		$page = 1;
+
+		while ( true ) {
+			$url      = self::BASE_URL . '/recruitment/sources?page=' . $page;
+			$response = $this->send_json_request( 'GET', $url, [], $api_key );
+
+			if ( is_wp_error( $response ) ) {
+				error_log( 'PeopleForce list sources error: ' . $response->get_error_message() );
+
+				return null;
+			}
+
+			$code = $response['response']['code'] ?? 0;
+			$body = $response['body'] ?? '';
+
+			if ( $code < 200 || $code >= 300 ) {
+				error_log( 'PeopleForce list sources error ' . $code . ': ' . $body );
+
+				return null;
+			}
+
+			$decoded = json_decode( $body, true );
+			$sources = $decoded['data'] ?? [];
+
+			if ( ! is_array( $sources ) || empty( $sources ) ) {
+				return null;
+			}
+
+			foreach ( $sources as $source ) {
+				if ( ! empty( $source['name'] ) && $source['name'] === $name ) {
+					return (int) $source['id'];
+				}
+			}
+
+			$metadata = $decoded['metadata'] ?? [];
+			$pages    = $metadata['pages'] ?? 1;
+
+			if ( $page >= $pages ) {
+				return null;
+			}
+
+			++$page;
+		}
+	}
+
+	/**
 	 * Search for an existing candidate by email address.
 	 *
 	 * @param string $email   Candidate email.
@@ -438,6 +506,31 @@ class PeopleForce {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Check whether a candidate response already contains an application for a vacancy.
+	 *
+	 * @param string $body      Candidate response body.
+	 * @param int    $vacancy_id PeopleForce vacancy ID.
+	 *
+	 * @return bool
+	 */
+	private function candidate_has_application_for_vacancy( string $body, int $vacancy_id ): bool {
+		$decoded      = json_decode( $body, true );
+		$applications = $decoded['data']['applications'] ?? [];
+
+		if ( ! is_array( $applications ) ) {
+			return false;
+		}
+
+		foreach ( $applications as $application ) {
+			if ( ! empty( $application['vacancy']['id'] ) && (int) $application['vacancy']['id'] === $vacancy_id ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
