@@ -29,6 +29,10 @@ class Env {
 	 * @return mixed
 	 */
 	public static function get( string $key, mixed $default = null ): mixed {
+		if ( defined( $key ) ) {
+			return constant( $key );
+		}
+
 		$value = getenv( $key );
 
 		if ( false !== $value ) {

@@ -109,7 +109,6 @@ class PeopleForce {
 
 			$payload['location']     = sanitize_text_field( $posted['location'] ?? '' );
 			$payload['portfolio']    = esc_url_raw( $posted['portfolio'] ?? '' );
-			$payload['applications'] = [ absint( $vacancy_id ) ];
 
 			$salary_raw = preg_replace( '/[^0-9]/', '', $posted['salary'] ?? '' );
 
@@ -135,9 +134,8 @@ class PeopleForce {
 		}
 
 		if ( is_wp_error( $response ) ) {
-			$message                  = $response->get_error_message();
-			$this->console_messages[] = __( 'PeopleForce API error:', 'fp' ) . ' ' . $message;
-			error_log( 'PeopleForce API error: ' . $message );
+			$this->console_messages[] = __( 'PeopleForce API error. Please try again later.', 'fp' );
+			error_log( 'PeopleForce API error: ' . $response->get_error_message() );
 
 			return;
 		}
@@ -145,12 +143,12 @@ class PeopleForce {
 		$code = $response['response']['code'] ?? 0;
 		$body = $response['body'] ?? '';
 
-		error_log( 'PeopleForce debug: HTTP ' . $code . ' body=' . $body );
+		error_log( 'PeopleForce debug: HTTP ' . $code );
 
 		if ( $code < 200 || $code >= 300 ) {
-			$message                  = __( 'PeopleForce API error', 'fp' ) . ' ' . $code . ': ' . $body;
+			$message                  = __( 'PeopleForce API error. Please try again later.', 'fp' );
 			$this->console_messages[] = $message;
-			error_log( $message );
+			error_log( 'PeopleForce API error: HTTP ' . $code );
 
 			return;
 		}
@@ -354,7 +352,16 @@ class PeopleForce {
 	 * @return int|null
 	 */
 	private function get_source_id( string $name, string $api_key ): ?int {
-		$page = 1;
+		$cache = get_transient( 'peopleforce_sources_map' );
+
+		if ( false !== $cache ) {
+			$map = json_decode( $cache, true );
+
+			return is_array( $map ) && isset( $map[ $name ] ) ? (int) $map[ $name ] : null;
+		}
+
+		$map   = [];
+		$page  = 1;
 
 		while ( true ) {
 			$url      = self::BASE_URL . '/recruitment/sources?page=' . $page;
@@ -367,24 +374,23 @@ class PeopleForce {
 			}
 
 			$code = $response['response']['code'] ?? 0;
-			$body = $response['body'] ?? '';
 
 			if ( $code < 200 || $code >= 300 ) {
-				error_log( 'PeopleForce list sources error ' . $code . ': ' . $body );
+				error_log( 'PeopleForce list sources error: HTTP ' . $code );
 
 				return null;
 			}
 
-			$decoded = json_decode( $body, true );
+			$decoded = json_decode( $response['body'] ?? '', true );
 			$sources = $decoded['data'] ?? [];
 
 			if ( ! is_array( $sources ) || empty( $sources ) ) {
-				return null;
+				break;
 			}
 
 			foreach ( $sources as $source ) {
-				if ( ! empty( $source['name'] ) && $source['name'] === $name ) {
-					return (int) $source['id'];
+				if ( ! empty( $source['name'] ) ) {
+					$map[ (string) $source['name'] ] = (int) $source['id'];
 				}
 			}
 
@@ -392,11 +398,15 @@ class PeopleForce {
 			$pages    = $metadata['pages'] ?? 1;
 
 			if ( $page >= $pages ) {
-				return null;
+				break;
 			}
 
 			++$page;
 		}
+
+		set_transient( 'peopleforce_sources_map', wp_json_encode( $map ), HOUR_IN_SECONDS );
+
+		return $map[ $name ] ?? null;
 	}
 
 	/**
@@ -422,7 +432,7 @@ class PeopleForce {
 		$body = $response['body'] ?? '';
 
 		if ( $code < 200 || $code >= 300 ) {
-			error_log( 'PeopleForce find candidate error ' . $code . ': ' . $body );
+			error_log( 'PeopleForce find candidate error: HTTP ' . $code );
 
 			return null;
 		}
@@ -562,22 +572,20 @@ class PeopleForce {
 		$response = $this->send_json_request( 'POST', $url, $data, $api_key );
 
 		if ( is_wp_error( $response ) ) {
-			$message = $response->get_error_message();
-			$this->console_messages[] = __( 'PeopleForce vacancy application error:', 'fp' ) . ' ' . $message;
-			error_log( 'PeopleForce vacancy application error: ' . $message );
+			$this->console_messages[] = __( 'PeopleForce vacancy application error. Please try again later.', 'fp' );
+			error_log( 'PeopleForce vacancy application error: ' . $response->get_error_message() );
 
 			return;
 		}
 
 		$code = $response['response']['code'] ?? 0;
-		$resp_body = $response['body'] ?? '';
 
-		error_log( 'PeopleForce debug application: HTTP ' . $code . ' body=' . $resp_body );
+		error_log( 'PeopleForce debug application: HTTP ' . $code );
 
 		if ( $code < 200 || $code >= 300 ) {
-			$message = __( 'PeopleForce vacancy application error', 'fp' ) . ' ' . $code . ': ' . $resp_body;
+			$message = __( 'PeopleForce vacancy application error. Please try again later.', 'fp' );
 			$this->console_messages[] = $message;
-			error_log( $message );
+			error_log( 'PeopleForce vacancy application error: HTTP ' . $code );
 		}
 	}
 
@@ -590,6 +598,13 @@ class PeopleForce {
 	 * @return int|null
 	 */
 	private function get_vacancy_initial_stage( int $vacancy_id, string $api_key ): ?int {
+		$cache_key = 'peopleforce_stage_' . $vacancy_id;
+		$cache     = get_transient( $cache_key );
+
+		if ( false !== $cache ) {
+			return (int) $cache;
+		}
+
 		$url      = self::BASE_URL . '/recruitment/vacancies/' . $vacancy_id . '/pipeline';
 		$response = $this->send_json_request( 'GET', $url, [], $api_key );
 
@@ -600,28 +615,36 @@ class PeopleForce {
 		}
 
 		$code = $response['response']['code'] ?? 0;
-		$body = $response['body'] ?? '';
 
 		if ( $code < 200 || $code >= 300 ) {
-			error_log( 'PeopleForce pipeline error ' . $code . ': ' . $body );
+			error_log( 'PeopleForce pipeline error: HTTP ' . $code );
 
 			return null;
 		}
 
-		$decoded = json_decode( $body, true );
+		$decoded = json_decode( $response['body'] ?? '', true );
 		$stages  = $decoded['stages'] ?? [];
 
 		if ( ! is_array( $stages ) || empty( $stages ) ) {
 			return null;
 		}
 
+		$stage_id = null;
+
 		foreach ( $stages as $stage ) {
 			if ( ! empty( $stage['type'] ) && 'new' === $stage['type'] ) {
-				return (int) $stage['id'];
+				$stage_id = (int) $stage['id'];
+				break;
 			}
 		}
 
-		return (int) $stages[0]['id'];
+		if ( ! $stage_id ) {
+			$stage_id = (int) $stages[0]['id'];
+		}
+
+		set_transient( $cache_key, $stage_id, HOUR_IN_SECONDS );
+
+		return $stage_id;
 	}
 
 	/**
