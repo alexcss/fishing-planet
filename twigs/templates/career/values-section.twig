@@ -3,15 +3,18 @@
 # Interactive letter word with scrollable content panel
 #}
 
+{% from "components/icon.twig" import icon %}
+
 {% if data and data.items %}
-	<section x-data="{ active: 0 }" class="relative py-60 md:py-80 xl:py-100">
+	<section x-data="careerValues({{ data.items|length }})" class="relative py-60 md:py-80 xl:py-100">
 		<div class="container xl:pt-32">
 			{% if data.title %}
 				<h2 class="h2 mb-32 text-left md:mb-40 md:text-center xl:mb-56">{{ data.title }}</h2>
 			{% endif %}
 
 			<div
-				class="no-scrollbar max-lg:overflow-x-auto -mx-16 mb-20 flex gap-12 overflow-y-hidden px-16 pb-20 md:-mx-32 md:mb-40 md:gap-24 md:px-32 lg:mx-0 lg:justify-between lg:px-0"
+				x-ref="letters"
+				class="no-scrollbar -mx-16 mb-20 flex gap-12 overflow-y-hidden px-16 pb-20 max-lg:overflow-x-auto md:-mx-32 md:mb-40 md:gap-24 md:px-32 lg:mx-0 lg:justify-between lg:px-0"
 			>
 				{% for item in data.items %}
 					<button
@@ -26,7 +29,21 @@
 				{% endfor %}
 			</div>
 
-			<div class="relative h-600 md:h-450 lg:h-375">
+			<div class="mb-40 flex items-center justify-between gap-12 md:mb-40 lg:hidden">
+				<button type="button" class="fp-btn-sqr" @click="prev()" aria-label="{{ __("Previous value", "fp") }}">
+					{{ icon({ name: "arrow-l", w: 24, h: 24 }) }}
+				</button>
+				<div class="fp-captital-title flex items-center justify-center gap-0">
+					{% for item in data.items %}
+						<span :class="{ 'text-accent': active === {{ loop.index0 }} }">{{ item.letter }}</span>
+					{% endfor %}
+				</div>
+				<button type="button" class="fp-btn-sqr" @click="next()" aria-label="{{ __("Next value", "fp") }}">
+					{{ icon({ name: "arrow-r", w: 24, h: 24 }) }}
+				</button>
+			</div>
+
+			<div class="relative h-450 lg:h-375">
 				{% for item in data.items %}
 					<div
 						x-show="active === {{ loop.index0 }}"
