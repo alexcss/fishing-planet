@@ -124,6 +124,7 @@
   }
 
   & table {
+    @apply border-collapse;
     display: block;
     line-height: initial;
     overflow-x: auto;
@@ -131,12 +132,12 @@
 
     & th,
     td {
-      @apply p-3 text-center;
+      @apply py-6 px-12 border border-white/10;
     }
 
     & tbody {
       & tr:nth-child(odd) {
-        @apply bg-accent/3;
+        @apply bg-white/4;
       }
 
       & tr th:first-child {
