@@ -21,14 +21,14 @@
 
 /* Secondary/Outline Button */
 @utility fp-btn-outline {
-  @apply btn-base;
-  @apply bg-transparent text-black border-current;
+  @apply btn-base h-54 py-14;
+  @apply bg-transparent text-black border-current border;
   @apply hover:text-accent active:text-accent [&.active]:text-accent;
 }
 
 @utility fp-btn-outline-light {
-  @apply btn-base;
-  @apply bg-transparent text-white border-current;
+  @apply btn-base h-54 py-14;
+  @apply bg-transparent text-white/70 border-gray border;
   @apply hover:not-disabled:text-accent active:not-disabled:text-accent [&.active]:not-disabled:text-accent;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }

@@ -1,0 +1,55 @@
+#wpconsent-container {
+  --wpconsent-min-width: 468px;
+  --wpconsent-shadow: none;
+  --wpconsent-accept-bg: var(--color-accent);
+
+  &::part(wpconsent-banner) {
+    @apply gap-y-16 xl:gap-y-24 max-md:inset-x-38 max-md:bottom-32 max-md:w-auto md:right-32 md:bottom-32;
+  }
+
+  &::part(wpconsent-accordion-toggle) {
+    @apply ml-4;
+  }
+
+  &::part(wpconsent-preferences-title) {
+    @apply h5;
+  }
+
+  &::part(wpconsent-banner-body) {
+    @apply text-left p-0 m-0 font-normal text-14/[1.5];
+  }
+
+  &::part(wpconsent-button-preferences) {
+    @apply fp-btn-outline-light transition;
+  }
+
+  &::part(wpconsent-button-preferences):hover {
+    @apply bg-white border-white text-dark-gray;
+  }
+
+  &::part(wpconsent-preferences-header) {
+    @apply pt-0;
+  }
+
+  &::part(wpconsent-button-accept),
+  &::part(wpconsent-preferences-cancel-button),
+  &::part(wpconsent-preferences-accept-button),
+  &::part(wpconsent-preferences-save-button) {
+    @apply fp-btn-light transition;
+  }
+
+  &::part(wpconsent-button-accept):hover,
+  &::part(wpconsent-preferences-cancel-button):hover,
+  &::part(wpconsent-preferences-accept-button):hover,
+  &::part(wpconsent-preferences-save-button):hover {
+    @apply text-white bg-accent;
+  }
+
+  &::part(wpconsent-banner) {
+    @apply p-32 xl:p-44 bg-pattern-wave rounded-none ring-20 ring-white/15;
+  }
+
+  &::part(wpconsent-preferences-content) {
+    @apply p-32 xl:p-44 rounded-none;
+  }
+}

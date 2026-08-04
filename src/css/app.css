@@ -7,6 +7,7 @@
 @import './components.css';
 @import './forms.css';
 @import './vendor/cf7.css';
+@import './vendor/cookie.css';
 @import './richtext.css';
 @import './utilities.css';
 
@@ -50,7 +51,7 @@
     50% {
       background-color: color-mix(
         in oklab,
-        var(--color-amber-400) 50%,
+        var(--color-accent) 50%,
         transparent
       );
     }
