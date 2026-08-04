@@ -32,7 +32,9 @@
 			<div class="lg:w-2/5">
 				{% include "global/footer/subscribe.twig" %}
 			</div>
-			<a href="{{ site.url }}" class="flex w-fit lg:order-first lg:w-3/5">{% include "global/logo-large.twig" %}</a>
+			<a href="{{ site.url }}" rel="home" title="{{ site.name }}" class="flex w-fit lg:order-first lg:w-3/5">
+				{% include "global/logo-large.twig" %}
+			</a>
 		</div>
 
 		{# Footer Bottom - Copyright #}

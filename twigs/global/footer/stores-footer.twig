@@ -4,7 +4,9 @@
 {% if (global.stores|length) > 0 %}
 	<div class="mb-50 w-full space-y-16 lg:mb-0 lg:w-auto">
 		{% if global.stores_title %}
-			<h5 class="fp-title-footer">{{ global.stores_title }}</h5>
+			<p class="fp-title-footer">
+				{{ global.stores_title }}
+			</p>
 		{% endif %}
 		<div class="flex w-fit flex-wrap gap-5 md:gap-8 lg:grid lg:grid-cols-3">
 			{% for store in global.stores %}
