@@ -136,3 +136,7 @@ form.submitting .wpcf7-spinner {
     opacity: 0;
   }
 }
+
+.grecaptcha-badge {
+  @apply sr-only;
+}
