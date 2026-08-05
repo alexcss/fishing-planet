@@ -2,7 +2,7 @@
 	<ul class="{{ class }}">
 		{% for item in items %}
 			<li>
-				<a class="fp-text-link fp-link-underline"
+				<a class="fp-text-link fp-link-underline {{ item.classes|join(' ') }}"
 					 href="{{ item.link }}"
 					 {% if item.target %}target="{{ item.target }}"{% endif %}
 					{% if offcanvas is defined %}@click="isMenuOpen = false"{% endif %}>
