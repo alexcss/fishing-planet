@@ -265,6 +265,9 @@
     @apply text-white/80 mt-0 *:!font-inherit;
   }
 
+  .wp-block-separator {
+    @apply border-white/80! my-32;
+  }
 
   & > :first-child {
     @apply !mt-0;
@@ -274,6 +277,7 @@
     @apply !mb-0;
   }
 }
+
 
 @utility fp-richtext-simple {
   @apply space-y-20 md:space-y-24;

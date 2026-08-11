@@ -22,6 +22,7 @@ class Core {
 		'core/html',
 		'core/columns',
 		'core/column',
+		'core/separator'
 	];
 
 	// TODO: Refactor to use the main block array from Register.php

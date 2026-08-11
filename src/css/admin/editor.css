@@ -249,6 +249,10 @@
     @apply text-white/80 mt-0 *:!font-inherit;
   }
 
+  .wp-block-separator {
+    @apply border border-t-2 border-white/80! my-32;
+  }
+
   & > :first-child {
     @apply !mt-0;
   }
